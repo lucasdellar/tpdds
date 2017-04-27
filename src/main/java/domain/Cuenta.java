@@ -11,21 +11,17 @@ public class Cuenta {
 	private String nombre;
 	private String anio;
 	private String patrimonio_neto;
-	
-	/*public Cuenta(float patrimonio_neto, int anio, String nombre){
-		this.patrimonio_neto = patrimonio_neto;
-		this.anio = anio;
-		this.nombre = nombre;
-	}*/
-	
-	public static Cuenta fromJson(String json){
-	    return new Gson().fromJson(json, Cuenta.class);
+
+	public Cuenta() {
 	}
-	
-	public String toJson(){
-         return new Gson().toJson(this);
-    }
-	
+
+	public Cuenta(String nombre, String anio, String patrimonio_neto) {
+		this.nombre 	= nombre;
+		this.anio 		= anio;
+		this.patrimonio_neto = patrimonio_neto;
+	}
+
+
 	public String getNombre() {
 		return nombre;
 	}

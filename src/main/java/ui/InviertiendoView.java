@@ -31,7 +31,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel>{
 		
 		crearBoton(mainPanel, "Mostrar Cuentas").onClick(() -> {
 			try {this.getModelObject().mostrarCuentas();
-			} catch (IOException e) {e.printStackTrace();}}); 
+			} catch (Exception e) {e.printStackTrace();}});
 		
 		Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
 		
@@ -55,7 +55,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel>{
 		
 		crearBoton(mainPanel, "Agregar Cuenta").onClick(() -> {
 			try { this.getModelObject().agregarCuenta();
-			} catch (IOException e) { e.printStackTrace();}	});
+			} catch (Exception e) { e.printStackTrace();}	});
 			
 	}
 

@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 public class Cuentas {
 	
-	private ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
-	/*
+	private ArrayList<Cuenta> cuentas;
+
+	public Cuentas(){
+		cuentas = new ArrayList<>();
+	}
+
 	public Cuentas(ArrayList<Cuenta> cuentas){
 		this.cuentas = cuentas;
 	}
-	*/
+
 	public ArrayList<Cuenta> getCuentas() {
 		return cuentas;
 	}

@@ -17,11 +17,11 @@ public class InviertiendoViewModel {
 	Cuentas cuentas;
 	Cuenta nuevaCuenta = new Cuenta();
 	
-	public void mostrarCuentas() throws IOException {
+	public void mostrarCuentas() throws Exception {
 		cuentas = new ManejadorDeArchivoCuentas("cuentas.txt").getCuentas(); 
 	}
 
-	public void agregarCuenta() throws FileNotFoundException, UnsupportedEncodingException, IOException {
+	public void agregarCuenta() throws FileNotFoundException, UnsupportedEncodingException, Exception {
 		new ManejadorDeArchivoCuentas("cuentas.txt").agregarCuentaAlArchivo(nuevaCuenta);
 	}
 
