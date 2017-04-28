@@ -1,6 +1,1 @@
-{"nombre":"Ringo","anio":2017,"patrimonio_neto":0.0}
-{"nombre":"Santi","anio":2017,"patrimonio_neto":9.0}
-{"nombre":"Santi","anio":2017,"patrimonio_neto":1231231.0}
-{"nombre":"asdas","anio":"123","patrimonio_neto":"123"}
-{"nombre":"NombreCuenta","anio":"2017","patrimonio_neto":"120000"}
-{"nombre":"NombreCuenta","anio":"2017","patrimonio_neto":"120000"}
+{"nombre":"NuevaCuenta","anio":"2017","patrimonio_neto":"20202"}

@@ -42,7 +42,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel>{
 
 		agregarColumna(table, "Cuenta", "nombre");
 		agregarColumna(table, "Periodo", "anio");
-		agregarColumna(table, "Patrimonio Neto", "patrimonio_neto");
+		agregarColumna(table, "Patrimonio Neto", "patrimonio_neto"); 
 		
 		Panel nuevaCuentaPanel = new Panel(mainPanel).setLayout(new ColumnLayout(3));
 		

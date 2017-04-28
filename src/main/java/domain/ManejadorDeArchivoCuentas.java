@@ -24,14 +24,14 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 		}
 
 		this.conversor = conversor;
-		this.cuentas = CargarCuentasDeArchivo();
+		this.cuentas = cuentasDeArchivo();
 	}
 
 	public ManejadorDeArchivoCuentas(String rutaArchivo) throws Exception{
 		this(rutaArchivo, new ConversorFormatoArchivo());
 	}
 
-	private Cuentas CargarCuentasDeArchivo() throws Exception{
+	private Cuentas cuentasDeArchivo() throws Exception{
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
 		String cuentaLeida;
@@ -44,11 +44,16 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 
 		return cuentasDeArchivo;
 	}
+	
+	public File getArchivo(){
+		return file;
+	}
 
 	@Override
 	public void agregarCuentaAlArchivo(Cuenta nuevaCuenta) throws IOException{
 		PrintWriter printWriter = new PrintWriter(new FileWriter(file, true));
 		printWriter.println(conversor.AFormatoArchivo(nuevaCuenta));
+		cuentas.agregarCuenta(nuevaCuenta);
 		printWriter.close();
 	}
 
@@ -57,7 +62,7 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 	public void setCuentas(Cuentas cuentas) {
 		this.cuentas = cuentas;
 	}
-
+ 
 	@Override
 	public Cuentas getCuentas() throws IOException{
 		return cuentas;
