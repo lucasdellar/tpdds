@@ -1,2 +1,9 @@
 /target/
 /.idea/
+/.git/
+/.settings/
+.classpath
+.project
+2017-vn-group-02.iml
+2017-vn-group-02.ipr
+2017-vn-group-02.iws
