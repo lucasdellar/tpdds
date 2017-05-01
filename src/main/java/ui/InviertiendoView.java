@@ -5,17 +5,17 @@ import java.io.IOException;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
-import org.uqbar.arena.widgets.Button;
-import org.uqbar.arena.widgets.Label;
-import org.uqbar.arena.widgets.Panel;
-import org.uqbar.arena.widgets.TextBox;
+import org.uqbar.arena.widgets.*;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.MainWindow;
 
 import domain.Cuenta;
+import org.uqbar.arena.windows.MessageBox;
+import org.uqbar.ui.view.ErrorViewer;
+import sun.plugin2.message.Message;
 
-public class InviertiendoView extends MainWindow<InviertiendoViewModel>{
+public class InviertiendoView extends MainWindow<InviertiendoViewModel> implements ErrorViewer{
 
 	public InviertiendoView() {
 		super(new InviertiendoViewModel());
@@ -26,42 +26,47 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel>{
 	public void createContents(Panel mainPanel) {
 		
 		this.setTitle("Invirtiendo");
-		
+		this.getDelegate().setErrorViewer(this);
+
 		mainPanel.setLayout(new VerticalLayout());
-		
-		crearBoton(mainPanel, "Mostrar Cuentas").onClick(() -> {
-			try {this.getModelObject().mostrarCuentas();
-			} catch (Exception e) {e.printStackTrace();}});
-		
+
+		crearBoton(mainPanel, "Mostrar RepositorioCuentas").onClick(() -> {
+			this.getModelObject().mostrarCuentas();});
+
+
 		Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
-		
+
 		Table<Cuenta> table = new Table<Cuenta>(tablePanel, Cuenta.class);
-		table.bindItemsToProperty("cuentas.cuentas");
+		table.bindItemsToProperty("repositorioCuentas.cuentas");
 		table.setNumberVisibleRows(6);
 		table.setWidth(1000);
 
 		agregarColumna(table, "Cuenta", "nombre");
 		agregarColumna(table, "Periodo", "anio");
-		agregarColumna(table, "Patrimonio Neto", "patrimonio_neto"); 
-		
+		agregarColumna(table, "Patrimonio Neto", "patrimonio_neto");
+
 		Panel nuevaCuentaPanel = new Panel(mainPanel).setLayout(new ColumnLayout(3));
-		
+
 		agregarLabel(nuevaCuentaPanel, "Cuenta");
 		agregarLabel(nuevaCuentaPanel, "Anio");
 		agregarLabel(nuevaCuentaPanel, "Patrimonio Neto");
 		agregarTextBox(nuevaCuentaPanel, "nuevaCuenta.nombre");
-		agregarTextBox(nuevaCuentaPanel, "nuevaCuenta.anio");
-		agregarTextBox(nuevaCuentaPanel, "nuevaCuenta.patrimonio_neto");
-		
+		agregarNumerico(nuevaCuentaPanel, "nuevaCuenta.anio");
+		agregarNumerico(nuevaCuentaPanel, "nuevaCuenta.patrimonio_neto");
+
 		crearBoton(mainPanel, "Agregar Cuenta").onClick(() -> {
 			try { this.getModelObject().agregarCuenta();
-			} catch (Exception e) { e.printStackTrace();}	});
-			
+			} catch (Exception e) { showError(e.getMessage());}	});
+
 	}
 
 
 	private void agregarTextBox(Panel nuevaCuentaPanel, String property) {
 		new TextBox(nuevaCuentaPanel).setWidth(150).bindValueToProperty(property);
+	}
+
+	private void agregarNumerico(Panel nuevaCuentaPanel, String property) {
+		new NumericField(nuevaCuentaPanel).setWidth(150).bindValueToProperty(property);
 	}
 
 
@@ -85,9 +90,30 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel>{
 		.setWidth(217);
 		return boton;
 	}
-	
+
 	public static void main(String[] args) {
 		new InviertiendoView().startApplication();
+	}
+
+	@Override
+	public void showInfo(String message) {
+		showMessage(message, MessageBox.Type.Information);
+	}
+
+	@Override
+	public void showWarning(String message) {
+		showMessage(message, MessageBox.Type.Warning);
+	}
+
+	@Override
+	public void showError(String message) {
+		showMessage(message, MessageBox.Type.Error);
+	}
+
+	private void showMessage(String message, MessageBox.Type type){
+		MessageBox messageBox = new MessageBox(this, type);
+		messageBox.setMessage(message);
+		messageBox.open();
 	}
 
 }

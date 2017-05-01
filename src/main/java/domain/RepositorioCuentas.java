@@ -4,8 +4,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
-public class Cuentas {
-	
+public class RepositorioCuentas {
+
 	private ArrayList<Cuenta> cuentas;
 
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
@@ -14,11 +14,11 @@ public class Cuentas {
 	   propertyChangeSupport.addPropertyChangeListener(listener);
 	}
 	
-	public Cuentas(){
+	public RepositorioCuentas(){
 		cuentas = new ArrayList<Cuenta>();
 	}
 
-	public Cuentas(ArrayList<Cuenta> cuentas){
+	public RepositorioCuentas(ArrayList<Cuenta> cuentas){
 		this.cuentas = cuentas;
 	}
 
@@ -32,6 +32,7 @@ public class Cuentas {
 	
 	public void agregarCuenta(Cuenta unaCuenta){
 		cuentas.add(unaCuenta);
+
 	}
 
 	public void ClearCuentas() {

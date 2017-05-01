@@ -8,7 +8,7 @@ import java.io.IOException;
 public interface IManejadorDeArchivoCuentas {
     void agregarCuentaAlArchivo(Cuenta nuevaCuenta) throws IOException;
 
-    void setCuentas(Cuentas cuentas);
+    void setRepositorioCuentas(RepositorioCuentas repositorioCuentas);
 
-    Cuentas getCuentas() throws IOException;
+    RepositorioCuentas getRepositorioCuentas() throws IOException;
 }

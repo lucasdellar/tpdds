@@ -1,25 +1,32 @@
 package domain;
 
-import org.apache.commons.lang.StringUtils;
 import org.uqbar.commons.model.UserException;
 
-/**
- * Created by Matias Fischer on 01/05/2017.
- */
-public class ValidadorCuenta {
+public class Validador {
 
 
-
-
-
-    public static void validarAnio(String anio) throws UserException{
-       if (!IsInteger((anio))) throw new UserException("maeameeeeee");
+    public static void validarCuenta(Cuenta unaCuenta){
+        validarAnio(unaCuenta.getAnio());
+        validarNombre(unaCuenta.getNombre());
+        validarPatrimonio(unaCuenta.getPatrimonio_neto());
     }
 
-    private static Boolean IsInteger(String value){
-        String intRegex = "[0-9]+";
+    private static void validarAnio(String anio) throws UserException{
+       if (!isInteger(anio)) throw new UserException("El anio debe ser un entero");
+    }
 
+    private static Boolean isInteger(String value){
+        String intRegex = "[0-9]+";
         return value.matches(intRegex);
     }
 
+    private static void validarNombre(String nombre) {
+        if (nombre.length() > 30) throw new UserException("El nombre es demasiado largo.");
+    }
+
+
+    private static void validarPatrimonio(String patrimonio_neto) {
+        String intRegex = "[0-9]+\\.[0-9]+";
+        if (Float.parseFloat(patrimonio_neto) >= 0) throw new UserException("El nombre es demasiado largo.");
+    }
 }

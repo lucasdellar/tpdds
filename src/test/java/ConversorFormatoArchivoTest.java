@@ -1,9 +1,6 @@
 
-import domain.ConversorFormatoArchivo;
-import domain.Cuenta;
-import domain.Cuentas;
-import domain.IConversorFormatoArchivo;
-import domain.ManejadorDeArchivoCuentas;
+import domain.*;
+import domain.RepositorioCuentas;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -53,8 +50,8 @@ public class ConversorFormatoArchivoTest {
         ManejadorDeArchivoCuentas manejador = Fixture.getManejador();
         Cuenta nuevaCuenta = new Cuenta("mati", "2017", "99999");
         manejador.agregarCuentaAlArchivo(nuevaCuenta);
-        Cuentas cuentas = manejador.getCuentas();
-        Assert.assertEquals(cuentas.getCuentas().get(0).getNombre(), "mati");
+        RepositorioCuentas repositorioCuentas = manejador.getRepositorioCuentas();
+        Assert.assertEquals(repositorioCuentas.getCuentas().get(0).getNombre(), "mati");
         manejador.getArchivo().delete();
     }
     

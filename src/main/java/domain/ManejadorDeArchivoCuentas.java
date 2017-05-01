@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 	
 	private File file;
-	private Cuentas cuentas;
+	private RepositorioCuentas repositorioCuentas;
 	private IConversorFormatoArchivo conversor;
 
 
@@ -24,25 +24,25 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 		}
 
 		this.conversor = conversor;
-		this.cuentas = cuentasDeArchivo();
+		this.repositorioCuentas = cuentasDeArchivo();
 	}
 
 	public ManejadorDeArchivoCuentas(String rutaArchivo) throws Exception{
 		this(rutaArchivo, new ConversorFormatoArchivo());
 	}
 
-	private Cuentas cuentasDeArchivo() throws Exception{
+	private RepositorioCuentas cuentasDeArchivo() throws Exception{
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
 		String cuentaLeida;
-		Cuentas cuentasDeArchivo = new Cuentas();
+		RepositorioCuentas repositorioCuentasDeArchivo = new RepositorioCuentas();
 
 		while((cuentaLeida = bufferedReader.readLine()) != null){
 			Cuenta miCuenta = conversor.DeFormatoArchivo(cuentaLeida, Cuenta.class);
-			cuentasDeArchivo.agregarCuenta(miCuenta);
+			repositorioCuentasDeArchivo.agregarCuenta(miCuenta);
 		}
 
-		return cuentasDeArchivo;
+		return repositorioCuentasDeArchivo;
 	}
 	
 	public File getArchivo(){
@@ -53,18 +53,18 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 	public void agregarCuentaAlArchivo(Cuenta nuevaCuenta) throws IOException{
 		PrintWriter printWriter = new PrintWriter(new FileWriter(file, true));
 		printWriter.println(conversor.AFormatoArchivo(nuevaCuenta));
-		cuentas.agregarCuenta(nuevaCuenta);
+		repositorioCuentas.agregarCuenta(nuevaCuenta);
 		printWriter.close();
 	}
 
 
 	@Override
-	public void setCuentas(Cuentas cuentas) {
-		this.cuentas = cuentas;
+	public void setRepositorioCuentas(RepositorioCuentas repositorioCuentas) {
+		this.repositorioCuentas = repositorioCuentas;
 	}
  
 	@Override
-	public Cuentas getCuentas() throws IOException{
-		return cuentas;
+	public RepositorioCuentas getRepositorioCuentas() throws IOException{
+		return repositorioCuentas;
 	}
 }
