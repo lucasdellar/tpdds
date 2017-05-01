@@ -35,8 +35,4 @@ public class RepositorioCuentas {
 
 	}
 
-	public void ClearCuentas() {
-		cuentas.clear();
-	}
-
 }

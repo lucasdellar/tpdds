@@ -13,7 +13,6 @@ import org.uqbar.arena.windows.MainWindow;
 import domain.Cuenta;
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.ui.view.ErrorViewer;
-import sun.plugin2.message.Message;
 
 public class InviertiendoView extends MainWindow<InviertiendoViewModel> implements ErrorViewer{
 
@@ -29,10 +28,13 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		this.getDelegate().setErrorViewer(this);
 
 		mainPanel.setLayout(new VerticalLayout());
-
-		crearBoton(mainPanel, "Mostrar RepositorioCuentas").onClick(() -> {
-			this.getModelObject().mostrarCuentas();});
-
+		
+		Panel filePanel = new Panel(mainPanel).setLayout(new ColumnLayout(2));
+		
+		agregarLabel(filePanel, "Archivo utilizado: ");
+		
+		agregarTextBox(filePanel, "rutaArchivo");
+		
 
 		Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
 
@@ -54,10 +56,11 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		agregarNumerico(nuevaCuentaPanel, "nuevaCuenta.anio");
 		agregarNumerico(nuevaCuentaPanel, "nuevaCuenta.patrimonio_neto");
 
-		crearBoton(mainPanel, "Agregar Cuenta").onClick(() -> {
-			try { this.getModelObject().agregarCuenta();
-			} catch (Exception e) { showError(e.getMessage());}	});
-
+		crearBoton(mainPanel, "Mostrar Cuentas").onClick(() -> this.getModelObject().mostrarCuentas());
+		crearBoton(mainPanel, "Agregar Cuenta").onClick(() -> this.getModelObject().agregarCuenta());
+	//	crearBoton(mainPanel, "Modificar Cuenta").onClick(() -> this.getModelObject().agregarCuenta());
+	//	crearBoton(mainPanel, "Eliminar Cuenta").onClick(() -> this.getModelObject().agregarCuenta());
+			
 	}
 
 

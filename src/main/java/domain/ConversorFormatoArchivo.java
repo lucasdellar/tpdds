@@ -2,11 +2,6 @@ package domain;
 
 import com.google.gson.Gson;
 
-/**
- * Created by Matias Fischer on 27/04/2017.
- */
-
-
 public class ConversorFormatoArchivo implements IConversorFormatoArchivo {
     private Gson gson;
 
@@ -19,13 +14,13 @@ public class ConversorFormatoArchivo implements IConversorFormatoArchivo {
     }
 
     @Override
-    public String AFormatoArchivo(Object obj)
+    public String aFormatoArchivo(Object obj)
     {
         return gson.toJson(obj);
     }
 
     @Override
-    public <T> T DeFormatoArchivo(String json, Class<T> claseObjeto){
+    public <T> T deFormatoArchivo(String json, Class<T> claseObjeto){
         return gson.fromJson(json,claseObjeto);
     }
 }

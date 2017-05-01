@@ -3,6 +3,7 @@ package domain;
 import java.io.BufferedReader;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,34 +16,30 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 	private IConversorFormatoArchivo conversor;
 
 
-	public ManejadorDeArchivoCuentas(String rutaArchivo, IConversorFormatoArchivo conversor) throws Exception{
+	public ManejadorDeArchivoCuentas(String rutaArchivo, IConversorFormatoArchivo conversor){
 		
 		file = new File(rutaArchivo);
-		
-		if(!file.exists()){
-			file.createNewFile();
-		}
-
 		this.conversor = conversor;
 		this.repositorioCuentas = cuentasDeArchivo();
 	}
 
-	public ManejadorDeArchivoCuentas(String rutaArchivo) throws Exception{
+	public ManejadorDeArchivoCuentas(String rutaArchivo){
 		this(rutaArchivo, new ConversorFormatoArchivo());
 	}
 
-	private RepositorioCuentas cuentasDeArchivo() throws Exception{
-		BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-
-		String cuentaLeida;
-		RepositorioCuentas repositorioCuentasDeArchivo = new RepositorioCuentas();
-
-		while((cuentaLeida = bufferedReader.readLine()) != null){
-			Cuenta miCuenta = conversor.DeFormatoArchivo(cuentaLeida, Cuenta.class);
-			repositorioCuentasDeArchivo.agregarCuenta(miCuenta);
-		}
-
-		return repositorioCuentasDeArchivo;
+	private RepositorioCuentas cuentasDeArchivo(){
+		BufferedReader bufferedReader;
+		try {
+			bufferedReader = new BufferedReader(new FileReader(file));
+			String cuentaLeida;
+			RepositorioCuentas repositorioCuentasDeArchivo = new RepositorioCuentas();
+			while((cuentaLeida = bufferedReader.readLine()) != null){
+				Cuenta miCuenta = conversor.deFormatoArchivo(cuentaLeida, Cuenta.class);
+				repositorioCuentasDeArchivo.agregarCuenta(miCuenta);
+			}
+			bufferedReader.close();
+			return repositorioCuentasDeArchivo;
+		} catch (IOException e) { throw new AgregarCuentaException("No se pudo leer las cuentas del archivo");}
 	}
 	
 	public File getArchivo(){
@@ -50,11 +47,15 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 	}
 
 	@Override
-	public void agregarCuentaAlArchivo(Cuenta nuevaCuenta) throws IOException{
-		PrintWriter printWriter = new PrintWriter(new FileWriter(file, true));
-		printWriter.println(conversor.AFormatoArchivo(nuevaCuenta));
-		repositorioCuentas.agregarCuenta(nuevaCuenta);
-		printWriter.close();
+	public void agregarCuentaAlArchivo(Cuenta nuevaCuenta){
+		PrintWriter printWriter;
+		try {
+			printWriter = new PrintWriter(new FileWriter(file, true));
+			printWriter.println(conversor.aFormatoArchivo(nuevaCuenta));
+			repositorioCuentas.agregarCuenta(nuevaCuenta);
+			printWriter.close();
+		} catch (IOException e) { throw new AgregarCuentaException("No se pudo agregar la cuenta al archivo");}
+		
 	}
 
 
@@ -64,7 +65,7 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 	}
  
 	@Override
-	public RepositorioCuentas getRepositorioCuentas() throws IOException{
+	public RepositorioCuentas getRepositorioCuentas(){
 		return repositorioCuentas;
 	}
 }
