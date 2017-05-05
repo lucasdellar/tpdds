@@ -1,6 +1,8 @@
 package domain;
 
-public class NombreInvalidoException extends RuntimeException {
+import org.uqbar.commons.model.UserException;
+
+public class NombreInvalidoException extends UserException {
 
 	public NombreInvalidoException(String message){
 		super(message);

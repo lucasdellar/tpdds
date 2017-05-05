@@ -1,6 +1,8 @@
 package domain;
 
-public class PatrimonioInvalidoException extends RuntimeException {
+import org.uqbar.commons.model.UserException;
+
+public class PatrimonioInvalidoException extends UserException {
 	
 	public PatrimonioInvalidoException(String message){
 		super(message);

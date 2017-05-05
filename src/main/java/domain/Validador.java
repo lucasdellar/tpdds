@@ -33,9 +33,14 @@ public class Validador {
 
 
     public static void validarPatrimonio(String patrimonio_neto) {
-        String intRegex = "[0-9]+\\.[0-9]+";
-        if (patrimonio_neto == null || Float.parseFloat(patrimonio_neto) < 0) throw new PatrimonioInvalidoException("El patrimonio neto debe ser un numero positivo");
+        
+        if (patrimonio_neto == null || !isFloatOrInt(patrimonio_neto) || Float.parseFloat(patrimonio_neto) < 0) throw new PatrimonioInvalidoException("El patrimonio neto debe ser un numero positivo");
     }
+
+	private static boolean isFloatOrInt(String patrimonio_neto) {
+		String intRegex = "[0-9]+\\.[0-9]+";
+		return patrimonio_neto.matches(intRegex) || isInteger(patrimonio_neto);
+	}
 
 	public static void validarRutaArchivo(String rutaArchivo) {
         String archRegex = ".+\\.txt";

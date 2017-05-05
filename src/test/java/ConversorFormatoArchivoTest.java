@@ -8,20 +8,21 @@ import org.junit.Before;
 import org.junit.Assert;
 import org.junit.Test;
 import org.omg.CORBA.UserException;
+import ui.*;
 
 public class ConversorFormatoArchivoTest {
 
     IConversorFormatoArchivo conversor;
     ManejadorDeArchivoCuentas manejador;
     Class<Cuenta> claseCuenta;
-    Class<Validador> validador;
+    InviertiendoViewModel viewModel;
 	
 	@Before
 	public void initObjects(){ // Si creamos los objetos aca no funciona los mantiene al salir del metodo.
         conversor = new ConversorFormatoArchivo();
         manejador = new ManejadorDeArchivoCuentas("cuentasMock.txt");
-        validador = Validador.class;
         claseCuenta = Cuenta.class;
+        viewModel = new InviertiendoViewModel();
 	}
 	
    @Test
@@ -41,45 +42,48 @@ public class ConversorFormatoArchivoTest {
     
     @Test(expected = CuentaPreexistenteException.class)
     public void cuentaRepetida(){
-    	RepositorioCuentas repositorioCuentas = manejador.getRepositorioCuentas();
-    	Cuenta nuevaCuenta = new Cuenta("CocaCola", "2018", "300");
-    	manejador.agregarCuentaAlArchivo(nuevaCuenta);
-    	Validador.validarCuenta(nuevaCuenta, repositorioCuentas);
+    	RepositorioCuentas repo = new RepositorioCuentas();
+    	repo.agregarCuenta(new Cuenta("Hola", "2020", "1111.0"));
+    	viewModel.setRepositorioCuentas(repo);
+    	viewModel.setNuevaCuenta(new Cuenta("Hola", "2018", "300.0"));
+    	viewModel.agregarCuenta();
     }
     
     @Test(expected = AnioInvalidoException.class)
     public void anioInvalido(){
-    	Cuenta nuevaCuenta = new Cuenta("Roar", "Doscientos A.C", "333");
-    	Validador.validarAnio(nuevaCuenta.getAnio());
+    	viewModel.setNuevaCuenta(new Cuenta("Hola", "asd", "300"));
+    	viewModel.agregarCuenta();
     }
     
     @Test(expected = NombreInvalidoException.class)
     public void nombreInvalido(){
-    	Cuenta nuevaCuenta = new Cuenta(null, "300", "8");
-    	Validador.validarNombre(nuevaCuenta.getNombre());
+    	viewModel.setNuevaCuenta(new Cuenta(null, "asd", "300"));
+    	viewModel.agregarCuenta();
     }
     
     @Test(expected = PatrimonioInvalidoException.class)
     public void patrimonioInvalido(){
-    	Cuenta nuevaCuenta = new Cuenta("Pablito Mendez", "2010", "-957");
-    	Validador.validarPatrimonio(nuevaCuenta.getPatrimonio_neto());
+    	viewModel.setNuevaCuenta(new Cuenta("Nombre", "123", "asd"));
+    	viewModel.agregarCuenta();
     }
     
     @Test(expected = ArchivoInvalidoException.class)
     public void archivoInvalidoPorExtension(){
-    	Validador.validarRutaArchivo("archivoCualquiera.xml");
+    	viewModel.setRutaArchivo("rutaInvalida.tx");
+    	viewModel.mostrarCuentas();
     }
     
     @Test(expected = ArchivoInvalidoException.class)
     public void archivoInvalidoPorExistencia(){
-    	Validador.validarRutaArchivo("archivoCualquiera.txt");
+    	viewModel.setRutaArchivo("rutaInvalida");
+    	viewModel.mostrarCuentas();
     }
     
     
     
     @After
     public void after(){
-        //manejador.getArchivo().delete();
+        // manejador.getArchivo().delete();
     }
     
 }
