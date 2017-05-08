@@ -17,7 +17,6 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 
 
 	public ManejadorDeArchivoCuentas(String rutaArchivo, IConversorFormatoArchivo conversor){
-		
 		file = new File(rutaArchivo);
 		this.conversor = conversor;
 		this.repositorioCuentas = cuentasDeArchivo();
@@ -39,7 +38,7 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 			}
 			bufferedReader.close();
 			return repositorioCuentasDeArchivo;
-		} catch (IOException e) { throw new AgregarCuentaException("No se pudo leer las cuentas del archivo");}
+		} catch (IOException e) { throw new AgregarCuentaAlArchivoException("No se pudo leer las cuentas del archivo");}
 	}
 	
 	public File getArchivo(){
@@ -54,7 +53,7 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 			printWriter.println(conversor.aFormatoArchivo(nuevaCuenta));
 			repositorioCuentas.agregarCuenta(nuevaCuenta);
 			printWriter.close();
-		} catch (IOException e) { throw new AgregarCuentaException("No se pudo agregar la cuenta al archivo");}
+		} catch (IOException e) { throw new AgregarCuentaAlArchivoException("No se pudo agregar la cuenta al archivo");}
 		
 	}
 

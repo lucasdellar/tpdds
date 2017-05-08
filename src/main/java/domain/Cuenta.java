@@ -11,6 +11,7 @@ public class Cuenta {
 	private String nombre;
 	private String anio;
 	private String patrimonio_neto;
+	
 
 	public Cuenta() {
 	}
