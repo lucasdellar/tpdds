@@ -30,7 +30,7 @@ public class Archivo implements IArchivo {
     @Override
     public void validarRutaArchivo(String rutaArchivo) {
         String archRegex = ".+\\.txt";
-        if (rutaArchivo == null || !rutaArchivo.matches(archRegex)) throw new ArchivoInvalidoException("El nombre del archivo no es valido. Debe ser un .txt");
+        if (rutaArchivo == null  || rutaArchivo == ""|| !rutaArchivo.matches(archRegex)) throw new ArchivoInvalidoException("El nombre del archivo no es valido. Debe ser un .txt");
         if (!new File(rutaArchivo).exists()) throw new ArchivoInvalidoException("El archivo ingresado no existe. Ingrese otro nombre o creelo y vuelva a intentarlo.");
     }
 

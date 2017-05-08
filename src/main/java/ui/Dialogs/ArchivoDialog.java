@@ -40,9 +40,5 @@ public class ArchivoDialog extends Dialog<Archivo> {
                 .onClick(this::accept)
                 .setAsDefault()
                 .disableOnError();
-
-        new Button(actions) //
-                .setCaption("Cancelar")
-                .onClick(this::cancel);
     }
 }

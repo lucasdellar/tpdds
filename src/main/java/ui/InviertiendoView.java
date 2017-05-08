@@ -31,6 +31,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 			viewModel.setRutaArchivo(archivo.getRuta());
 			viewModel.mostrarCuentas();
 		});
+		//archivoDialog.onCancel( () -> int veresto = 1); // Ver caso cerrado sin completar
 		archivoDialog.open();
 	}
 
