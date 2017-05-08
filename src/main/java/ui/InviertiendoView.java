@@ -1,32 +1,44 @@
 package ui;
 
-import java.io.IOException;
-
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.*;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
-import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.MainWindow;
 
 import domain.Cuenta;
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.ui.view.ErrorViewer;
+import ui.Dialogs.ArchivoDialog;
+import ui.Dialogs.CrearCuentaDialog;
+import ui.ViewModels.InviertiendoViewModel;
 
 public class InviertiendoView extends MainWindow<InviertiendoViewModel> implements ErrorViewer{
 
 	public InviertiendoView() {
 		super(new InviertiendoViewModel());
 	}
+	private Archivo archivo;
 
 
-	protected void openDialog(Dialog<?> dialog) {
-		dialog.onAccept(getModelObject()::search);
-		dialog.open();
+	protected void openArchivoDialog() {
+		archivo = new Archivo();
+		ArchivoDialog archivoDialog = new ArchivoDialog(this, archivo);
+		archivoDialog.onAccept(() -> {
+			InviertiendoViewModel viewModel = this.getModelObject();
+			viewModel.setRutaArchivo(archivo.getRuta());
+			viewModel.mostrarCuentas();
+		});
+		archivoDialog.open();
 	}
 
+	protected void openCrearCuentaDialog() {
+		CrearCuentaDialog crearCuentaDialog = new CrearCuentaDialog(this,archivo);
+		crearCuentaDialog.open();
+		this.getModelObject().mostrarCuentas();
+	}
 
 	@Override
 	public void createContents(Panel mainPanel) {
@@ -40,8 +52,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		
 		agregarLabel(filePanel, "Archivo utilizado: ");
 		
-		agregarTextBox(filePanel, "rutaArchivo");
-		
+		agregarLabel(filePanel, this.getModelObject().getRutaArchivo());
 
 		Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
 
@@ -56,18 +67,9 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 		Panel nuevaCuentaPanel = new Panel(mainPanel).setLayout(new ColumnLayout(3));
 
-		agregarLabel(nuevaCuentaPanel, "Cuenta");
-		agregarLabel(nuevaCuentaPanel, "Anio");
-		agregarLabel(nuevaCuentaPanel, "Patrimonio Neto");
-		agregarTextBox(nuevaCuentaPanel, "nuevaCuenta.nombre");
-		agregarNumerico(nuevaCuentaPanel, "nuevaCuenta.anio");
-		agregarNumerico(nuevaCuentaPanel, "nuevaCuenta.patrimonio_neto");
+		crearBoton(mainPanel, "Agregar Cuenta").onClick(() -> openCrearCuentaDialog());
 
-		crearBoton(mainPanel, "Mostrar Cuentas").onClick(() -> this.getModelObject().mostrarCuentas());
-		crearBoton(mainPanel, "Agregar Cuenta").onClick(() -> this.getModelObject().agregarCuenta());
-	//	crearBoton(mainPanel, "Modificar Cuenta").onClick(() -> this.getModelObject().agregarCuenta());
-	//	crearBoton(mainPanel, "Eliminar Cuenta").onClick(() -> this.getModelObject().agregarCuenta());
-			
+		openArchivoDialog();
 	}
 
 

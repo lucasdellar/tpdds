@@ -1,9 +1,10 @@
 package domain;
 
+import domain.DomainExceptions.AgregarCuentaAlArchivoException;
+
 import java.io.BufferedReader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 	
 	private File file;
 	private RepositorioCuentas repositorioCuentas;
-	private IConversorFormatoArchivo conversor;
+	private IConversorFormatoArchivo<Cuenta> conversor;
 
 
 	public ManejadorDeArchivoCuentas(String rutaArchivo, IConversorFormatoArchivo conversor){

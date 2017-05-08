@@ -1,11 +1,10 @@
-package ui;
+package ui.ViewModels;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import domain.RepositorioCuentas;
-import domain.Validador;
 import org.uqbar.commons.utils.Observable;
 
 import domain.Cuenta;
@@ -21,14 +20,7 @@ public class InviertiendoViewModel {
 
 	
 	public void mostrarCuentas(){
-		Validador.validarRutaArchivo(rutaArchivo);
 		repositorioCuentas = new ManejadorDeArchivoCuentas(rutaArchivo).getRepositorioCuentas();
-	}	
-
-	public void agregarCuenta() {
-		Validador.validarCuenta(nuevaCuenta, repositorioCuentas);
-		new ManejadorDeArchivoCuentas(rutaArchivo).agregarCuentaAlArchivo(getNuevaCuenta());
-		this.mostrarCuentas();
 	}
 
 	public Cuenta getNuevaCuenta() {

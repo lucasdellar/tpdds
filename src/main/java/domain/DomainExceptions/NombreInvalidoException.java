@@ -1,4 +1,4 @@
-package domain;
+package domain.DomainExceptions;
 
 import org.uqbar.commons.model.UserException;
 

@@ -1,29 +1,24 @@
-package ui;
+package ui.Dialogs;
 
-import org.uqbar.arena.aop.windows.TransactionalDialog;
-import org.uqbar.arena.bindings.ObservableProperty;
-import org.uqbar.arena.bindings.PropertyAdapter;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.*;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
-import org.uqbar.lacar.ui.model.ListBuilder;
-import org.uqbar.lacar.ui.model.bindings.Binding;
+import ui.IArchivo;
+import ui.ViewModels.CuentaViewModel;
 
 /**
  * Created by Matias Fischer on 07/05/2017.
  */
-
-public class ArchivoDialog extends Dialog<Archivo> {
+public class CrearCuentaDialog extends Dialog<CuentaViewModel> {
 
     /**
      *
      */
-    private static final long serialVersionUID = 1L;
 
-    public ArchivoDialog(WindowOwner owner, Archivo model) {
-        super(owner, model);
-        this.setTitle("Ingrese un archivo fuente");
+    public CrearCuentaDialog(WindowOwner owner, IArchivo archivo) {
+        super(owner, new CuentaViewModel(archivo));
+        this.setTitle("Crear cuenta");
     }
 
     @Override
@@ -31,9 +26,19 @@ public class ArchivoDialog extends Dialog<Archivo> {
         Panel form = new Panel(mainPanel);
         form.setLayout(new ColumnLayout(2));
 
-        new Label(form).setText("Recibe resumen cuenta en domicilio");
-        new CheckBox(form).bindValueToProperty("recibeResumenCuenta");
+        new Label(form).setText("Nombre");
+        new TextBox(form).bindValueToProperty("nombre");
 
+        new Label(form).setText("Año");
+        new TextBox(form).bindValueToProperty("anio");
+
+        new Label(form).setText("Patrimonio neto");
+        new TextBox(form).bindValueToProperty("patrimonio_neto");
+
+        this.onAccept(() ->
+        {
+            this.getModelObject().agregarCuenta();
+        });
     }
 
     @Override
@@ -48,5 +53,4 @@ public class ArchivoDialog extends Dialog<Archivo> {
                 .setCaption("Cancelar")
                 .onClick(this::cancel);
     }
-
 }

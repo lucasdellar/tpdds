@@ -2,7 +2,7 @@ package domain;
 
 import com.google.gson.Gson;
 
-public class ConversorFormatoArchivo implements IConversorFormatoArchivo {
+public class ConversorFormatoArchivo<T> implements IConversorFormatoArchivo<T> {
     private Gson gson;
 
     public ConversorFormatoArchivo() {
@@ -20,7 +20,7 @@ public class ConversorFormatoArchivo implements IConversorFormatoArchivo {
     }
 
     @Override
-    public <T> T deFormatoArchivo(String json, Class<T> claseObjeto){
+    public T deFormatoArchivo(String json, Class<T> claseObjeto){
         return gson.fromJson(json,claseObjeto);
     }
 }

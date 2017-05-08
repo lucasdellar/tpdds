@@ -1,18 +1,16 @@
 
 import domain.*;
 
-import java.io.IOException;
-
+import domain.DomainExceptions.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Assert;
 import org.junit.Test;
-import org.omg.CORBA.UserException;
-import ui.*;
+import ui.ViewModels.InviertiendoViewModel;
 
 public class ConversorFormatoArchivoTest {
 
-    IConversorFormatoArchivo conversor;
+    IConversorFormatoArchivo<Cuenta> conversor;
     ManejadorDeArchivoCuentas manejador;
     Class<Cuenta> claseCuenta;
     InviertiendoViewModel viewModel;
@@ -46,25 +44,25 @@ public class ConversorFormatoArchivoTest {
     	repo.agregarCuenta(new Cuenta("Hola", "2020", "1111.0"));
     	viewModel.setRepositorioCuentas(repo);
     	viewModel.setNuevaCuenta(new Cuenta("Hola", "2018", "300.0"));
-    	viewModel.agregarCuenta();
+    	//viewModel.agregarCuenta();
     }
     
     @Test(expected = AnioInvalidoException.class)
     public void anioInvalido(){
     	viewModel.setNuevaCuenta(new Cuenta("Hola", "asd", "300"));
-    	viewModel.agregarCuenta();
+    	//viewModel.agregarCuenta();
     }
     
     @Test(expected = NombreInvalidoException.class)
     public void nombreInvalido(){
     	viewModel.setNuevaCuenta(new Cuenta(null, "asd", "300"));
-    	viewModel.agregarCuenta();
+    	//viewModel.agregarCuenta();
     }
     
     @Test(expected = PatrimonioInvalidoException.class)
     public void patrimonioInvalido(){
     	viewModel.setNuevaCuenta(new Cuenta("Nombre", "123", "asd"));
-    	viewModel.agregarCuenta();
+    	//viewModel.agregarCuenta();
     }
     
     @Test(expected = ArchivoInvalidoException.class)

@@ -3,7 +3,7 @@ package domain;
 
 import org.uqbar.commons.utils.Observable;
 
-import com.google.gson.Gson;
+import ui.ViewModels.CuentaViewModel;
 
 @Observable
 public class Cuenta {
@@ -22,6 +22,11 @@ public class Cuenta {
 		this.patrimonio_neto = patrimonio_neto;
 	}
 
+	public Cuenta(CuentaViewModel viewModel){
+		this.nombre = viewModel.getNombre();
+		this.anio 	= viewModel.getAnio();
+		this.patrimonio_neto = viewModel.getPatrimonio_neto();
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -46,5 +51,7 @@ public class Cuenta {
 	public void setPatrimonio_neto(String patrimonio_neto) {
 		this.patrimonio_neto = patrimonio_neto;
 	}
-	
+
+
+
 }
