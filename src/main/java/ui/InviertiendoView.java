@@ -8,6 +8,7 @@ import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.*;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
+import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.MainWindow;
 
 import domain.Cuenta;
@@ -20,7 +21,13 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		super(new InviertiendoViewModel());
 	}
 
-	
+
+	protected void openDialog(Dialog<?> dialog) {
+		dialog.onAccept(getModelObject()::search);
+		dialog.open();
+	}
+
+
 	@Override
 	public void createContents(Panel mainPanel) {
 		
