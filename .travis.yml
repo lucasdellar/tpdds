@@ -5,3 +5,14 @@ directories:
 
 jdk:
     - oraclejdk8
+    
+notifications:
+  email:
+    recipients:
+      - santiagoilli96@gmail.com
+      - mfischer00@gmail.com
+      - lucasdellarciprete@gmail.com
+      - martingonzalez_89@hotmail.com
+      - lucasrotelavila@gmail.com
+    on_success: change
+    on_failure: always
