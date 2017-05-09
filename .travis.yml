@@ -1,0 +1,7 @@
+language: java
+
+directories:
+    - "$HOME/.m2"
+
+jdk:
+    - oraclejdk8
