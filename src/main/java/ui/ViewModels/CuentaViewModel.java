@@ -1,12 +1,10 @@
 package ui.ViewModels;
 
+import org.uqbar.commons.utils.Observable;
+
 import domain.*;
-import ui.IArchivo;
 
-/**
- * Created by Matias Fischer on 07/05/2017.
- */
-
+@Observable
 public class CuentaViewModel {
     private String nombre;
     private String anio;
@@ -15,14 +13,14 @@ public class CuentaViewModel {
 
 
 
-    private IArchivo archivo;
+    private Archivo archivo;
 
 
     public CuentaViewModel() {
         validador = new ValidadorCuenta();
     }
 
-    public CuentaViewModel(String nombre, String anio, String patrimonio_neto, IArchivo archivo) {
+    public CuentaViewModel(String nombre, String anio, String patrimonio_neto, Archivo archivo) {
         this();
         this.nombre = nombre;
         this.anio = anio;
@@ -31,7 +29,7 @@ public class CuentaViewModel {
     }
 
 
-    public CuentaViewModel(IArchivo archivo) {
+    public CuentaViewModel(Archivo archivo) {
         this();
         this.archivo = archivo;
     }
@@ -42,7 +40,6 @@ public class CuentaViewModel {
 
     public void setNombre(String nombre) {
         validador.validarNombre(nombre);
-
         this.nombre = nombre;
     }
 
@@ -52,7 +49,6 @@ public class CuentaViewModel {
 
     public void setAnio(String anio) {
         validador.validarAnio(anio);
-
         this.anio = anio;
     }
 
@@ -62,19 +58,24 @@ public class CuentaViewModel {
 
     public void setPatrimonio_neto(String patrimonio_neto) {
         validador.validarPatrimonio(patrimonio_neto);
-
         this.patrimonio_neto = patrimonio_neto;
     }
     public void agregarCuenta() {
+    	validador.validarQueNoEsteYaCargarda(nombre, new ManejadorDeArchivoCuentas(archivo.getRuta()).getRepositorioCuentas());
         archivo.agregarCuenta(new Cuenta(this));
     }
 
-    public IArchivo getArchivo() {
+    public Archivo getArchivo() {
         return archivo;
     }
 
-    public void setArchivo(IArchivo archivo) {
+    public void setArchivo(Archivo archivo) {
         this.archivo = archivo;
     }
+    
+    public void setRutaArchivo(String ruta){
+    	archivo.setRuta(ruta);
+    }
+    
 
 }

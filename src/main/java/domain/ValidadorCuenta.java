@@ -1,13 +1,15 @@
 package domain;
 
 import domain.DomainExceptions.AnioInvalidoException;
+import domain.DomainExceptions.CuentaPreexistenteException;
 import domain.DomainExceptions.NombreInvalidoException;
 import domain.DomainExceptions.PatrimonioInvalidoException;
 
 public class ValidadorCuenta {
-   /* private static void validarQueNoEsteYaCargarda(String nombre, RepositorioCuentas misCuentas) {
+	
+    public void validarQueNoEsteYaCargarda(String nombre, RepositorioCuentas misCuentas) {
     	if(misCuentas.getCuentas().stream().anyMatch(x -> x.getNombre().equals(nombre))) throw new CuentaPreexistenteException("La cuenta ingresada ya existe.");
-	}*/
+	}
 
     public void validarAnio(String anio) {
         if (anio == null || !isInteger(anio)) throw new AnioInvalidoException("El anio debe ser un entero.");

@@ -2,25 +2,36 @@
 import domain.*;
 
 import domain.DomainExceptions.*;
+
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Assert;
 import org.junit.Test;
+
+import ui.ViewModels.CuentaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
 
-public class ConversorFormatoArchivoTest {
+public class InvirtiendoTest {
 
     IConversorFormatoArchivo<Cuenta> conversor;
     ManejadorDeArchivoCuentas manejador;
     Class<Cuenta> claseCuenta;
-    InviertiendoViewModel viewModel;
+    InviertiendoViewModel inviertiendoViewModel;
+    CuentaViewModel cuentasViewModel;
+    File file;
 	
 	@Before
-	public void initObjects(){ // Si creamos los objetos aca no funciona los mantiene al salir del metodo.
+	public void initObjects() throws IOException{ // Si creamos los objetos aca no funciona los mantiene al salir del metodo.
+		file = new File("cuentasMock.txt");
+		file.createNewFile();
         conversor = new ConversorFormatoArchivo();
         manejador = new ManejadorDeArchivoCuentas("cuentasMock.txt");
         claseCuenta = Cuenta.class;
-        viewModel = new InviertiendoViewModel();
+        inviertiendoViewModel = new InviertiendoViewModel();
+        cuentasViewModel = new CuentaViewModel();
 	}
 	
    @Test
@@ -40,41 +51,40 @@ public class ConversorFormatoArchivoTest {
     
     @Test(expected = CuentaPreexistenteException.class)
     public void cuentaRepetida(){
-    	RepositorioCuentas repo = new RepositorioCuentas();
-    	repo.agregarCuenta(new Cuenta("Hola", "2020", "1111.0"));
-    	viewModel.setRepositorioCuentas(repo);
-    	viewModel.setNuevaCuenta(new Cuenta("Hola", "2018", "300.0"));
-    	//viewModel.agregarCuenta();
+    	Archivo archivo = new Archivo();
+    	archivo.setRuta("cuentasMock.txt");
+    	manejador.agregarCuentaAlArchivo(new Cuenta("Hola", "2020", "1111"));
+    	cuentasViewModel.setArchivo(archivo);
+    	cuentasViewModel.setNombre("Hola");
+    	cuentasViewModel.setAnio("1233"); 
+    	cuentasViewModel.setPatrimonio_neto("1233"); 
+    	cuentasViewModel.agregarCuenta();
     }
     
     @Test(expected = AnioInvalidoException.class)
     public void anioInvalido(){
-    	viewModel.setNuevaCuenta(new Cuenta("Hola", "asd", "300"));
+    	cuentasViewModel.setAnio("./zxc");
     	//viewModel.agregarCuenta();
     }
     
     @Test(expected = NombreInvalidoException.class)
     public void nombreInvalido(){
-    	viewModel.setNuevaCuenta(new Cuenta(null, "asd", "300"));
-    	//viewModel.agregarCuenta();
+    	cuentasViewModel.setNombre(null);
     }
     
     @Test(expected = PatrimonioInvalidoException.class)
     public void patrimonioInvalido(){
-    	viewModel.setNuevaCuenta(new Cuenta("Nombre", "123", "asd"));
-    	//viewModel.agregarCuenta();
+    	cuentasViewModel.setPatrimonio_neto(null);
     }
     
     @Test(expected = ArchivoInvalidoException.class)
     public void archivoInvalidoPorExtension(){
-    	viewModel.setRutaArchivo("rutaInvalida.tx");
-    	viewModel.mostrarCuentas();
+    	Archivo.validarRutaArchivo("rutaInvalida.tar");
     }
     
     @Test(expected = ArchivoInvalidoException.class)
     public void archivoInvalidoPorExistencia(){
-    	viewModel.setRutaArchivo("rutaInvalida");
-    	viewModel.mostrarCuentas();
+    	Archivo.validarRutaArchivo("rutaInvalida.txt");
     }
     
     

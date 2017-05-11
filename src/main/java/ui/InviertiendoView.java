@@ -8,11 +8,13 @@ import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.MainWindow;
 
+import domain.Archivo;
 import domain.Cuenta;
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.ui.view.ErrorViewer;
 import ui.Dialogs.ArchivoDialog;
 import ui.Dialogs.CrearCuentaDialog;
+import ui.ViewModels.ArchivoViewModel;
 import ui.ViewModels.InviertiendoViewModel;
 
 public class InviertiendoView extends MainWindow<InviertiendoViewModel> implements ErrorViewer{
@@ -20,30 +22,33 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	public InviertiendoView() {
 		super(new InviertiendoViewModel());
 	}
-	private Archivo archivo;
+	private Archivo archivo = new Archivo();
 
 
 	protected void openArchivoDialog() {
-		archivo = new Archivo();
-		ArchivoDialog archivoDialog = new ArchivoDialog(this, archivo);
+		ArchivoDialog archivoDialog = new ArchivoDialog(this, new ArchivoViewModel());
 		archivoDialog.onAccept(() -> {
-			InviertiendoViewModel viewModel = this.getModelObject();
-			viewModel.setRutaArchivo(archivo.getRuta());
-			viewModel.mostrarCuentas();
+			archivo.setRuta(archivoDialog.getRutaArchivo());
+			this.getModelObject().setRutaArchivo(archivoDialog.getRutaArchivo());
+			this.getModelObject().mostrarCuentas(); 
 		});
-		//archivoDialog.onCancel( () -> int veresto = 1); // Ver caso cerrado sin completar
+		/***********************************************************************************************
+		***********************************************************************************************
+		archivoDialog.onCancel( () -> this.close()); ************************* // Porque no se cierra ??
+		***********************************************************************************************
+		***********************************************************************************************/
 		archivoDialog.open();
 	}
 
 	protected void openCrearCuentaDialog() {
 		CrearCuentaDialog crearCuentaDialog = new CrearCuentaDialog(this,archivo);
 		crearCuentaDialog.open();
-		this.getModelObject().mostrarCuentas();
+		this.getModelObject().mostrarCuentas(); 
 	}
 
 	@Override
 	public void createContents(Panel mainPanel) {
-		
+		openArchivoDialog();
 		this.setTitle("Invirtiendo");
 		this.getDelegate().setErrorViewer(this);
 
@@ -51,10 +56,8 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		
 		Panel filePanel = new Panel(mainPanel).setLayout(new ColumnLayout(2));
 		
-		agregarLabel(filePanel, "Archivo utilizado: ");
+		agregarLabel(filePanel, "Archivo utilizado: " + this.getModelObject().getRutaArchivo());
 		
-		agregarLabel(filePanel, this.getModelObject().getRutaArchivo());
-
 		Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
 
 		Table<Cuenta> table = new Table<Cuenta>(tablePanel, Cuenta.class);
@@ -70,9 +73,8 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 		crearBoton(mainPanel, "Agregar Cuenta").onClick(() -> openCrearCuentaDialog());
 
-		openArchivoDialog();
+		
 	}
-
 
 	private void agregarTextBox(Panel nuevaCuentaPanel, String property) {
 		new TextBox(nuevaCuentaPanel).setWidth(150).bindValueToProperty(property);
@@ -82,11 +84,9 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		new NumericField(nuevaCuentaPanel).setWidth(150).bindValueToProperty(property);
 	}
 
-
 	private void agregarLabel(Panel nuevaCuentaPanel, String texto) {
 		new Label(nuevaCuentaPanel).setText(texto);
 	}
-
 
 	private void agregarColumna(Table<Cuenta> table, String titulo, String propiedad) {
 		new Column<Cuenta>(table)
@@ -94,7 +94,6 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		.setFixedSize(100)
 		.bindContentsToProperty(propiedad);
 	}
-	
 
 	private Button crearBoton(Panel mainPanel, String textoBoton) {
 		Button boton =	new Button(mainPanel);

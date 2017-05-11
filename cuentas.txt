@@ -1,0 +1,4 @@
+{"nombre":"Hola","anio":"2222","patrimonio_neto":"1515"}
+{"nombre":"Hola","anio":"215","patrimonio_neto":"1561"}
+{"nombre":"Santi","anio":"1615","patrimonio_neto":"12"}
+{"nombre":"Ringo","anio":"1231","patrimonio_neto":"2133"}

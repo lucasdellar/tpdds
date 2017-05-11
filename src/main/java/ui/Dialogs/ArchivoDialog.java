@@ -4,22 +4,23 @@ import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.*;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
-import ui.Archivo;
 
-/**
- * Created by Matias Fischer on 07/05/2017.
- */
+import domain.Archivo;
+import ui.ViewModels.ArchivoViewModel;
 
-public class ArchivoDialog extends Dialog<Archivo> {
 
-    /**
-     *
-     */
+public class ArchivoDialog extends Dialog<ArchivoViewModel> {
+
+	
     public String getRutaArchivo(){
-        return this.getModelObject().getRuta();
+        return this.getModelObject().getRuta(); 
+    }
+    
+    public String getArchivo(){
+    	return this.getModelObject().getRuta();
     }
 
-    public ArchivoDialog(WindowOwner owner, Archivo model) {
+    public ArchivoDialog(WindowOwner owner, ArchivoViewModel model) {
         super(owner, model);
         this.setTitle("Ingrese un archivo fuente");
     }

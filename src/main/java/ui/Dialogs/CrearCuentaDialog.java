@@ -4,19 +4,14 @@ import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.*;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
-import ui.IArchivo;
+
+import domain.Archivo;
 import ui.ViewModels.CuentaViewModel;
 
-/**
- * Created by Matias Fischer on 07/05/2017.
- */
+
 public class CrearCuentaDialog extends Dialog<CuentaViewModel> {
 
-    /**
-     *
-     */
-
-    public CrearCuentaDialog(WindowOwner owner, IArchivo archivo) {
+    public CrearCuentaDialog(WindowOwner owner, Archivo archivo) {
         super(owner, new CuentaViewModel(archivo));
         this.setTitle("Crear cuenta");
     }
