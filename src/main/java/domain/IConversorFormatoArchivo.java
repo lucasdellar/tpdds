@@ -1,9 +1,9 @@
 package domain;
 
 
-public interface IConversorFormatoArchivo<T> {
+public interface IConversorFormatoArchivo {
 	
 	
     String aFormatoArchivo(Object obj);
-    T deFormatoArchivo(String json, Class<T> claseObjeto);
+    Cuenta deFormatoArchivo(String json);
 }

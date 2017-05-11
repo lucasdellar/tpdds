@@ -14,7 +14,7 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 	
 	private File file;
 	private RepositorioCuentas repositorioCuentas;
-	private IConversorFormatoArchivo<Cuenta> conversor;
+	private IConversorFormatoArchivo conversor;
 
 
 	public ManejadorDeArchivoCuentas(String rutaArchivo, IConversorFormatoArchivo conversor){
@@ -25,7 +25,7 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 
 	public ManejadorDeArchivoCuentas(String rutaArchivo){
 		this(rutaArchivo, new ConversorFormatoArchivo());
-	}
+	} 
 
 	private RepositorioCuentas cuentasDeArchivo(){
 		BufferedReader bufferedReader;
@@ -34,7 +34,7 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 			String cuentaLeida;
 			RepositorioCuentas repositorioCuentasDeArchivo = new RepositorioCuentas();
 			while((cuentaLeida = bufferedReader.readLine()) != null){
-				Cuenta miCuenta = conversor.deFormatoArchivo(cuentaLeida, Cuenta.class);
+				Cuenta miCuenta = conversor.deFormatoArchivo(cuentaLeida);
 				repositorioCuentasDeArchivo.agregarCuenta(miCuenta);
 			}
 			bufferedReader.close();
@@ -58,7 +58,6 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
 		
 	}
 
-
 	@Override
 	public void setRepositorioCuentas(RepositorioCuentas repositorioCuentas) {
 		this.repositorioCuentas = repositorioCuentas;
@@ -66,6 +65,6 @@ public class ManejadorDeArchivoCuentas implements IManejadorDeArchivoCuentas {
  
 	@Override
 	public RepositorioCuentas getRepositorioCuentas(){
-		return repositorioCuentas;
+		return cuentasDeArchivo();
 	}
 }

@@ -1,9 +1,7 @@
 package domain;
 
-import domain.DomainExceptions.AnioInvalidoException;
+import domain.DomainExceptions.CuentaInvalidaException;
 import domain.DomainExceptions.CuentaPreexistenteException;
-import domain.DomainExceptions.NombreInvalidoException;
-import domain.DomainExceptions.PatrimonioInvalidoException;
 
 public class ValidadorCuenta {
 	
@@ -12,7 +10,7 @@ public class ValidadorCuenta {
 	}
 
     public void validarAnio(String anio) {
-        if (anio == null || !isInteger(anio)) throw new AnioInvalidoException("El anio debe ser un entero.");
+        if (anio == null || !isInteger(anio)) throw new CuentaInvalidaException("El anio debe ser un entero.");
     }
 
     private Boolean isInteger(String value){
@@ -21,13 +19,13 @@ public class ValidadorCuenta {
     }
 
     public void validarNombre(String nombre) {
-        if (nombre == null) throw new NombreInvalidoException("Debe ingresar un nombre.");
+        if (nombre == null) throw new CuentaInvalidaException("Debe ingresar un nombre.");
     }
 
 
     public void validarPatrimonio(String patrimonio_neto) {
 
-        if (patrimonio_neto == null || !isFloatOrInt(patrimonio_neto) || Float.parseFloat(patrimonio_neto) < 0) throw new PatrimonioInvalidoException("El patrimonio neto debe ser un numero positivo");
+        if (patrimonio_neto == null || !isFloatOrInt(patrimonio_neto) || Float.parseFloat(patrimonio_neto) < 0) throw new CuentaInvalidaException("El patrimonio neto debe ser un numero positivo");
     }
 
     private boolean isFloatOrInt(String patrimonio_neto) {
