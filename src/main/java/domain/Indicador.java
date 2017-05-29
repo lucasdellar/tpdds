@@ -1,5 +1,5 @@
 package domain;
-import org.antlr.*;
+//import org.antlr.*;
 
 public class Indicador {
 	
