@@ -37,14 +37,14 @@ public class InvirtiendoTest {
 	
    @Test
    public void deFormatoArchivoValido(){
-        String cuenta = "{ nombre : \"juanca\", anio : \"2000\",patrimonio_neto : \"2000\"}";
+        String cuenta = "{empresa: \"Fibertel\", nombre : \"juanca\", anio : \"2000\",valor : \"2000\"}";
         Cuenta resultado =  conversor.deFormatoArchivo(cuenta);
         Assert.assertEquals(resultado.getNombre(), "juanca");
     }
 
     @Test
     public void manejadorAgregaCuentaAlArchivoCorrectamente() {
-        Cuenta nuevaCuenta = new Cuenta("mati", "2017", "99999");
+        Cuenta nuevaCuenta = new Cuenta("Coca-cola", "mati", "2017", "99999");
         manejador.agregarCuentaAlArchivo(nuevaCuenta);
         RepositorioCuentas repositorioCuentas = manejador.getRepositorioCuentas();
         Assert.assertEquals(repositorioCuentas.getCuentas().get(0).getNombre(), "mati");
@@ -52,21 +52,24 @@ public class InvirtiendoTest {
     
     @Test(expected = CuentaPreexistenteException.class)
     public void viewModelAgregaCuentaRepetidaAlArchivo(){
+    	cuentasViewModel.setEmpresa("Coca-Cola");
     	cuentasViewModel.setNombre("Hola");
     	cuentasViewModel.setAnio("1233"); 
-    	cuentasViewModel.setPatrimonio_neto("1233"); 
+    	cuentasViewModel.setValor("1233"); 
     	cuentasViewModel.agregarCuenta();
+    	cuentasViewModel.setEmpresa("Pepsi");
     	cuentasViewModel.setNombre("Hola");
     	cuentasViewModel.setAnio("1233"); 
-    	cuentasViewModel.setPatrimonio_neto("1233"); 
+    	cuentasViewModel.setValor("1233"); 
     	cuentasViewModel.agregarCuenta();
     }
     
     @Test
     public void viewModelAgregaCuentaAlArchivoCorrectamente(){
+    	cuentasViewModel.setEmpresa("Coco&Mimo");
     	cuentasViewModel.setNombre("koko13");
     	cuentasViewModel.setAnio("1233"); 
-    	cuentasViewModel.setPatrimonio_neto("1233"); 
+    	cuentasViewModel.setValor("1233"); 
     	cuentasViewModel.agregarCuenta();
     	Assert.assertEquals(manejador.getRepositorioCuentas().getCuentas().get(0).getNombre(), "koko13");
     }
@@ -83,8 +86,8 @@ public class InvirtiendoTest {
     }
     
     @Test(expected = CuentaInvalidaException.class)
-    public void cuentaConPatrimonioInvalido(){
-    	cuentasViewModel.setPatrimonio_neto(null);
+    public void cuentaConValorInvalido(){
+    	cuentasViewModel.setValor(null);
     }
     
     @Test(expected = ArchivoInvalidoException.class)

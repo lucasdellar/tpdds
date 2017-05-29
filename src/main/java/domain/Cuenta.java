@@ -8,24 +8,27 @@ import ui.ViewModels.CuentaViewModel;
 @Observable
 public class Cuenta {
 	
+	private String empresa;
 	private String nombre;
 	private String anio;
-	private String patrimonio_neto;
+	private String valor;
 	
 
 	public Cuenta() {
 	}
 
-	public Cuenta(String nombre, String anio, String patrimonio_neto) {
-		this.nombre 	= nombre;
-		this.anio 		= anio;
-		this.patrimonio_neto = patrimonio_neto;
+	public Cuenta(String empresa, String nombre, String anio, String valor) {
+		this.empresa = empresa;
+		this.nombre = nombre;
+		this.anio = anio;
+		this.valor = valor;
 	}
 
 	public Cuenta(CuentaViewModel viewModel){
+		this.empresa = viewModel.getEmpresa();
 		this.nombre = viewModel.getNombre();
 		this.anio 	= viewModel.getAnio();
-		this.patrimonio_neto = viewModel.getPatrimonio_neto();
+		this.valor = viewModel.getValor();
 	}
 
 	public String getNombre() {
@@ -44,12 +47,20 @@ public class Cuenta {
 		this.anio = anio;
 	}
 	
-	public String getPatrimonio_neto() {
-		return patrimonio_neto;
+	public String getValor() {
+		return valor;
 	}
 	
-	public void setPatrimonio_neto(String patrimonio_neto) {
-		this.patrimonio_neto = patrimonio_neto;
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
+	public String getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
 	}
 
 

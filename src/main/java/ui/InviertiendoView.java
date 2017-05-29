@@ -65,9 +65,10 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		table.setNumberVisibleRows(6);
 		table.setWidth(1000);
 
+		agregarColumna(table, "Empresa", "empresa");
 		agregarColumna(table, "Cuenta", "nombre");
 		agregarColumna(table, "Anio", "anio");
-		agregarColumna(table, "Patrimonio Neto", "patrimonio_neto");
+		agregarColumna(table, "Valor", "valor");
 
 		Panel nuevaCuentaPanel = new Panel(mainPanel).setLayout(new ColumnLayout(3));
 

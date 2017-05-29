@@ -20,6 +20,9 @@ public class CrearCuentaDialog extends Dialog<CuentaViewModel> {
     protected void createFormPanel(Panel mainPanel) {
         Panel form = new Panel(mainPanel);
         form.setLayout(new ColumnLayout(2));
+        
+        new Label(form).setText("Empresa");
+        new TextBox(form).bindValueToProperty("empresa");
 
         new Label(form).setText("Nombre");
         new TextBox(form).bindValueToProperty("nombre");
@@ -27,8 +30,8 @@ public class CrearCuentaDialog extends Dialog<CuentaViewModel> {
         new Label(form).setText("Año");
         new TextBox(form).bindValueToProperty("anio");
 
-        new Label(form).setText("Patrimonio neto");
-        new TextBox(form).bindValueToProperty("patrimonio_neto");
+        new Label(form).setText("Valor");
+        new TextBox(form).bindValueToProperty("valor");
 
         this.onAccept(() ->
         {

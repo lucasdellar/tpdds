@@ -23,13 +23,17 @@ public class ValidadorCuenta {
     }
 
 
-    public void validarPatrimonio(String patrimonio_neto) {
+    public void validarValor(String valor) {
 
-        if (patrimonio_neto == null || !isFloatOrInt(patrimonio_neto) || Float.parseFloat(patrimonio_neto) < 0) throw new CuentaInvalidaException("El patrimonio neto debe ser un numero positivo");
+        if (valor == null || !isFloatOrInt(valor) || Float.parseFloat(valor) < 0) throw new CuentaInvalidaException("El valor debe ser un numero positivo");
     }
 
-    private boolean isFloatOrInt(String patrimonio_neto) {
+    private boolean isFloatOrInt(String valor) {
         String intRegex = "[0-9]+\\.[0-9]+";
-        return patrimonio_neto.matches(intRegex) || isInteger(patrimonio_neto);
+        return valor.matches(intRegex) || isInteger(valor);
+    }
+    
+    public void validarEmpresa(String empresa) {
+    	if(empresa == null) throw new CuentaInvalidaException("Debe ingresar una empresa");
     }
 }

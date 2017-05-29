@@ -1,5 +1,9 @@
-{"nombre":"Hola","anio":"2222","patrimonio_neto":"1515"}
-{"nombre":"Hola","anio":"215","patrimonio_neto":"1561"}
-{"nombre":"Santi","anio":"1615","patrimonio_neto":"12"}
-{"nombre":"Ringo","anio":"1231","patrimonio_neto":"2133"}
-{"nombre":"Mati","anio":"213","patrimonio_neto":"321"}
+{"empresa":"Coca-cola","nombre":"Hola","anio":"2222","valor":"1515"}
+{"empresa":"Pepsi","nombre":"Hola","anio":"215","valor":"1561"}
+{"empresa":"Mc'Donalds","nombre":"Santi","anio":"1615","valor":"12"}
+{"empresa":"Wendys","nombre":"Ringo","anio":"1231","valor":"2133"}
+{"empresa":"Wendys","nombre":"Mati","anio":"213","valor":"321"}
+{"empresa":"El chori","nombre":"Lucas","anio":"2017","valor":"1000"}
+{"empresa":"El chori","nombre":"Kaia","anio":"305","valor":"1000"}
+{"nombre":"CFK","anio":"2017","valor":"1000000"}
+{"empresa":"JEJE","nombre":"Zz","anio":"2012","valor":"100303"}

@@ -6,12 +6,11 @@ import domain.*;
 
 @Observable
 public class CuentaViewModel {
-    private String nombre;
+    private String empresa;
+	private String nombre;
     private String anio;
-    private String patrimonio_neto;
+    private String valor;
     private ValidadorCuenta validador;
-
-
 
     private Archivo archivo;
 
@@ -20,11 +19,11 @@ public class CuentaViewModel {
         validador = new ValidadorCuenta();
     }
 
-    public CuentaViewModel(String nombre, String anio, String patrimonio_neto, Archivo archivo) {
+    public CuentaViewModel(String nombre, String anio, String valor, Archivo archivo) {
         this();
         this.nombre = nombre;
         this.anio = anio;
-        this.patrimonio_neto = patrimonio_neto;
+        this.valor = valor;
         this.archivo = archivo;
     }
 
@@ -52,13 +51,22 @@ public class CuentaViewModel {
         this.anio = anio;
     }
 
-    public String getPatrimonio_neto() {
-        return patrimonio_neto;
+    public String getValor() {
+        return valor;
     }
 
-    public void setPatrimonio_neto(String patrimonio_neto) {
-        validador.validarPatrimonio(patrimonio_neto);
-        this.patrimonio_neto = patrimonio_neto;
+    public String getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(String empresa) {
+		validador.validarEmpresa(empresa);
+		this.empresa = empresa;
+	}
+
+	public void setValor(String valor) {
+        validador.validarValor(valor);
+        this.valor = valor;
     }
     public void agregarCuenta() {
     	validador.validarQueNoEsteYaCargarda(nombre, new ManejadorDeArchivoCuentas(archivo.getRuta()).getRepositorioCuentas());
