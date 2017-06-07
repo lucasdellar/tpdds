@@ -41,7 +41,7 @@ public class Indicador {
 	private ArrayList<Cuenta> filtrarCuentasPorAnio(ArrayList<Cuenta> cuentas, String periodo) {
 		ArrayList<Cuenta> cuentasFiltradas = new ArrayList<Cuenta>();
 		for (Cuenta cuenta : cuentas) {
-			if(cuenta.getAnio().equals(periodo)) cuentasFiltradas.add(cuenta);
+			if(cuenta.getPeriodo().equals(periodo)) cuentasFiltradas.add(cuenta);
 		}
 		return cuentasFiltradas;
 	}

@@ -9,7 +9,7 @@ import scala.collection.generic.BitOperations.Int;
 public class CuentaViewModel {
     private Empresa empresa;
 	private String nombre;
-    private String anio;
+    private String periodo;
     private String valor;
     private ValidadorCuenta validador;
 
@@ -20,10 +20,10 @@ public class CuentaViewModel {
         validador = new ValidadorCuenta();
     }
 
-    public CuentaViewModel(String nombre, String anio, String valor, Archivo archivo) {
+    public CuentaViewModel(String nombre, String periodo, String valor, Archivo archivo) {
         this();
         this.nombre = nombre;
-        this.anio = anio;
+        this.periodo = periodo;
         this.valor = valor;
         this.archivo = archivo;
     }
@@ -43,13 +43,13 @@ public class CuentaViewModel {
         this.nombre = nombre;
     }
 
-    public String getAnio() {
-        return anio;
+    public String getPeriodo() {
+        return periodo;
     }
 
-    public void setAnio(String anio) {
-        validador.validarAnio(anio);
-        this.anio = anio;
+    public void setPeriodo(String periodo) {
+        validador.validarAnio(periodo);
+        this.periodo = periodo;
     }
 
     public String getValor() {
@@ -70,8 +70,8 @@ public class CuentaViewModel {
         this.valor = valor;
     }
     public void agregarCuenta() {
-    	validador.validarQueNoEsteYaCargarda(nombre, anio, empresa.getCuentas());
-    	empresa.agregarCuenta(new Cuenta(nombre, anio, valor));
+    	validador.validarQueNoEsteYaCargarda(nombre, periodo, empresa.getCuentas());
+    	empresa.agregarCuenta(new Cuenta(nombre, periodo, valor));
         archivo.actualizarEmpresa(empresa);
     }
 

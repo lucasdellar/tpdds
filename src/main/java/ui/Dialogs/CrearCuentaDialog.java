@@ -24,8 +24,8 @@ public class CrearCuentaDialog extends Dialog<CuentaViewModel> {
         new Label(form).setText("Nombre");
         new TextBox(form).bindValueToProperty("nombre");
 
-        new Label(form).setText("Año");
-        new TextBox(form).bindValueToProperty("anio");
+        new Label(form).setText("Periodo");
+        new TextBox(form).bindValueToProperty("periodo");
 
         new Label(form).setText("Valor");
         new TextBox(form).bindValueToProperty("valor");

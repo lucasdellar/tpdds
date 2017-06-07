@@ -52,7 +52,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		CrearCuentaDialog crearCuentaDialog = new CrearCuentaDialog(this,archivoEmpresas);
 		crearCuentaDialog.getModelObject().setEmpresa(this.getModelObject().getEmpresa());
 		crearCuentaDialog.open();
-		this.getModelObject().actualizarEmpresas();
+		//this.getModelObject().actualizarEmpresas();
 	}
 
 	protected void openEmpresaDialog() {
@@ -98,7 +98,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		
 			
 		agregarColumna(tablaCuentas, "Cuenta", "nombre");
-		agregarColumna(tablaCuentas, "Anio", "anio");
+		agregarColumna(tablaCuentas, "Periodo", "periodo");
 		agregarColumna(tablaCuentas, "Valor", "valor");
 
 

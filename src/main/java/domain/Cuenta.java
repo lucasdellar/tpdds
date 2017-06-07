@@ -9,22 +9,22 @@ import ui.ViewModels.CuentaViewModel;
 public class Cuenta {
 	
 	private String nombre;
-	private String anio;
+	private String periodo;
 	private String valor;
 	
 
 	public Cuenta() {
 	}
 
-	public Cuenta(String nombre, String anio, String valor) {
+	public Cuenta(String nombre, String periodo, String valor) {
 		this.nombre = nombre;
-		this.anio = anio;
+		this.periodo = periodo;
 		this.valor = valor;
 	}
 
 	public Cuenta(CuentaViewModel viewModel){
 		this.nombre = viewModel.getNombre();
-		this.anio 	= viewModel.getAnio();
+		this.periodo 	= viewModel.getPeriodo();
 		this.valor = viewModel.getValor();
 	}
 
@@ -36,12 +36,12 @@ public class Cuenta {
 		this.nombre = nombre;
 	}
 	
-	public String getAnio() {
-		return anio;
+	public String getPeriodo() {
+		return periodo;
 	}
 	
-	public void setAnio(String anio) {
-		this.anio = anio;
+	public void setPeriodo(String periodo) {
+		this.periodo = periodo;
 	}
 	
 	public String getValor() {

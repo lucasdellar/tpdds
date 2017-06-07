@@ -9,7 +9,8 @@ public class Parser {
 	public static Boolean verificarFormato(String posibleCuenta){
 		
 		String cuentaRegex = "[\\da-zA-Z]+([+-/\\*][\\da-zA-Z]+)*$";
-		if(!posibleCuenta.replaceAll("\\s+","").matches(cuentaRegex)) throw new ParserException("Formato incorrecto");
+		if(!posibleCuenta.replaceAll("\\s+","").matches(cuentaRegex)) 
+			throw new ParserException("Formato incorrecto");
 		return true;
 	}
 	

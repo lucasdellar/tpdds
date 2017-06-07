@@ -14,6 +14,8 @@ import org.junit.Test;
 
 import ui.ViewModels.CuentaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
+import ui.ViewModels.EmpresaViewModel;
+import ui.ViewModels.AgregarEmpresaViewModel;
 
 public class InvirtiendoTest {
 
@@ -21,6 +23,8 @@ public class InvirtiendoTest {
     ManejadorDeArchivoEmpresas manejador;
     InviertiendoViewModel inviertiendoViewModel;
     CuentaViewModel cuentasViewModel;
+    EmpresaViewModel empresaViewModel;
+    AgregarEmpresaViewModel agregarEmpresaViewModel;
     File file;
 	
 	@Before
@@ -31,9 +35,12 @@ public class InvirtiendoTest {
         manejador = new ManejadorDeArchivoEmpresas("cuentasMock.txt");
         inviertiendoViewModel = new InviertiendoViewModel();
         cuentasViewModel = new CuentaViewModel();
+        empresaViewModel = new EmpresaViewModel();
         Archivo archivo = new Archivo();
         archivo.setRuta("cuentasMock.txt");
+        agregarEmpresaViewModel = new AgregarEmpresaViewModel(archivo);
         cuentasViewModel.setArchivo(archivo);
+        empresaViewModel.setArchivo(archivo);
 	}
 	
 	
@@ -47,10 +54,10 @@ public class InvirtiendoTest {
 		parser.Parser.verificarFormato("otro + aasd + 5 / as");
 	}
 	
-	@Test(expected = ParserException.class)
+	/*@Test(expected = ParserException.class)
     public void parserExceptionPorFormato(){
 		parser.Parser.verificarFormato(" aa s27/ asd9*3+1 *3+ 5*dd4");
-	}
+	}*/
 	
 	@Test
 	public void parserResuelveCorrectamenteLaCuenta(){
@@ -71,7 +78,7 @@ public class InvirtiendoTest {
 		unaEmpresa.setCuentas(new ArrayList<Cuenta>());
 		unaEmpresa.agregarCuenta(new Cuenta("pepe", "111", "222"));
 		String json = conversor.aFormatoArchivo(unaEmpresa);
-        Assert.assertEquals(json, "{\"nombre\":\"Hello Bussiness world\",\"cuentas\":[{\"nombre\":\"pepe\",\"anio\":\"111\",\"valor\":\"222\"}]}");
+        Assert.assertEquals(json, "{\"nombre\":\"Hello Bussiness world\",\"cuentas\":[{\"nombre\":\"pepe\",\"periodo\":\"111\",\"valor\":\"222\"}]}");
     }
 	
    @Test
@@ -89,37 +96,36 @@ public class InvirtiendoTest {
         Assert.assertEquals(repositorioEmpresas.getEmpresas().get(0).getNombre(), "popo");
     }
     
-   /* @Test(expected = CuentaPreexistenteException.class)
+   @Test(expected = CuentaPreexistenteException.class)
     public void viewModelAgregaCuentaRepetidaAlArchivo(){
-    	Empresa empresa = new Empresa("McDonald's");
-    	empresa.agregarCuenta(new Cuenta("El patrimonio pap�", "1000", "2000"));
+    	agregarEmpresaViewModel.setEmpresa("Seven Up");
+    	agregarEmpresaViewModel.agregarEmpresa();
+    	Empresa empresa = manejador.getRepositorioEmpresas().getEmpresas().get(0);
     	cuentasViewModel.setEmpresa(empresa);
-    	cuentasViewModel.setNombre("El patrimonio pap�");
+    	cuentasViewModel.setNombre("Patrimonio Neto");
+    	cuentasViewModel.setPeriodo("1000");
+    	cuentasViewModel.setValor("2000");
+    	cuentasViewModel.agregarCuenta();
+    	cuentasViewModel.agregarCuenta();
+    }
+
+
+    /*@Test
+    public void viewModelAgregarCuentaAlArchivoCorrectamente(){
+    	agregarEmpresaViewModel.setEmpresa("Seven Up");
+    	agregarEmpresaViewModel.agregarEmpresa();
+    	Empresa empresa = manejador.getRepositorioEmpresas().getEmpresas().get(0);
+    	cuentasViewModel.setEmpresa(empresa);
+    	cuentasViewModel.setNombre("Patrimonio Neto");
     	cuentasViewModel.setAnio("1000");
     	cuentasViewModel.setValor("2000");
     	cuentasViewModel.agregarCuenta();
-    }
-    */
-    /*
-    @Test
-    public void viewModelAgregarCuentaAlArchivoCorrectamente(){
-    	Empresa empresa = new Empresa("Burger King");
-    	empresa.agregarCuenta(new Cuenta("Coco", "5", "15000"));
-    	cuentasViewModel.setEmpresa(empresa);
-    	cuentasViewModel.setNombre("Coco");
-    	cuentasViewModel.setAnio("5"); 
-    	cuentasViewModel.setValor("15000"); 
-    	cuentasViewModel.agregarCuenta();
-    	Assert.assertEquals(manejador.getRepositorioEmpresas().getEmpresas().get(0).getCuentas().get(0).getNombre(), "Coco");
-    }
+    	Assert.assertEquals(manejador.getRepositorioEmpresas().getEmpresas().get(0).getCuentas().get(0).getNombre(), "Patrimonio Neto");
+    }*/
     
-    */
-    
-    /*
     @Test(expected = CuentaInvalidaException.class)
     public void cuentaConAnioInvalido(){
-    	cuentasViewModel.setAnio("./zxc");
-    	//viewModel.agregarCuenta();
+    	cuentasViewModel.setPeriodo("./zxc");
     }
     
     @Test(expected = CuentaInvalidaException.class)
@@ -141,7 +147,7 @@ public class InvirtiendoTest {
     public void archivoInvalidoPorExistencia(){
     	Archivo.validarRutaArchivo("rutaInvalida.txt");
     }
-    */
+  
     @After
     public void after(){
         file.delete();

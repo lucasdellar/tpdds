@@ -41,7 +41,7 @@ public class EmpresaViewModel {
 	        empresa.setNombre(nombre);
 	    }
 
-	    public void agregarCuenta() {
+	    public void agregarEmpresa() {
 	    	validador.validarQueNoEsteYaCargarda(empresa.getNombre(), new ManejadorDeArchivoEmpresas(archivo.getRuta()).getRepositorioEmpresas());
 	        archivo.agregarEmpresa(empresa);
 	    }

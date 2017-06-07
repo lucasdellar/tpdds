@@ -8,7 +8,7 @@ import domain.DomainExceptions.CuentaPreexistenteException;
 public class ValidadorCuenta {
 	
     public void validarQueNoEsteYaCargarda(String nombre, String periodo, ArrayList<Cuenta> misCuentas) {
-    	if(misCuentas.stream().anyMatch(x -> x.getNombre().equals(nombre) && x.getAnio().equals(periodo)))	throw new CuentaPreexistenteException("La cuenta ingresada ya existe.");
+    	if(misCuentas.stream().anyMatch(x -> x.getNombre().equals(nombre) && x.getPeriodo().equals(periodo)))	throw new CuentaPreexistenteException("La cuenta ingresada ya existe.");
 	}
 
     public void validarAnio(String anio) {
