@@ -1,5 +1,11 @@
 package domain;
-
+/*
+ * 
+ * 
+ * Esta clase no la vamos a usar mas
+ * 
+ * 
+ */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -33,7 +39,6 @@ public class RepositorioCuentas {
 	
 	public void agregarCuenta(Cuenta unaCuenta){
 		cuentas.add(unaCuenta);
-
 	}
 
 }

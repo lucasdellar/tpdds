@@ -21,9 +21,6 @@ public class CrearCuentaDialog extends Dialog<CuentaViewModel> {
         Panel form = new Panel(mainPanel);
         form.setLayout(new ColumnLayout(2));
         
-        new Label(form).setText("Empresa");
-        new TextBox(form).bindValueToProperty("empresa");
-
         new Label(form).setText("Nombre");
         new TextBox(form).bindValueToProperty("nombre");
 

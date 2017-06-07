@@ -3,10 +3,11 @@ package ui.ViewModels;
 import org.uqbar.commons.utils.Observable;
 
 import domain.*;
+import scala.collection.generic.BitOperations.Int;
 
 @Observable
 public class CuentaViewModel {
-    private String empresa;
+    private Empresa empresa;
 	private String nombre;
     private String anio;
     private String valor;
@@ -55,12 +56,12 @@ public class CuentaViewModel {
         return valor;
     }
 
-    public String getEmpresa() {
+    public Empresa getEmpresa() {
 		return empresa;
 	}
 
-	public void setEmpresa(String empresa) {
-		validador.validarEmpresa(empresa);
+	public void setEmpresa(Empresa empresa) {
+		validador.validarEmpresa(empresa.getNombre());
 		this.empresa = empresa;
 	}
 
@@ -69,8 +70,9 @@ public class CuentaViewModel {
         this.valor = valor;
     }
     public void agregarCuenta() {
-    	validador.validarQueNoEsteYaCargarda(nombre, new ManejadorDeArchivoCuentas(archivo.getRuta()).getRepositorioCuentas());
-        archivo.agregarCuenta(new Cuenta(this));
+    	validador.validarQueNoEsteYaCargarda(nombre, anio, empresa.getCuentas());
+    	empresa.agregarCuenta(new Cuenta(nombre, anio, valor));
+        archivo.actualizarEmpresa(empresa);
     }
 
     public Archivo getArchivo() {

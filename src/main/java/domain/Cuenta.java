@@ -8,7 +8,6 @@ import ui.ViewModels.CuentaViewModel;
 @Observable
 public class Cuenta {
 	
-	private String empresa;
 	private String nombre;
 	private String anio;
 	private String valor;
@@ -17,15 +16,13 @@ public class Cuenta {
 	public Cuenta() {
 	}
 
-	public Cuenta(String empresa, String nombre, String anio, String valor) {
-		this.empresa = empresa;
+	public Cuenta(String nombre, String anio, String valor) {
 		this.nombre = nombre;
 		this.anio = anio;
 		this.valor = valor;
 	}
 
 	public Cuenta(CuentaViewModel viewModel){
-		this.empresa = viewModel.getEmpresa();
 		this.nombre = viewModel.getNombre();
 		this.anio 	= viewModel.getAnio();
 		this.valor = viewModel.getValor();
@@ -54,15 +51,5 @@ public class Cuenta {
 	public void setValor(String valor) {
 		this.valor = valor;
 	}
-
-	public String getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(String empresa) {
-		this.empresa = empresa;
-	}
-
-
 
 }

@@ -1,12 +1,14 @@
 package domain;
 
+import java.util.ArrayList;
+
 import domain.DomainExceptions.CuentaInvalidaException;
 import domain.DomainExceptions.CuentaPreexistenteException;
 
 public class ValidadorCuenta {
 	
-    public void validarQueNoEsteYaCargarda(String nombre, RepositorioCuentas misCuentas) {
-    	if(misCuentas.getCuentas().stream().anyMatch(x -> x.getNombre().equals(nombre))) throw new CuentaPreexistenteException("La cuenta ingresada ya existe.");
+    public void validarQueNoEsteYaCargarda(String nombre, String periodo, ArrayList<Cuenta> misCuentas) {
+    	if(misCuentas.stream().anyMatch(x -> x.getNombre().equals(nombre) && x.getAnio().equals(periodo)))	throw new CuentaPreexistenteException("La cuenta ingresada ya existe.");
 	}
 
     public void validarAnio(String anio) {

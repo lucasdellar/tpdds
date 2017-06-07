@@ -1,5 +1,4 @@
 package ui;
-
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -10,72 +9,130 @@ import org.uqbar.arena.windows.MainWindow;
 
 import domain.Archivo;
 import domain.Cuenta;
+import domain.Empresa;
+import domain.ManejadorDeArchivoIndicadores;
+
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.ui.view.ErrorViewer;
+
+import ui.Dialogs.AgregarEmpresaDialog;
+import ui.Dialogs.AgregarIndicadorDialog;
 import ui.Dialogs.ArchivoDialog;
 import ui.Dialogs.CrearCuentaDialog;
+import ui.Dialogs.EmpresaDialog;
+import ui.Dialogs.EvaluarEmpresaDialog;
+import ui.ViewModels.AgregarEmpresaViewModel;
+import ui.ViewModels.AgregarIndicadorViewModel;
 import ui.ViewModels.ArchivoViewModel;
+import ui.ViewModels.EmpresaViewModel;
+import ui.ViewModels.EvaluarEmpresaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
 
 public class InviertiendoView extends MainWindow<InviertiendoViewModel> implements ErrorViewer{
 
 	public InviertiendoView() {
 		super(new InviertiendoViewModel());
+		archivoIndicadores.setRuta("indicadores.txt");
 	}
-	private Archivo archivo = new Archivo();
-
+	private Archivo archivoEmpresas = new Archivo();
+	private Archivo archivoIndicadores = new Archivo();
+	private EmpresaViewModel empresaViewModel;
 
 	protected void openArchivoDialog() {
 		ArchivoDialog archivoDialog = new ArchivoDialog(this, new ArchivoViewModel());
 		archivoDialog.onAccept(() -> {
-			archivo.setRuta(archivoDialog.getRutaArchivo());
+			archivoEmpresas.setRuta(archivoDialog.getRutaArchivo());
 			this.getModelObject().setRutaArchivo(archivoDialog.getRutaArchivo());
-			this.getModelObject().mostrarCuentas(); 
+			//this.getModelObject().mostrarCuentas(); 
 		});
-		/***********************************************************************************************
-		***********************************************************************************************
-		archivoDialog.onCancel( () -> this.close()); ************************* // Porque no se cierra ??
-		***********************************************************************************************
-		***********************************************************************************************/
 		archivoDialog.open();
 	}
 
 	protected void openCrearCuentaDialog() {
-		CrearCuentaDialog crearCuentaDialog = new CrearCuentaDialog(this,archivo);
+		CrearCuentaDialog crearCuentaDialog = new CrearCuentaDialog(this,archivoEmpresas);
+		crearCuentaDialog.getModelObject().setEmpresa(this.getModelObject().getEmpresa());
 		crearCuentaDialog.open();
-		this.getModelObject().mostrarCuentas(); 
+		this.getModelObject().actualizarEmpresas();
 	}
 
+	protected void openEmpresaDialog() {
+		empresaViewModel = new EmpresaViewModel(archivoEmpresas);
+		EmpresaDialog empresaDialog = new EmpresaDialog(this, empresaViewModel);
+		empresaDialog.open();
+	}
+	
 	@Override
 	public void createContents(Panel mainPanel) {
+		
 		openArchivoDialog();
 		this.setTitle("Invirtiendo");
 		this.getDelegate().setErrorViewer(this);
 
 		mainPanel.setLayout(new VerticalLayout());
 		
+		
+		Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
+
+		Table<Empresa> table = new Table<Empresa>(tablePanel, Empresa.class);
+		table.bindItemsToProperty("repositorioEmpresas.empresas");
+		table.setNumberVisibleRows(6);
+		table.setWidth(3000);
+		table.bindSelectionToProperty("empresa");
+
+		agregarColumna(table, "Nombre", "nombre");
+
+		crearBoton(mainPanel, "Agregar Empresa").onClick(() -> { openCrearEmpresaDialog();
+		this.getModelObject().actualizarEmpresas(); });
+		
+		
 		Panel filePanel = new Panel(mainPanel).setLayout(new ColumnLayout(2));
 		
 		agregarLabel(filePanel, "Archivo utilizado: " + this.getModelObject().getRutaArchivo());
 		
-		Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
+		Panel cuentasPanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
 
-		Table<Cuenta> table = new Table<Cuenta>(tablePanel, Cuenta.class);
-		table.bindItemsToProperty("repositorioCuentas.cuentas");
-		table.setNumberVisibleRows(6);
-		table.setWidth(1000);
+		Table<Cuenta> tablaCuentas = new Table<Cuenta>(cuentasPanel, Cuenta.class);
+		tablaCuentas.bindItemsToProperty("empresa.cuentas");
+		tablaCuentas.setNumberVisibleRows(6);
+		tablaCuentas.setWidth(1000);
+		
+			
+		agregarColumna(tablaCuentas, "Cuenta", "nombre");
+		agregarColumna(tablaCuentas, "Anio", "anio");
+		agregarColumna(tablaCuentas, "Valor", "valor");
 
-		agregarColumna(table, "Empresa", "empresa");
-		agregarColumna(table, "Cuenta", "nombre");
-		agregarColumna(table, "Anio", "anio");
-		agregarColumna(table, "Valor", "valor");
 
 		Panel nuevaCuentaPanel = new Panel(mainPanel).setLayout(new ColumnLayout(3));
 
 		crearBoton(mainPanel, "Agregar Cuenta").onClick(() -> openCrearCuentaDialog());
-
+		this.getModelObject().actualizarEmpresas();
 		
+		crearBoton(mainPanel, "Agregar Indicador").onClick(() -> openCrearIndicadorDialog());
+		this.getModelObject().actualizarEmpresas();
+		
+		crearBoton(mainPanel, "Evaluar Empresa con Indicador").onClick(() -> openEvaluarEmpresaDialog());
+		this.getModelObject().actualizarEmpresas();
 	}
+
+
+    private void openEvaluarEmpresaDialog() {
+    	EvaluarEmpresaViewModel evaluarViewModel = new EvaluarEmpresaViewModel(this.getModelObject().getEmpresa(), new ManejadorDeArchivoIndicadores(archivoIndicadores.getRuta()).getRepositorioIndicadores());
+    	EvaluarEmpresaDialog evaluarIndicadorDialog = new EvaluarEmpresaDialog(this, evaluarViewModel);
+    	evaluarIndicadorDialog.open();
+    }
+
+	private void openCrearIndicadorDialog() {
+    	AgregarIndicadorViewModel agregarViewModel = new AgregarIndicadorViewModel(archivoIndicadores.getRuta());
+    	AgregarIndicadorDialog agregarIndicadorDialog = new AgregarIndicadorDialog(this, agregarViewModel);
+    	agregarIndicadorDialog.open();
+	}
+
+	private void openCrearEmpresaDialog() {
+    	AgregarEmpresaViewModel agregarViewModel = new AgregarEmpresaViewModel(archivoEmpresas);
+ 		AgregarEmpresaDialog agregarEmpresaDialog = new AgregarEmpresaDialog(this, agregarViewModel);
+ 		agregarEmpresaDialog.onAccept(() -> {agregarViewModel.agregarEmpresa(); this.getModelObject().actualizarEmpresas();});
+ 		agregarEmpresaDialog.open();
+ 	}
 
 	private void agregarTextBox(Panel nuevaCuentaPanel, String property) {
 		new TextBox(nuevaCuentaPanel).setWidth(150).bindValueToProperty(property);
@@ -89,14 +146,14 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		new Label(nuevaCuentaPanel).setText(texto);
 	}
 
-	private void agregarColumna(Table<Cuenta> table, String titulo, String propiedad) {
-		new Column<Cuenta>(table)
+	public static <T>void agregarColumna(Table<T> table, String titulo, String propiedad) {
+		new Column<T>(table)
 		.setTitle(titulo)
 		.setFixedSize(100)
 		.bindContentsToProperty(propiedad);
 	}
 
-	private Button crearBoton(Panel mainPanel, String textoBoton) {
+	public static Button crearBoton(Panel mainPanel, String textoBoton) {
 		Button boton =	new Button(mainPanel);
 		boton.setCaption(textoBoton)
 		.setHeight(25)

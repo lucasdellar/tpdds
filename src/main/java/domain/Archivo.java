@@ -7,7 +7,7 @@ import java.io.File;
 
 public class Archivo {
 	private String ruta;
-    private IManejadorDeArchivoCuentas manejador;
+    private IManejadorDeArchivoEmpresas manejador;
 
     public String getRuta() {
         return ruta;
@@ -16,7 +16,7 @@ public class Archivo {
     public void setRuta(String ruta) {
         validarRutaArchivo(ruta);
         this.ruta = ruta;
-        manejador = new ManejadorDeArchivoCuentas(ruta);
+        manejador = new ManejadorDeArchivoEmpresas(ruta);
     }
 
     public static void validarRutaArchivo(String rutaArchivo) {
@@ -25,15 +25,19 @@ public class Archivo {
         if (!new File(rutaArchivo).exists()) throw new ArchivoInvalidoException("El archivo ingresado no existe. Ingrese otro nombre o creelo y vuelva a intentarlo.");
     }
 
-    public IManejadorDeArchivoCuentas getManejador() {
+    public IManejadorDeArchivoEmpresas getManejador() {
         return manejador;
     }
 
-    public void setManejador(IManejadorDeArchivoCuentas manejador) {
+    public void setManejador(IManejadorDeArchivoEmpresas manejador) {
         this.manejador = manejador;
     }
 
-    public void agregarCuenta(Cuenta cuenta){
-        this.manejador.agregarCuentaAlArchivo(cuenta);
+    public void agregarEmpresa(Empresa empresa){
+        this.manejador.agregarEmpresaAlArchivo(empresa);
     }
+
+	public void actualizarEmpresa(Empresa empresa) {
+		this.manejador.actualizarEmpresa(empresa);
+	}
 }

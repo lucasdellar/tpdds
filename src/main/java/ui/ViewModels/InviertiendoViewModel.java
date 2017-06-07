@@ -3,25 +3,27 @@ package ui.ViewModels;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import domain.RepositorioCuentas;
+import domain.RepositorioEmpresas;
+
 import org.uqbar.commons.utils.Observable;
 
 import domain.Cuenta;
-import domain.ManejadorDeArchivoCuentas;
+import domain.Empresa;
+import domain.ManejadorDeArchivoEmpresas;
 
 
 @Observable
 public class InviertiendoViewModel {
-	private RepositorioCuentas repositorioCuentas;
+	
 	private Cuenta nuevaCuenta = new Cuenta();
 	private String rutaArchivo;
+	private Empresa empresa;
+	private RepositorioEmpresas repositorioEmpresas;
 
 
-	
-	public void mostrarCuentas(){
-		repositorioCuentas = new ManejadorDeArchivoCuentas(rutaArchivo).getRepositorioCuentas();
-	}
 
 	public Cuenta getNuevaCuenta() {
 		return nuevaCuenta;
@@ -31,14 +33,7 @@ public class InviertiendoViewModel {
 		this.nuevaCuenta = nuevaCuenta;
 	}
 
-	public RepositorioCuentas getRepositorioCuentas() {
-		return repositorioCuentas;
-	}
-
-	public void setRepositorioCuentas(RepositorioCuentas repositorioCuentas) {
-		this.repositorioCuentas = repositorioCuentas;
-	}
-
+	
 	public String getRutaArchivo() {
 		return rutaArchivo;
 	}
@@ -46,5 +41,27 @@ public class InviertiendoViewModel {
 	public void setRutaArchivo(String rutaArchivo) {
 		this.rutaArchivo = rutaArchivo;
 	}
+	
+	public void setRepositorioEmpresas(RepositorioEmpresas repoEmpresas)
+	{
+		this.repositorioEmpresas = repoEmpresas;
+	}
+	
+	public RepositorioEmpresas getRepositorioEmpresas() {
+		return repositorioEmpresas;
+	}
+
+	public void actualizarEmpresas() {
+		this.setRepositorioEmpresas(new ManejadorDeArchivoEmpresas(rutaArchivo).getRepositorioEmpresas());
+	}
+	
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+	
 
 }

@@ -5,5 +5,5 @@ public interface IConversorFormatoArchivo {
 	
 	
     String aFormatoArchivo(Object obj);
-    Cuenta deFormatoArchivo(String json);
+    <T> T deFormatoArchivo(String json, Class<T> claseObjeto);
 }

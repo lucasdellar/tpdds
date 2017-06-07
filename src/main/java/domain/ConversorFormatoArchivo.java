@@ -20,7 +20,7 @@ public class ConversorFormatoArchivo implements IConversorFormatoArchivo {
     }
 
     @Override
-    public Cuenta deFormatoArchivo(String json){
-        return gson.fromJson(json, Cuenta.class);
-    }
+    public <T> T deFormatoArchivo(String json, Class<T> claseObjeto){
+    	return gson.fromJson(json,claseObjeto);
+}
 }
