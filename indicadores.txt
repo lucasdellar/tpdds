@@ -1,2 +1,3 @@
 {"nombre":"Potencial","formula":"Patrimonio * 10"}
 {"nombre":"Rom","formula":"Potencial + Continuo / 2"}
+{"nombre":"Hola","formula":"6"}

@@ -4,6 +4,7 @@ import org.uqbar.commons.utils.Observable;
 
 import domain.*;
 import scala.collection.generic.BitOperations.Int;
+import validadores.ValidadorCuenta;
 
 @Observable
 public class CuentaViewModel {

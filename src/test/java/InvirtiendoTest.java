@@ -2,7 +2,10 @@
 import domain.*;
 
 import domain.DomainExceptions.*;
+import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import parser.*;
+import repositorios.RepositorioEmpresas;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import org.junit.Before;
 import org.junit.Assert;
 import org.junit.Test;
 
+import OperacionesMatematicas.ResolutorDeCuentas;
 import ui.ViewModels.CuentaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
 import ui.ViewModels.EmpresaViewModel;
@@ -51,17 +55,17 @@ public class InvirtiendoTest {
 	
 	@Test
     public void verificarFormatoParserConPalabra(){
-		parser.Parser.verificarFormato("otro + aasd + 5 / as");
+		parser.Parser.verificarFormato(" otro + aasd + 5 / as");
 	}
 	
-	/*@Test(expected = ParserException.class)
+	@Test(expected = ParserException.class)
     public void parserExceptionPorFormato(){
-		parser.Parser.verificarFormato(" aa s27/ asd9*3+1 *3+ 5*dd4");
-	}*/
+		parser.Parser.verificarFormato("aa s27/ asd9*3+1 *3+ 5*dd4");
+	}
 	
 	@Test
-	public void parserResuelveCorrectamenteLaCuenta(){
-        Assert.assertEquals(parser.Parser.resolverCuenta("27/9*3+ 1*3+5  *4"), 32, 0);
+	public void resolutorResuelveCorrectamenteLaCuenta(){
+        Assert.assertEquals(ResolutorDeCuentas.resolver("27/9*3+ 1*3+5  *4"), 32, 0);
 	}
 	
 	@Test

@@ -8,7 +8,7 @@ import org.uqbar.lacar.ui.model.Action;
 
 import domain.Archivo;
 import domain.Empresa;
-import domain.RepositorioEmpresas;
+import repositorios.RepositorioEmpresas;
 import ui.InviertiendoView;
 import ui.ViewModels.AgregarEmpresaViewModel;
 import ui.ViewModels.CuentaViewModel;

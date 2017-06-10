@@ -1,4 +1,4 @@
-package domain;
+package repositorios;
 /*
  * 
  * 
@@ -9,6 +9,8 @@ package domain;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+
+import domain.Cuenta;
 
 
 public class RepositorioCuentas {

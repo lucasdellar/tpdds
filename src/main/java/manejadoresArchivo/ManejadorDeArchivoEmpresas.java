@@ -1,6 +1,11 @@
-package domain;
+package manejadoresArchivo;
 
+import domain.ConversorFormatoArchivo;
+import domain.Cuenta;
+import domain.Empresa;
+import domain.IConversorFormatoArchivo;
 import domain.DomainExceptions.AgregarCuentaAlArchivoException;
+import repositorios.RepositorioEmpresas;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

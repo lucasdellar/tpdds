@@ -1,7 +1,8 @@
-package domain;
+package validadores;
 
 import java.util.ArrayList;
 
+import domain.Cuenta;
 import domain.DomainExceptions.CuentaInvalidaException;
 import domain.DomainExceptions.CuentaPreexistenteException;
 

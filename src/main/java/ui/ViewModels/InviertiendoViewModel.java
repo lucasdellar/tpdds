@@ -5,14 +5,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-import domain.RepositorioCuentas;
-import domain.RepositorioEmpresas;
-
 import org.uqbar.commons.utils.Observable;
 
 import domain.Cuenta;
 import domain.Empresa;
-import domain.ManejadorDeArchivoEmpresas;
+import manejadoresArchivo.ManejadorDeArchivoEmpresas;
+import repositorios.RepositorioCuentas;
+import repositorios.RepositorioEmpresas;
 
 
 @Observable

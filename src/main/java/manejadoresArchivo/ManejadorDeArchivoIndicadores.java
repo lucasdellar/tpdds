@@ -1,7 +1,12 @@
 
-package domain;
+package manejadoresArchivo;
 
+import domain.ConversorFormatoArchivo;
+import domain.IConversorFormatoArchivo;
+import domain.Indicador;
 import domain.DomainExceptions.AgregarIndicadorAlArchivoException;
+import repositorios.RepositorioIndicadores;
+
 /*import domain.Indicadores.Modelo.Indicador;
 import domain.Indicadores.Modelo.RepositorioIndicadores;
 */

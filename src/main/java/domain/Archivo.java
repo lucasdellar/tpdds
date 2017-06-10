@@ -1,6 +1,8 @@
 package domain;
 
 import domain.DomainExceptions.ArchivoInvalidoException;
+import manejadoresArchivo.IManejadorDeArchivoEmpresas;
+import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 
 import java.io.File;
 

@@ -1,8 +1,9 @@
-package domain;
+package validadores;
 
 import domain.DomainExceptions.EmpresaInvalidaException;
 import domain.DomainExceptions.EmpresaYaCargadaException;
 import domain.DomainExceptions.IndicadorYaCreadoExcepction;
+import manejadoresArchivo.ManejadorDeArchivoIndicadores;
 
 public class ValidadorIndicadores {
 

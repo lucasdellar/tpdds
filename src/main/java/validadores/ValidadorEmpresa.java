@@ -1,9 +1,10 @@
-package domain;
+package validadores;
 
 import domain.DomainExceptions.CuentaInvalidaException;
 import domain.DomainExceptions.CuentaPreexistenteException;
 import domain.DomainExceptions.EmpresaInvalidaException;
 import domain.DomainExceptions.EmpresaYaCargadaException;
+import repositorios.RepositorioEmpresas;
 
 public class ValidadorEmpresa {
 

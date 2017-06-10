@@ -3,8 +3,8 @@ package ui.ViewModels;
 import org.uqbar.commons.utils.Observable;
 
 import domain.Indicador;
-import domain.ManejadorDeArchivoIndicadores;
-import domain.ValidadorIndicadores;
+import manejadoresArchivo.ManejadorDeArchivoIndicadores;
+import validadores.ValidadorIndicadores;
 
 @Observable
 public class AgregarIndicadorViewModel {

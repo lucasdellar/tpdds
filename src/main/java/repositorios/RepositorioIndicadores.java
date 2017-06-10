@@ -1,8 +1,10 @@
-package domain;
+package repositorios;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+
+import domain.Indicador;
 
 public class RepositorioIndicadores {
 	

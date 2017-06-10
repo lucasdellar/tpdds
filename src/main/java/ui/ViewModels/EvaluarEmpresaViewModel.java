@@ -4,7 +4,7 @@ import org.uqbar.commons.utils.Observable;
 
 import domain.Empresa;
 import domain.Indicador;
-import domain.RepositorioIndicadores;
+import repositorios.RepositorioIndicadores;
 import scala.collection.generic.BitOperations.Int;
 
 @Observable

@@ -10,7 +10,7 @@ import org.uqbar.arena.windows.MainWindow;
 import domain.Archivo;
 import domain.Cuenta;
 import domain.Empresa;
-import domain.ManejadorDeArchivoIndicadores;
+import manejadoresArchivo.ManejadorDeArchivoIndicadores;
 
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.ui.view.ErrorViewer;
