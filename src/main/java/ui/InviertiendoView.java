@@ -74,7 +74,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
 
 		Table<Empresa> table = new Table<Empresa>(tablePanel, Empresa.class);
-		table.bindItemsToProperty("repositorioEmpresas.empresas");
+		table.bindItemsToProperty("repositorioEmpresas.lista");
 		table.setNumberVisibleRows(6);
 		table.setWidth(3000);
 		table.bindSelectionToProperty("empresa");

@@ -4,7 +4,7 @@ import domain.*;
 import domain.DomainExceptions.*;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import parser.*;
-import repositorios.RepositorioEmpresas;
+import repositorios.Repositorio;
 
 import java.io.File;
 import java.io.IOException;
@@ -96,15 +96,15 @@ public class InvirtiendoTest {
     public void manejadorAgregaEmpresaAlArchivoCorrectamente() {
         Empresa nuevaEmpresa = new Empresa("popo");
         manejador.agregarEmpresaAlArchivo(nuevaEmpresa);
-        RepositorioEmpresas repositorioEmpresas = manejador.getRepositorioEmpresas();
-        Assert.assertEquals(repositorioEmpresas.getEmpresas().get(0).getNombre(), "popo");
+        Repositorio<Empresa> repositorioEmpresas = manejador.getRepositorioEmpresas();
+        Assert.assertEquals(repositorioEmpresas.getLista().get(0).getNombre(), "popo");
     }
     
    @Test(expected = CuentaPreexistenteException.class)
     public void viewModelAgregaCuentaRepetidaAlArchivo(){
     	agregarEmpresaViewModel.setEmpresa("Seven Up");
     	agregarEmpresaViewModel.agregarEmpresa();
-    	Empresa empresa = manejador.getRepositorioEmpresas().getEmpresas().get(0);
+    	Empresa empresa = manejador.getRepositorioEmpresas().getLista().get(0);
     	cuentasViewModel.setEmpresa(empresa);
     	cuentasViewModel.setNombre("Patrimonio Neto");
     	cuentasViewModel.setPeriodo("1000");
@@ -114,18 +114,18 @@ public class InvirtiendoTest {
     }
 
 
-    /*@Test
+    @Test
     public void viewModelAgregarCuentaAlArchivoCorrectamente(){
     	agregarEmpresaViewModel.setEmpresa("Seven Up");
     	agregarEmpresaViewModel.agregarEmpresa();
-    	Empresa empresa = manejador.getRepositorioEmpresas().getEmpresas().get(0);
+    	Empresa empresa = manejador.getRepositorioEmpresas().getLista().get(0);
     	cuentasViewModel.setEmpresa(empresa);
     	cuentasViewModel.setNombre("Patrimonio Neto");
-    	cuentasViewModel.setAnio("1000");
+    	cuentasViewModel.setPeriodo("1000");
     	cuentasViewModel.setValor("2000");
     	cuentasViewModel.agregarCuenta();
-    	Assert.assertEquals(manejador.getRepositorioEmpresas().getEmpresas().get(0).getCuentas().get(0).getNombre(), "Patrimonio Neto");
-    }*/
+    	Assert.assertEquals(manejador.getRepositorioEmpresas().getLista().get(0).getCuentas().get(0).getNombre(), "Patrimonio Neto");
+    }
     
     @Test(expected = CuentaInvalidaException.class)
     public void cuentaConAnioInvalido(){

@@ -4,7 +4,7 @@ import org.uqbar.commons.utils.Observable;
 
 import domain.Empresa;
 import domain.Indicador;
-import repositorios.RepositorioIndicadores;
+import repositorios.Repositorio;
 import scala.collection.generic.BitOperations.Int;
 
 @Observable
@@ -13,10 +13,10 @@ public class EvaluarEmpresaViewModel {
 	private String periodo;
 	private Indicador indicadorSeleccionado;
 	private Empresa empresaSeleccionada;
-	private RepositorioIndicadores repositorioIndicadores;
+	private Repositorio<Indicador> repositorioIndicadores;
 	private String resultado;
 	
-	public EvaluarEmpresaViewModel(Empresa unaEmpresa, RepositorioIndicadores unRepo){
+	public EvaluarEmpresaViewModel(Empresa unaEmpresa, Repositorio<Indicador> unRepo){
 		empresaSeleccionada		= unaEmpresa;
 		setRepositorioIndicadores(unRepo);
 		
@@ -51,11 +51,11 @@ public class EvaluarEmpresaViewModel {
 		this.empresaSeleccionada = empresaSeleccionada;
 	}
 
-	public RepositorioIndicadores getRepositorioIndicadores() {
+	public Repositorio<Indicador> getRepositorioIndicadores() {
 		return repositorioIndicadores;
 	}
 
-	public void setRepositorioIndicadores(RepositorioIndicadores repositorioIndicadores) {
+	public void setRepositorioIndicadores(Repositorio<Indicador> repositorioIndicadores) {
 		this.repositorioIndicadores = repositorioIndicadores;
 	}
 

@@ -51,13 +51,20 @@ public class EvaluarEmpresaDialog extends Dialog<EvaluarEmpresaViewModel> {
         
         new Label(seleccionarPanel).setText("Seleccionar indicador");
 		
+        Panel indicadorSeleccionadoPanel = new Panel(mainPanel);
+        indicadorSeleccionadoPanel.setLayout(new ColumnLayout(2));
+        new Label(indicadorSeleccionadoPanel).setText("Formula del indicador ");
+        new Label(indicadorSeleccionadoPanel).bindValueToProperty("indicadorSeleccionado.nombre");
+        new Label(indicadorSeleccionadoPanel).setText("  ");
+        new Label(indicadorSeleccionadoPanel).bindValueToProperty("indicadorSeleccionado.formula");
+        
         Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
         
         
        
         
 		Table<Indicador> table = new Table<Indicador>(tablePanel, Indicador.class);
-		table.bindItemsToProperty("repositorioIndicadores.indicadores");
+		table.bindItemsToProperty("repositorioIndicadores.lista");
 		table.setNumberVisibleRows(6);
 		table.setWidth(5000);
 		table.bindSelectionToProperty("indicadorSeleccionado");

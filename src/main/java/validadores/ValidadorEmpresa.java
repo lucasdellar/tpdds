@@ -1,10 +1,9 @@
 package validadores;
 
-import domain.DomainExceptions.CuentaInvalidaException;
-import domain.DomainExceptions.CuentaPreexistenteException;
+import domain.Empresa;
 import domain.DomainExceptions.EmpresaInvalidaException;
 import domain.DomainExceptions.EmpresaYaCargadaException;
-import repositorios.RepositorioEmpresas;
+import repositorios.Repositorio;
 
 public class ValidadorEmpresa {
 
@@ -12,9 +11,8 @@ public class ValidadorEmpresa {
         if (nombre == null) throw new EmpresaInvalidaException("Debe ingresar un nombre.");
     }
 
-	public void validarQueNoEsteYaCargarda(String nombre, RepositorioEmpresas repositorioEmpresas) {
-    	if(repositorioEmpresas.getEmpresas().stream().anyMatch(x -> x.getNombre().equals(nombre))) throw new EmpresaYaCargadaException("La empresa ingresada ya existe.");
-
+	public void validarQueNoEsteYaCargarda(String nombre, Repositorio<Empresa> repositorioEmpresas) {
+    	if(repositorioEmpresas.getLista().stream().anyMatch(x -> x.getNombre().equals(nombre))) throw new EmpresaYaCargadaException("La empresa ingresada ya existe.");
 	}
 	
 }

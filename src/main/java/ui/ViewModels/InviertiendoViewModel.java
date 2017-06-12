@@ -10,8 +10,7 @@ import org.uqbar.commons.utils.Observable;
 import domain.Cuenta;
 import domain.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
-import repositorios.RepositorioCuentas;
-import repositorios.RepositorioEmpresas;
+import repositorios.Repositorio;
 
 
 @Observable
@@ -20,7 +19,7 @@ public class InviertiendoViewModel {
 	private Cuenta nuevaCuenta = new Cuenta();
 	private String rutaArchivo;
 	private Empresa empresa;
-	private RepositorioEmpresas repositorioEmpresas;
+	private Repositorio<Empresa> repositorioEmpresas;
 
 
 
@@ -41,12 +40,12 @@ public class InviertiendoViewModel {
 		this.rutaArchivo = rutaArchivo;
 	}
 	
-	public void setRepositorioEmpresas(RepositorioEmpresas repoEmpresas)
+	public void setRepositorioEmpresas(Repositorio<Empresa> repoEmpresas)
 	{
 		this.repositorioEmpresas = repoEmpresas;
 	}
 	
-	public RepositorioEmpresas getRepositorioEmpresas() {
+	public Repositorio<Empresa> getRepositorioEmpresas() {
 		return repositorioEmpresas;
 	}
 

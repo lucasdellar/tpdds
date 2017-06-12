@@ -1,14 +1,14 @@
 package manejadoresArchivo;
 
 import domain.Empresa;
-import repositorios.RepositorioEmpresas;
+import repositorios.Repositorio;
 
 public interface IManejadorDeArchivoEmpresas {
     void agregarEmpresaAlArchivo(Empresa empresa);
 
-    void setRepositorioCuentas(RepositorioEmpresas repositorioCuentas);
+    void setRepositorioCuentas(Repositorio<Empresa> repositorioCuentas);
 
-    RepositorioEmpresas getRepositorioEmpresas();
+    Repositorio<Empresa> getRepositorioEmpresas();
 
 	void actualizarEmpresa(Empresa empresa);
 }

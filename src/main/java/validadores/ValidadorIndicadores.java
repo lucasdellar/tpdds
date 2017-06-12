@@ -12,8 +12,8 @@ public class ValidadorIndicadores {
 	    }
 
 		public void validarQueNoEsteYaCargardo(String nombre, String formula, ManejadorDeArchivoIndicadores manejador) {
-			if(manejador.getRepositorioIndicadores().getIndicadores().stream().anyMatch(x -> x.getNombre().equals(nombre))) throw new IndicadorYaCreadoExcepction("El indicador ingresado ya existe.");
-
+			if(manejador.getRepositorioIndicadores().getLista().stream().anyMatch(x -> x.getNombre().equals(nombre))) throw new IndicadorYaCreadoExcepction("El indicador ingresado ya existe.");
+ 
 		}
 
 		public void validarIndicador(String nombre, String formula, ManejadorDeArchivoIndicadores manejador) {

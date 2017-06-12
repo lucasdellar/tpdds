@@ -4,11 +4,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
-import domain.Empresa;
+public class Repositorio<T> {
 
-public class RepositorioEmpresas {
-
-	public ArrayList<Empresa> empresas;
+	private ArrayList<T> lista;
 
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
@@ -18,25 +16,25 @@ public class RepositorioEmpresas {
 	
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		   propertyChangeSupport.removePropertyChangeListener(listener);
-		}
-	
-	public RepositorioEmpresas() {
-		setEmpresas(new ArrayList<Empresa>());
-	}
-
-	public RepositorioEmpresas(ArrayList<Empresa> unasEmpresas){
-		this.setEmpresas(unasEmpresas);
 	}
 	
-	public void agregarEmpresa(Empresa nombreEmpresa){
-		empresas.add(nombreEmpresa);
+	public Repositorio(){
+		lista = new ArrayList<T>();
+	}
+	public Repositorio(ArrayList<T> objetosTipoT){
+		setLista(objetosTipoT);
+	}
+	
+	public void agregar(T objetoTipoT){
+		lista.add(objetoTipoT);
 	}
 
-	public ArrayList<Empresa> getEmpresas() {
-		return empresas;
+	public ArrayList<T> getLista() {
+		return lista;
 	}
 
-	public void setEmpresas(ArrayList<Empresa> empresas) {
-		this.empresas = empresas;
+	private void setLista(ArrayList<T> indicadores) {
+		this.lista = indicadores;
 	}
+		
 }

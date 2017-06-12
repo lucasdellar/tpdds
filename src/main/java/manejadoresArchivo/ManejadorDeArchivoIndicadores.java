@@ -5,7 +5,7 @@ import domain.ConversorFormatoArchivo;
 import domain.IConversorFormatoArchivo;
 import domain.Indicador;
 import domain.DomainExceptions.AgregarIndicadorAlArchivoException;
-import repositorios.RepositorioIndicadores;
+import repositorios.Repositorio;
 
 /*import domain.Indicadores.Modelo.Indicador;
 import domain.Indicadores.Modelo.RepositorioIndicadores;
@@ -22,7 +22,7 @@ import domain.DomainExceptions.AgregarIndicadorAlArchivoException;
 public class ManejadorDeArchivoIndicadores {
 	
 	private File file;
-	private RepositorioIndicadores repositorioIndicadores;
+	private Repositorio<Indicador> repositorioIndicadores;
 	private IConversorFormatoArchivo conversor;
 
 
@@ -36,7 +36,7 @@ public class ManejadorDeArchivoIndicadores {
 		this(rutaArchivo, new ConversorFormatoArchivo());
 	} 
 
-	private RepositorioIndicadores obtenerIndicadoresDeArchivo(){
+	private Repositorio<Indicador> obtenerIndicadoresDeArchivo(){
 		
 		BufferedReader bufferedReader;
 		
@@ -44,10 +44,10 @@ public class ManejadorDeArchivoIndicadores {
 			
 			bufferedReader = new BufferedReader(new FileReader(file));
 			String indicadorLeido;
-			RepositorioIndicadores repositorioIndicadoresDeArchivo = new RepositorioIndicadores();
+			Repositorio<Indicador> repositorioIndicadoresDeArchivo = new Repositorio<Indicador>();
 			while((indicadorLeido = bufferedReader.readLine()) != null){
 				Indicador miIndicador = conversor.deFormatoArchivo(indicadorLeido, Indicador.class);
-				repositorioIndicadoresDeArchivo.agregarIndicador(miIndicador);
+				repositorioIndicadoresDeArchivo.agregar(miIndicador);
 			}
 			bufferedReader.close();
 		
@@ -67,17 +67,17 @@ public class ManejadorDeArchivoIndicadores {
 				
 			printWriter.println(conversor.aFormatoArchivo(nuevoIndicador));
 			
-			repositorioIndicadores.agregarIndicador(nuevoIndicador);
+			repositorioIndicadores.agregar(nuevoIndicador);
 			printWriter.close();
 		} catch (IOException e) { throw new AgregarIndicadorAlArchivoException("No se pudo guardar el indicador en el archivo.");}
 		
 	}
 
-	public void setRepositorioIndicadores(RepositorioIndicadores repositorioIndicadores) {
+	public void setRepositorioIndicadores(Repositorio<Indicador> repositorioIndicadores) {
 		this.repositorioIndicadores = repositorioIndicadores;
 	}
  
-	public RepositorioIndicadores getRepositorioIndicadores(){
+	public Repositorio<Indicador> getRepositorioIndicadores(){
 		return obtenerIndicadoresDeArchivo();
 	}
 	

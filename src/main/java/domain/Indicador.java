@@ -9,14 +9,14 @@ import org.uqbar.commons.utils.Observable;
 
 import OperacionesMatematicas.ResolutorDeCuentas;
 import domain.DomainExceptions.IndicadorInvalidoException;
-import repositorios.RepositorioIndicadores;
+import repositorios.Repositorio;
 
 @Observable
 public class Indicador {
 	
 	private String nombre;
 	private String formula;
-	RepositorioIndicadores repositorioIndicadores;
+	Repositorio<Indicador> repositorioIndicadores;
 
 	public Indicador(String _nombre, String _formula){
 		setNombre(_nombre);
@@ -26,7 +26,7 @@ public class Indicador {
 	
 	
 	
-	public Double aplicarIndicador(String periodo, Empresa unaEmpresa, RepositorioIndicadores repo){
+	public Double aplicarIndicador(String periodo, Empresa unaEmpresa, Repositorio<Indicador> repo){
 		repositorioIndicadores = repo;
 		formula = formula.replaceAll("\\s+","");
 		String cuentaLiteralMatematica = reemplazarPorLasCuentas( filtrarCuentasPorAnio(unaEmpresa.getCuentas(), periodo));
@@ -50,13 +50,12 @@ public class Indicador {
 
 	private String reemplazarPorLosIndicadores(String cuentaMatematica, String periodo, Empresa unaEmpresa){
 		String aux = cuentaMatematica;
-		for (Indicador indicador : repositorioIndicadores.getIndicadores()) {
+		for (Indicador indicador : repositorioIndicadores.getLista()) {
 			if(cuentaMatematica.contains(indicador.getNombre())) 
 				aux = aux.replace(indicador.getNombre(), String.valueOf(indicador.aplicarIndicador(periodo, unaEmpresa, repositorioIndicadores))); 
 		}
 		return aux;
 	}
-
 
 	private String reemplazarPorLasCuentas(ArrayList<Cuenta> cuentas){
 		String aux = getFormula();
@@ -67,25 +66,17 @@ public class Indicador {
 		return aux;
 	}
 
-
-
 	public String getNombre() {
 		return nombre;
 	}
-
-
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-
-
 	public String getFormula() {
 		return formula;
 	}
-
-
 
 	public void setFormula(String formula) {
 		this.formula = formula;

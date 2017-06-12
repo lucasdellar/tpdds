@@ -8,7 +8,6 @@ import org.uqbar.lacar.ui.model.Action;
 
 import domain.Archivo;
 import domain.Empresa;
-import repositorios.RepositorioEmpresas;
 import ui.InviertiendoView;
 import ui.ViewModels.AgregarEmpresaViewModel;
 import ui.ViewModels.CuentaViewModel;
@@ -35,7 +34,7 @@ public class EmpresaDialog extends Dialog<EmpresaViewModel> {
 		Selector<Empresa> selector = new Selector<Empresa>(form);
 		selector.allowNull(false);
 		selector.bindValueToProperty("empresa.nombre");
-		selector.bindItemsToProperty("empresas.empresas");
+		selector.bindItemsToProperty("empresas.empresa");
 		
         
         InviertiendoView.crearBoton(mainPanel, "Agregar Empresa").onClick(() -> openCrearEmpresaDialog());

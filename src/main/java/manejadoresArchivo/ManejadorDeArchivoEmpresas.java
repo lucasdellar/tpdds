@@ -5,7 +5,7 @@ import domain.Cuenta;
 import domain.Empresa;
 import domain.IConversorFormatoArchivo;
 import domain.DomainExceptions.AgregarCuentaAlArchivoException;
-import repositorios.RepositorioEmpresas;
+import repositorios.Repositorio;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 	
 	private File file;
-	private RepositorioEmpresas repositorioEmpresas;
+	private Repositorio<Empresa> repositorioEmpresas;
 //	private RepositorioCuentas repositorioCuentas;
 	private IConversorFormatoArchivo conversor;
 
@@ -34,7 +34,7 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 		this(rutaArchivo, new ConversorFormatoArchivo());
 	} 
 
-	private RepositorioEmpresas empresasDeArchivo(){
+	private Repositorio<Empresa> empresasDeArchivo(){
 		
 		BufferedReader bufferedReader;
 		
@@ -42,10 +42,10 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 			
 			bufferedReader = new BufferedReader(new FileReader(file));
 			String cuentaLeida;
-			RepositorioEmpresas repositorioCuentasDeArchivo = new RepositorioEmpresas();
+			Repositorio<Empresa> repositorioCuentasDeArchivo = new Repositorio<Empresa>();
 			while((cuentaLeida = bufferedReader.readLine()) != null){
 				Empresa miEmpresa = conversor.deFormatoArchivo(cuentaLeida, Empresa.class);
-				repositorioCuentasDeArchivo.agregarEmpresa(miEmpresa);
+				repositorioCuentasDeArchivo.agregar(miEmpresa);
 			}
 			bufferedReader.close();
 		
@@ -66,25 +66,25 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 				
 			printWriter.println(conversor.aFormatoArchivo(nuevaEmpresa));
 			
-			repositorioEmpresas.agregarEmpresa(nuevaEmpresa);
+			repositorioEmpresas.agregar(nuevaEmpresa);
 			printWriter.close();
 		} catch (IOException e) { throw new AgregarCuentaAlArchivoException("No se pudo agregar la cuenta al archivo");}
 		
 	}
 
 	@Override
-	public void setRepositorioCuentas(RepositorioEmpresas repositorioEmpresas) {
+	public void setRepositorioCuentas(Repositorio<Empresa> repositorioEmpresas) {
 		this.repositorioEmpresas = repositorioEmpresas;
 	}
  
 	@Override
-	public RepositorioEmpresas getRepositorioEmpresas(){
+	public Repositorio<Empresa> getRepositorioEmpresas(){
 		return empresasDeArchivo();
 	}
 
 	public ArrayList<Cuenta> getCuentasDeEmpresa(String empresa) {
 		
-		for (Empresa unaEmpresa: repositorioEmpresas.getEmpresas()) {
+		for (Empresa unaEmpresa: repositorioEmpresas.getLista()) {
 			if(unaEmpresa.getNombre().equals(empresa)) return unaEmpresa.getCuentas();
 		}
 		return null;
