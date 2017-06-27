@@ -11,6 +11,7 @@ import domain.Cuenta;
 import domain.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import repositorios.Repositorio;
+import repositorios.RepositorioEmpresas;
 
 
 @Observable
@@ -19,7 +20,7 @@ public class InviertiendoViewModel {
 	private Cuenta nuevaCuenta = new Cuenta();
 	private String rutaArchivo;
 	private Empresa empresa;
-	private Repositorio<Empresa> repositorioEmpresas;
+	private RepositorioEmpresas repositorioEmpresas;
 
 
 
@@ -40,12 +41,12 @@ public class InviertiendoViewModel {
 		this.rutaArchivo = rutaArchivo;
 	}
 	
-	public void setRepositorioEmpresas(Repositorio<Empresa> repoEmpresas)
+	public void setRepositorioEmpresas(RepositorioEmpresas repoEmpresas)
 	{
 		this.repositorioEmpresas = repoEmpresas;
 	}
 	
-	public Repositorio<Empresa> getRepositorioEmpresas() {
+	public RepositorioEmpresas getRepositorioEmpresas() {
 		return repositorioEmpresas;
 	}
 

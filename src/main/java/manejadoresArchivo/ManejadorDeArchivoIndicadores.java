@@ -5,7 +5,7 @@ import domain.ConversorFormatoArchivo;
 import domain.IConversorFormatoArchivo;
 import domain.Indicador;
 import domain.DomainExceptions.AgregarIndicadorAlArchivoException;
-import repositorios.Repositorio;
+import repositorios.RepositorioIndicadores;
 
 /*import domain.Indicadores.Modelo.Indicador;
 import domain.Indicadores.Modelo.RepositorioIndicadores;
@@ -22,7 +22,7 @@ import domain.DomainExceptions.AgregarIndicadorAlArchivoException;
 public class ManejadorDeArchivoIndicadores {
 	
 	private File file;
-	private Repositorio<Indicador> repositorioIndicadores;
+	private RepositorioIndicadores repositorioIndicadores;
 	private IConversorFormatoArchivo conversor;
 
 
@@ -36,7 +36,7 @@ public class ManejadorDeArchivoIndicadores {
 		this(rutaArchivo, new ConversorFormatoArchivo());
 	} 
 
-	private Repositorio<Indicador> obtenerIndicadoresDeArchivo(){
+	private RepositorioIndicadores obtenerIndicadoresDeArchivo(){
 		
 		BufferedReader bufferedReader;
 		
@@ -44,7 +44,7 @@ public class ManejadorDeArchivoIndicadores {
 			
 			bufferedReader = new BufferedReader(new FileReader(file));
 			String indicadorLeido;
-			Repositorio<Indicador> repositorioIndicadoresDeArchivo = new Repositorio<Indicador>();
+			RepositorioIndicadores repositorioIndicadoresDeArchivo = new RepositorioIndicadores();
 			while((indicadorLeido = bufferedReader.readLine()) != null){
 				Indicador miIndicador = conversor.deFormatoArchivo(indicadorLeido, Indicador.class);
 				repositorioIndicadoresDeArchivo.agregar(miIndicador);
@@ -73,11 +73,11 @@ public class ManejadorDeArchivoIndicadores {
 		
 	}
 
-	public void setRepositorioIndicadores(Repositorio<Indicador> repositorioIndicadores) {
+	public void setRepositorioIndicadores(RepositorioIndicadores repositorioIndicadores) {
 		this.repositorioIndicadores = repositorioIndicadores;
 	}
  
-	public Repositorio<Indicador> getRepositorioIndicadores(){
+	public RepositorioIndicadores getRepositorioIndicadores(){
 		return obtenerIndicadoresDeArchivo();
 	}
 	

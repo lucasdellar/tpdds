@@ -6,6 +6,7 @@ import domain.Empresa;
 import domain.IConversorFormatoArchivo;
 import domain.DomainExceptions.AgregarCuentaAlArchivoException;
 import repositorios.Repositorio;
+import repositorios.RepositorioEmpresas;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 	
 	private File file;
-	private Repositorio<Empresa> repositorioEmpresas;
+	private RepositorioEmpresas repositorioEmpresas;
 //	private RepositorioCuentas repositorioCuentas;
 	private IConversorFormatoArchivo conversor;
 
@@ -34,7 +35,7 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 		this(rutaArchivo, new ConversorFormatoArchivo());
 	} 
 
-	private Repositorio<Empresa> empresasDeArchivo(){
+	private RepositorioEmpresas empresasDeArchivo(){
 		
 		BufferedReader bufferedReader;
 		
@@ -42,7 +43,7 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 			
 			bufferedReader = new BufferedReader(new FileReader(file));
 			String cuentaLeida;
-			Repositorio<Empresa> repositorioCuentasDeArchivo = new Repositorio<Empresa>();
+			RepositorioEmpresas repositorioCuentasDeArchivo = new RepositorioEmpresas();
 			while((cuentaLeida = bufferedReader.readLine()) != null){
 				Empresa miEmpresa = conversor.deFormatoArchivo(cuentaLeida, Empresa.class);
 				repositorioCuentasDeArchivo.agregar(miEmpresa);
@@ -73,12 +74,12 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 	}
 
 	@Override
-	public void setRepositorioCuentas(Repositorio<Empresa> repositorioEmpresas) {
+	public void setRepositorioCuentas(RepositorioEmpresas repositorioEmpresas) {
 		this.repositorioEmpresas = repositorioEmpresas;
 	}
  
 	@Override
-	public Repositorio<Empresa> getRepositorioEmpresas(){
+	public RepositorioEmpresas getRepositorioEmpresas(){
 		return empresasDeArchivo();
 	}
 

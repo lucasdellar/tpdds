@@ -7,6 +7,7 @@ import domain.Cuenta;
 import domain.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import repositorios.Repositorio;
+import repositorios.RepositorioEmpresas;
 import validadores.ValidadorCuenta;
 import validadores.ValidadorEmpresa;
 
@@ -15,7 +16,7 @@ import validadores.ValidadorEmpresa;
 public class EmpresaViewModel {
 
 	    private Empresa empresa;
-	    private Repositorio<Empresa> empresas;
+	    private RepositorioEmpresas empresas;
 	    private ValidadorEmpresa validador;
 
 	    private Archivo archivo;
@@ -58,11 +59,11 @@ public class EmpresaViewModel {
 	    	archivo.setRuta(ruta);
 	    }
 
-		public Repositorio<Empresa> getEmpresas() {
+		public RepositorioEmpresas getEmpresas() {
 			return empresas;
 		}
 
-		public void setEmpresas(Repositorio<Empresa> empresas) {
+		public void setEmpresas(RepositorioEmpresas empresas) {
 			this.empresas = empresas;
 		}
 

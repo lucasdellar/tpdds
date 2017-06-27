@@ -9,14 +9,14 @@ import org.uqbar.commons.utils.Observable;
 
 import OperacionesMatematicas.ResolutorDeCuentas;
 import domain.DomainExceptions.IndicadorInvalidoException;
-import repositorios.Repositorio;
+import repositorios.RepositorioIndicadores;
 
 @Observable
 public class Indicador {
 	
 	private String nombre;
 	private String formula;
-	Repositorio<Indicador> repositorioIndicadores;
+	RepositorioIndicadores repositorioIndicadores;
 
 	public Indicador(String _nombre, String _formula){
 		setNombre(_nombre);
@@ -26,7 +26,7 @@ public class Indicador {
 	
 	
 	
-	public Double aplicarIndicador(String periodo, Empresa unaEmpresa, Repositorio<Indicador> repo){
+	public Double aplicarIndicador(String periodo, Empresa unaEmpresa, RepositorioIndicadores repo){
 		repositorioIndicadores = repo;
 		formula = formula.replaceAll("\\s+","");
 		String cuentaLiteralMatematica = reemplazarPorLasCuentas( filtrarCuentasPorAnio(unaEmpresa.getCuentas(), periodo));

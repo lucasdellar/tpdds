@@ -4,7 +4,7 @@ import domain.*;
 import domain.DomainExceptions.*;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import parser.*;
-import repositorios.Repositorio;
+import repositorios.RepositorioEmpresas;
 
 import java.io.File;
 import java.io.IOException;
@@ -96,7 +96,7 @@ public class InvirtiendoTest {
     public void manejadorAgregaEmpresaAlArchivoCorrectamente() {
         Empresa nuevaEmpresa = new Empresa("popo");
         manejador.agregarEmpresaAlArchivo(nuevaEmpresa);
-        Repositorio<Empresa> repositorioEmpresas = manejador.getRepositorioEmpresas();
+        RepositorioEmpresas repositorioEmpresas = manejador.getRepositorioEmpresas();
         Assert.assertEquals(repositorioEmpresas.getLista().get(0).getNombre(), "popo");
     }
     
