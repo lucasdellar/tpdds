@@ -1,51 +1,41 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+
+import condiciones.Condicion;
+import empresas.Empresa;
+import empresas.EmpresaRankeada;
 
 public class Metodologia {
 
-	ArrayList<EmpresaRankeada> empresasAInvertir; // cumple taxativa y tiene peso
-	ArrayList<Empresa> empresasNoInvertir; // no cumple taxativa
 	
-	ArrayList<CondicionTaxativa> condicionesTaxativas;
-	ArrayList<CondicionConPeso> condicionesConPeso;
-	Condicion a;
+	ArrayList<Condicion> condiciones;
 
-	public Metodologia(ArrayList<CondicionTaxativa> taxativas, ArrayList<CondicionConPeso> conPeso){
-		condicionesTaxativas = taxativas;
-		condicionesConPeso = conPeso;
-		
-		empresasAInvertir = new ArrayList<>();
-		empresasNoInvertir = new ArrayList<>();
+	public Metodologia(ArrayList<Condicion> condiciones){
+		this.condiciones = condiciones;
 	}
 	
 	public ArrayList<EmpresaRankeada> aplicarMetodologia(ArrayList<Empresa> empresas){
+		ArrayList<EmpresaRankeada> misEmpresas = new ArrayList<>();
+		inicializarEmpresasRankeadas(misEmpresas, empresas);
+		ordenarPorRanking(misEmpresas);
 		
-		separarEmpresas(empresas);
-		ordenarPorRanking();
-		
-		return empresasAInvertir;
+		return misEmpresas;
 	}
 
-	private void ordenarPorRanking() {
-		for(CondicionConPeso condicion : condicionesConPeso){
-			
+	private void inicializarEmpresasRankeadas(ArrayList<EmpresaRankeada> misEmpresas, ArrayList<Empresa> empresas) {
+		for(Empresa empresa : empresas){
+			misEmpresas.add(new EmpresaRankeada(empresa.getNombre()));
 		}
 	}
 
-	private void separarEmpresas(ArrayList<Empresa> empresas) {
-		for(Empresa unaEmpresa : empresas){
-			if(cumpleTaxativas(unaEmpresa))
-				empresasAInvertir.add(new EmpresaRankeada(unaEmpresa));
-			else
-				empresasNoInvertir.add(unaEmpresa);
+	private void ordenarPorRanking(ArrayList<EmpresaRankeada> misEmpresas) {
+		
+		for(Condicion condicion : condiciones){
+			condicion.aplicarCondicion(misEmpresas);
 		}
+		//misEmpresas.sort( (x, y) -> x.getRanking() > y.getRanking()); PREGUNTAR
 	}
-
-	private boolean cumpleTaxativas(Empresa unaEmpresa) {
-		return condicionesTaxativas.stream().allMatch(x -> x.cumpleCondicion(unaEmpresa));
-	}
-	
-	
 	
 }

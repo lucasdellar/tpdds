@@ -2,9 +2,9 @@ package manejadoresArchivo;
 
 import domain.ConversorFormatoArchivo;
 import domain.Cuenta;
-import domain.Empresa;
 import domain.IConversorFormatoArchivo;
 import domain.DomainExceptions.AgregarCuentaAlArchivoException;
+import empresas.Empresa;
 import repositorios.Repositorio;
 import repositorios.RepositorioEmpresas;
 

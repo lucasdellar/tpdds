@@ -1,10 +1,12 @@
-package domain;
+package empresas;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 import org.uqbar.commons.utils.Observable;
+
+import domain.Cuenta;
 
 @Observable
 public class Empresa {

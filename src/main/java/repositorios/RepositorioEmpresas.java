@@ -1,6 +1,6 @@
 package repositorios;
 
-import domain.Empresa;
+import empresas.Empresa;
 
 public class RepositorioEmpresas extends Repositorio<Empresa> {
 

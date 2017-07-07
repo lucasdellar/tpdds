@@ -2,6 +2,7 @@
 import domain.*;
 
 import domain.DomainExceptions.*;
+import empresas.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import parser.*;
 import repositorios.RepositorioEmpresas;

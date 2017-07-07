@@ -2,8 +2,8 @@ package ui.ViewModels;
 
 import org.uqbar.commons.utils.Observable;
 
-import domain.Empresa;
 import domain.Indicador;
+import empresas.Empresa;
 import repositorios.Repositorio;
 import repositorios.RepositorioIndicadores;
 import scala.collection.generic.BitOperations.Int;

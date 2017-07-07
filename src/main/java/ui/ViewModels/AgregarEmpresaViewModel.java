@@ -6,7 +6,7 @@ import org.uqbar.commons.utils.Observable;
 
 import domain.Archivo;
 import domain.Cuenta;
-import domain.Empresa;
+import empresas.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import validadores.ValidadorEmpresa;
 

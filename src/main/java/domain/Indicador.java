@@ -9,6 +9,7 @@ import org.uqbar.commons.utils.Observable;
 
 import OperacionesMatematicas.ResolutorDeCuentas;
 import domain.DomainExceptions.IndicadorInvalidoException;
+import empresas.Empresa;
 import repositorios.RepositorioIndicadores;
 
 @Observable
