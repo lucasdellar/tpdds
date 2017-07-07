@@ -11,8 +11,8 @@ import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 
-import domain.Empresa;
 import domain.Indicador;
+import empresas.Empresa;
 import ui.InviertiendoView;
 import ui.ViewModels.AgregarIndicadorViewModel;
 import ui.ViewModels.EvaluarEmpresaViewModel;

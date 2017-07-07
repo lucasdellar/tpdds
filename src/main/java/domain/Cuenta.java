@@ -6,7 +6,7 @@ import org.uqbar.commons.utils.Observable;
 import ui.ViewModels.CuentaViewModel;
 
 @Observable
-public class Cuenta {
+public class Cuenta implements Comparable<Cuenta>{
 	
 	private String nombre;
 	private String periodo;
@@ -50,6 +50,11 @@ public class Cuenta {
 	
 	public void setValor(String valor) {
 		this.valor = valor;
+	}
+
+	@Override
+	public int compareTo(Cuenta unaCuenta) {
+		return periodo.compareTo(unaCuenta.getPeriodo());
 	}
 
 }

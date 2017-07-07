@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.uqbar.commons.utils.Observable;
 
 import domain.Cuenta;
-import domain.Empresa;
+import empresas.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import repositorios.Repositorio;
 import repositorios.RepositorioEmpresas;
@@ -18,7 +18,7 @@ import repositorios.RepositorioEmpresas;
 public class InviertiendoViewModel {
 	
 	private Cuenta nuevaCuenta = new Cuenta();
-	private String rutaArchivo;
+	private String rutaArchivoEmpresas;
 	private Empresa empresa;
 	private RepositorioEmpresas repositorioEmpresas;
 
@@ -34,11 +34,11 @@ public class InviertiendoViewModel {
 
 	
 	public String getRutaArchivo() {
-		return rutaArchivo;
+		return rutaArchivoEmpresas;
 	}
 
 	public void setRutaArchivo(String rutaArchivo) {
-		this.rutaArchivo = rutaArchivo;
+		this.rutaArchivoEmpresas = rutaArchivo;
 	}
 	
 	public void setRepositorioEmpresas(RepositorioEmpresas repoEmpresas)
@@ -51,7 +51,7 @@ public class InviertiendoViewModel {
 	}
 
 	public void actualizarEmpresas() {
-		this.setRepositorioEmpresas(new ManejadorDeArchivoEmpresas(rutaArchivo).getRepositorioEmpresas());
+		this.setRepositorioEmpresas(new ManejadorDeArchivoEmpresas(rutaArchivoEmpresas).getRepositorioEmpresas());
 	}
 	
 	public Empresa getEmpresa() {
@@ -61,6 +61,5 @@ public class InviertiendoViewModel {
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
-	
 
 }

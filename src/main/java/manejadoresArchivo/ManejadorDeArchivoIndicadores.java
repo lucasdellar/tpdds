@@ -4,7 +4,7 @@ package manejadoresArchivo;
 import domain.ConversorFormatoArchivo;
 import domain.IConversorFormatoArchivo;
 import domain.Indicador;
-import domain.DomainExceptions.AgregarIndicadorAlArchivoException;
+import domain.DomainExceptions.AgregarMetodologiaAlArchivoException;
 import repositorios.RepositorioIndicadores;
 
 /*import domain.Indicadores.Modelo.Indicador;
@@ -17,7 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import domain.DomainExceptions.AgregarIndicadorAlArchivoException;
+import domain.DomainExceptions.AgregarMetodologiaAlArchivoException;
 
 public class ManejadorDeArchivoIndicadores {
 	
@@ -53,7 +53,7 @@ public class ManejadorDeArchivoIndicadores {
 		
 			return repositorioIndicadoresDeArchivo;
 		
-		} catch (IOException e) { throw new AgregarIndicadorAlArchivoException("No fue posible leer los indicadores del archivo");}
+		} catch (IOException e) { throw new AgregarMetodologiaAlArchivoException("No fue posible leer los indicadores del archivo");}
 	}
 
 	public File getArchivo(){
@@ -69,7 +69,7 @@ public class ManejadorDeArchivoIndicadores {
 			
 			repositorioIndicadores.agregar(nuevoIndicador);
 			printWriter.close();
-		} catch (IOException e) { throw new AgregarIndicadorAlArchivoException("No se pudo guardar el indicador en el archivo.");}
+		} catch (IOException e) { throw new AgregarMetodologiaAlArchivoException("No se pudo guardar el indicador en el archivo.");}
 		
 	}
 

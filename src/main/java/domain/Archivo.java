@@ -1,6 +1,7 @@
 package domain;
 
 import domain.DomainExceptions.ArchivoInvalidoException;
+import empresas.Empresa;
 import manejadoresArchivo.IManejadorDeArchivoEmpresas;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 

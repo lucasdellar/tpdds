@@ -7,7 +7,7 @@ import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.lacar.ui.model.Action;
 
 import domain.Archivo;
-import domain.Empresa;
+import empresas.Empresa;
 import ui.InviertiendoView;
 import ui.ViewModels.AgregarEmpresaViewModel;
 import ui.ViewModels.CuentaViewModel;

@@ -1,6 +1,6 @@
 package manejadoresArchivo;
 
-import domain.Empresa;
+import empresas.Empresa;
 import repositorios.RepositorioEmpresas;
 
 public interface IManejadorDeArchivoEmpresas {

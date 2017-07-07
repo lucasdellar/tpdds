@@ -1,4 +1,7 @@
 package ui;
+import java.util.ArrayList;
+import java.util.concurrent.Callable;
+
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -9,7 +12,7 @@ import org.uqbar.arena.windows.MainWindow;
 
 import domain.Archivo;
 import domain.Cuenta;
-import domain.Empresa;
+import empresas.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoIndicadores;
 
 import org.uqbar.arena.windows.MessageBox;
@@ -17,15 +20,20 @@ import org.uqbar.ui.view.ErrorViewer;
 
 import ui.Dialogs.AgregarEmpresaDialog;
 import ui.Dialogs.AgregarIndicadorDialog;
+import ui.Dialogs.AgregarMetodologiaDialog;
 import ui.Dialogs.ArchivoDialog;
 import ui.Dialogs.CrearCuentaDialog;
 import ui.Dialogs.EmpresaDialog;
 import ui.Dialogs.EvaluarEmpresaDialog;
+import ui.Dialogs.EvaluarMetolodigaDialog;
+import ui.ViewModels.AgregarCondicionViewModel;
 import ui.ViewModels.AgregarEmpresaViewModel;
 import ui.ViewModels.AgregarIndicadorViewModel;
+import ui.ViewModels.AgregarMetodologiaViewModel;
 import ui.ViewModels.ArchivoViewModel;
 import ui.ViewModels.EmpresaViewModel;
 import ui.ViewModels.EvaluarEmpresaViewModel;
+import ui.ViewModels.EvaluarMetodologiaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
 
 public class InviertiendoView extends MainWindow<InviertiendoViewModel> implements ErrorViewer{
@@ -33,9 +41,11 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	public InviertiendoView() {
 		super(new InviertiendoViewModel());
 		archivoIndicadores.setRuta("indicadores.txt");
+		archivoMetodologias.setRuta("metodologias.txt");
 	}
 	private Archivo archivoEmpresas = new Archivo();
 	private Archivo archivoIndicadores = new Archivo();
+	private Archivo archivoMetodologias = new Archivo();
 	private EmpresaViewModel empresaViewModel;
 
 	protected void openArchivoDialog() {
@@ -60,6 +70,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		EmpresaDialog empresaDialog = new EmpresaDialog(this, empresaViewModel);
 		empresaDialog.open();
 	}
+	
 	
 	@Override
 	public void createContents(Panel mainPanel) {
@@ -112,6 +123,10 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		
 		crearBoton(mainPanel, "Evaluar Empresa con Indicador").onClick(() -> openEvaluarEmpresaDialog());
 		this.getModelObject().actualizarEmpresas();
+		
+		crearBoton(mainPanel, "Agregar Metodologia").onClick(() -> openAgregarMetodologiaDialog());
+		
+		crearBoton(mainPanel, "Evaluar empresa con Metodologia").onClick(() -> openEvaluarMetodologiaDialog());
 	}
 
 
@@ -126,7 +141,21 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
     	AgregarIndicadorDialog agregarIndicadorDialog = new AgregarIndicadorDialog(this, agregarViewModel);
     	agregarIndicadorDialog.open();
 	}
+	
 
+	private void openAgregarMetodologiaDialog() {
+		AgregarMetodologiaViewModel agregarViewModel = new AgregarMetodologiaViewModel(archivoMetodologias.getRuta());
+		agregarViewModel.setCondiciones(new ArrayList<>());
+		AgregarMetodologiaDialog agregarMetodologiaDialog = new AgregarMetodologiaDialog(this, agregarViewModel, new ManejadorDeArchivoIndicadores(archivoIndicadores.getRuta()).getRepositorioIndicadores());
+		agregarMetodologiaDialog.open();
+	}
+	
+	private void openEvaluarMetodologiaDialog() {
+    	EvaluarMetodologiaViewModel evaluarViewModel = new EvaluarMetodologiaViewModel();
+    	EvaluarMetolodigaDialog evaluarMetodologiaDialog = new EvaluarMetolodigaDialog(this, evaluarViewModel);
+    	evaluarMetodologiaDialog.open();
+    }
+	
 	private void openCrearEmpresaDialog() {
     	AgregarEmpresaViewModel agregarViewModel = new AgregarEmpresaViewModel(archivoEmpresas);
  		AgregarEmpresaDialog agregarEmpresaDialog = new AgregarEmpresaDialog(this, agregarViewModel);

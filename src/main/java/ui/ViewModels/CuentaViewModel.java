@@ -3,6 +3,7 @@ package ui.ViewModels;
 import org.uqbar.commons.utils.Observable;
 
 import domain.*;
+import empresas.Empresa;
 import scala.collection.generic.BitOperations.Int;
 import validadores.ValidadorCuenta;
 
