@@ -5,6 +5,8 @@ import java.util.Comparator;
 
 import comparadores.IComparador;
 import criterios.Criterio;
+import domain.Indicador;
+import edu.emory.mathcs.backport.java.util.Collections;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
@@ -12,11 +14,12 @@ public class ComparaEmpresasPorIndicador extends Condicion {
 
 
 	private String periodo;
+	private Indicador indicador;
 	
-	public ComparaEmpresasPorIndicador(RepositorioIndicadores repoIndicadores, IComparador comparador ,Criterio criterio, String periodo) {
+	public ComparaEmpresasPorIndicador(RepositorioIndicadores repoIndicadores, IComparador comparador, Indicador indicador, String periodo) {
 		super(repoIndicadores, comparador);
-		this.setCriterio(criterio);
 		this.periodo = periodo;
+		this.indicador = indicador;
 	}
 
 	@Override
@@ -26,17 +29,18 @@ public class ComparaEmpresasPorIndicador extends Condicion {
 
 			@Override
 			public int compare(EmpresaRankeada emp1, EmpresaRankeada emp2) {
-				return getCriterio().getIndicador().aplicarIndicador(periodo, emp1, getRepoIndicadores()).
-						compareTo(getCriterio().getIndicador().aplicarIndicador(periodo, emp2, getRepoIndicadores()));
+				return indicador.aplicarIndicador(periodo, emp1, getRepoIndicadores()).
+						compareTo(indicador.aplicarIndicador(periodo, emp2, getRepoIndicadores()));
 			}
 		});
+		Collections.reverse(empresas);
 		aumentarPeso(empresas);
 		return empresas;
 	}
 
 	private void aumentarPeso(ArrayList<EmpresaRankeada> empresas) {
 		for(EmpresaRankeada unaEmp : empresas){
-			unaEmp.aumentarRanking(peso * (empresas.size() - empresas.indexOf(unaEmp)));    // Manera propia de calcularle el peso
+			unaEmp.aumentarRanking(getPeso() * (empresas.size() - empresas.indexOf(unaEmp)));    // Manera propia de calcularle el peso
 		}
 		
 	}

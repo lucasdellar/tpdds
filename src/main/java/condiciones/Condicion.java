@@ -10,7 +10,7 @@ import repositorios.RepositorioIndicadores;
 public abstract class Condicion {
 	
 	private Criterio criterio;
-	int peso;
+	private int peso;
 	private RepositorioIndicadores repoIndicadores;
 	private IComparador comparador;
 	
@@ -20,7 +20,7 @@ public abstract class Condicion {
 	
 	public Condicion(RepositorioIndicadores indicadores, int peso, IComparador comparador){
 		this.setRepoIndicadores(indicadores);
-		this.peso = peso;
+		this.setPeso(peso);
 		this.comparador = comparador;
 	}
 	
@@ -48,6 +48,14 @@ public abstract class Condicion {
 
 	void setComparador(IComparador comparador) {
 		this.comparador = comparador;
+	}
+
+	public int getPeso() {
+		return peso;
+	}
+
+	public void setPeso(int peso) {
+		this.peso = peso;
 	}
 	
 }

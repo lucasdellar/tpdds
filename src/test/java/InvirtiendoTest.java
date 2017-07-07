@@ -21,6 +21,7 @@ import org.junit.Test;
 import OperacionesMatematicas.ResolutorDeCuentas;
 import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
+import condiciones.ComparaEmpresasPorIndicador;
 import condiciones.Condicion;
 import condiciones.Crecimiento;
 import condiciones.DependeDeValor;
@@ -69,6 +70,41 @@ public class InvirtiendoTest {
 		ComparadorMayor comparador = new ComparadorMayor();
 		
 		Assert.assertEquals(comparador.comparar(5, 9), false);
+	}
+	
+	@Test
+	public void compararEmpresasPorIndicador(){
+		RepositorioIndicadores repo = new RepositorioIndicadores();
+		Indicador unIndicador = new Indicador("testIndicador", "cuentaTest + 5");
+		ComparaEmpresasPorIndicador compararEmpresasPorIndicador = new ComparaEmpresasPorIndicador(repo, new ComparadorMayor(),
+				unIndicador, "2015");
+		
+		EmpresaRankeada empresaUno = new EmpresaRankeada("empresaTestUno");
+		empresaUno.setCuentas(new ArrayList());
+		empresaUno.agregarCuenta(new Cuenta("cuentaTest", "2015", "1300"));
+		
+		EmpresaRankeada empresaDos = new EmpresaRankeada("empresaTestDos");
+		empresaDos.setCuentas(new ArrayList());
+		empresaDos.agregarCuenta(new Cuenta("cuentaTest", "2015", "500"));
+		
+		EmpresaRankeada empresaTres = new EmpresaRankeada("empresaTestTres");
+		empresaTres.setCuentas(new ArrayList());
+		empresaTres.agregarCuenta(new Cuenta("cuentaTest", "2015", "5050"));
+		
+		
+		ArrayList<EmpresaRankeada> empresas = new ArrayList<>();
+		empresas.add(empresaUno);
+		empresas.add(empresaDos);
+		empresas.add(empresaTres);
+		
+		compararEmpresasPorIndicador.setPeso(10);
+		compararEmpresasPorIndicador.aplicarCondicion(empresas);
+		
+		for(EmpresaRankeada empresa : empresas){
+			System.out.println(empresa.getNombre());
+		}
+		
+		Assert.assertEquals(empresas.get(0).getNombre(), empresaTres.getNombre());
 	}
 	
 	@Test
