@@ -1,9 +1,9 @@
 package validadores;
 
-import domain.DomainExceptions.EmpresaInvalidaException;
-import domain.DomainExceptions.EmpresaYaCargadaException;
+import domain.DomainExceptions.IndicadorInexsistenteException;
 import domain.DomainExceptions.IndicadorYaCreadoExcepction;
 import manejadoresArchivo.ManejadorDeArchivoIndicadores;
+import repositorios.RepositorioIndicadores;
 
 public class ValidadorIndicadores {
 
@@ -21,4 +21,9 @@ public class ValidadorIndicadores {
 			this.validarQueNoEsteYaCargardo(nombre, formula, manejador);
 		}
 	
+		public void validarQueExista(String nombre, RepositorioIndicadores repo) {
+			if(!repo.getLista().stream().anyMatch(x -> x.getNombre().equals(nombre))) 
+				throw new IndicadorInexsistenteException("Indicador no cargado");
+ 
+		}
 }

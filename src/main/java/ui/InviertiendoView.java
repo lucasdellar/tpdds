@@ -1,4 +1,5 @@
 package ui;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 import org.uqbar.arena.layout.ColumnLayout;
@@ -120,10 +121,12 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		crearBoton(mainPanel, "Agregar Indicador").onClick(() -> openCrearIndicadorDialog());
 		this.getModelObject().actualizarEmpresas();
 		
-		crearBoton(mainPanel, "Agregar Metodología").onClick(() -> openAgregarMetodologiaDialog());
-		
 		crearBoton(mainPanel, "Evaluar Empresa con Indicador").onClick(() -> openEvaluarEmpresaDialog());
 		this.getModelObject().actualizarEmpresas();
+		
+		crearBoton(mainPanel, "Agregar Metodologia").onClick(() -> openAgregarMetodologiaDialog());
+		
+		crearBoton(mainPanel, "Evaluar empresa con Metodologia").onClick(() -> openEvaluarMetodologiaDialog());
 	}
 
 
@@ -142,7 +145,8 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 	private void openAgregarMetodologiaDialog() {
 		AgregarMetodologiaViewModel agregarViewModel = new AgregarMetodologiaViewModel(archivoMetodologias.getRuta());
-		AgregarMetodologiaDialog agregarMetodologiaDialog = new AgregarMetodologiaDialog(this, agregarViewModel);
+		agregarViewModel.setCondiciones(new ArrayList<>());
+		AgregarMetodologiaDialog agregarMetodologiaDialog = new AgregarMetodologiaDialog(this, agregarViewModel, new ManejadorDeArchivoIndicadores(archivoIndicadores.getRuta()).getRepositorioIndicadores());
 		agregarMetodologiaDialog.open();
 	}
 	

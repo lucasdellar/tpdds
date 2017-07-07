@@ -22,7 +22,7 @@ public class DependeDeValor extends Condicion {
 		List<EmpresaRankeada> unasEmpresas = empresas.stream()
 				.filter(x -> getCriterio().aplicarCriterio(x, this)).collect(Collectors.toList());
 		
-		return new ArrayList<EmpresaRankeada>(unasEmpresas);
+		return new ArrayList<EmpresaRankeada>(unasEmpresas); 
 	}
 
 	public int getValor() {

@@ -8,15 +8,19 @@ import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 
+import repositorios.RepositorioIndicadores;
+import ui.InviertiendoView;
 import ui.ViewModels.AgregarCondicionViewModel;
-import ui.ViewModels.AgregarIndicadorViewModel;
 import ui.ViewModels.AgregarMetodologiaViewModel;
 
 public class AgregarMetodologiaDialog extends  Dialog<AgregarMetodologiaViewModel> {
 
-	public AgregarMetodologiaDialog(WindowOwner owner, AgregarMetodologiaViewModel model) {
+	RepositorioIndicadores repositorioIndicadores;
+	
+	public AgregarMetodologiaDialog(WindowOwner owner, AgregarMetodologiaViewModel model, RepositorioIndicadores repositorioIndicadores) {
 		super(owner, model);
-		this.setTitle("Agregar Metodología");
+		this.setTitle("Agregar Metodologia");
+		this.repositorioIndicadores = repositorioIndicadores;
 	}
 
 	@Override
@@ -24,10 +28,10 @@ public class AgregarMetodologiaDialog extends  Dialog<AgregarMetodologiaViewMode
 		Panel form = new Panel(mainPanel);
         form.setLayout(new ColumnLayout(2));
         
-        new Label(form).setText("Ingrese el nombre de la metodología a agregar");
+        new Label(form).setText("Ingrese el nombre de la metodologia a agregar");
         new TextBox(form).bindValueToProperty("nombre");        
         
-        this.crearBoton(mainPanel, "Agregar Condiciones").onClick(() -> openAgregarCondicionDialog());   
+        InviertiendoView.crearBoton(mainPanel, "Agregar Condiciones").onClick(() -> openAgregarCondicionDialog());   
         
         this.onAccept(() -> this.getModelObject().agregarMetodologia());
 		
@@ -37,15 +41,22 @@ public class AgregarMetodologiaDialog extends  Dialog<AgregarMetodologiaViewMode
 	public void openAgregarCondicionDialog(){
 		
 		AgregarCondicionViewModel agregarViewModel = new AgregarCondicionViewModel();
-		AgregarCondicionDialog agregarCondicionDialog = new AgregarCondicionDialog(this, agregarViewModel);
+		AgregarCondicionDialog agregarCondicionDialog = new AgregarCondicionDialog(this, agregarViewModel, 
+				this.getModelObject().getCondiciones(), repositorioIndicadores);
 		agregarCondicionDialog.open();
 	}
 	
-	public static Button crearBoton(Panel mainPanel, String textoBoton) {
-		Button boton =	new Button(mainPanel);
-		boton.setCaption(textoBoton)
-		.setHeight(25)
-		.setWidth(217);
-		return boton;
-	}
+
+	@Override
+    protected void addActions(Panel actions) {
+        new Button(actions)
+                .setCaption("Aceptar")
+                .onClick(this::accept)
+                .setAsDefault()
+                .disableOnError();
+
+        new Button(actions) //
+                .setCaption("Cancelar")
+                .onClick(this::cancel);
+    }
 }

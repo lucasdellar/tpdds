@@ -36,7 +36,13 @@ public class Metodologia {
 		for(Condicion condicion : condiciones){
 			condicion.aplicarCondicion(misEmpresas);
 		}
-		//misEmpresas.sort( (x, y) -> x.getRanking() > y.getRanking()); PREGUNTAR
+		misEmpresas.sort(new Comparator<EmpresaRankeada>(){
+
+			@Override
+			public int compare(EmpresaRankeada emp1, EmpresaRankeada emp2) {
+				return emp1.getRanking().compareTo(emp2.getRanking());
+			}
+		});
 	}
 	
 }

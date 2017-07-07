@@ -18,8 +18,8 @@ public abstract class Condicion {
 		this(indicadores, 0, comparador);
 	}
 	
-	public Condicion(RepositorioIndicadores indicadores2, int peso, IComparador comparador){
-		this.setRepoIndicadores(indicadores2);
+	public Condicion(RepositorioIndicadores indicadores, int peso, IComparador comparador){
+		this.setRepoIndicadores(indicadores);
 		this.peso = peso;
 		this.comparador = comparador;
 	}

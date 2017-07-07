@@ -1,20 +1,35 @@
 package ui.ViewModels;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+
+import org.uqbar.commons.utils.Observable;
 
 import condiciones.Condicion;
 import domain.Metodologia;
-import manejadoresArchivo.ManejadorDeArchivoIndicadores;
 import manejadoresArchivo.ManejadorDeArchivoMetodologias;
 
+@Observable
 public class AgregarMetodologiaViewModel {
 	
 	String nombre; 
-	ArrayList<Condicion> condiciones;
+	private ArrayList<Condicion> condiciones;
 	private ManejadorDeArchivoMetodologias manejador;
 
+	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+	   propertyChangeSupport.addPropertyChangeListener(listener);
+	}
+	
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		   propertyChangeSupport.removePropertyChangeListener(listener);
+	}
+	
 	public AgregarMetodologiaViewModel(String rutaArchivo) {
 		this.manejador = new ManejadorDeArchivoMetodologias(rutaArchivo);
+	//	condiciones = new ArrayList<>();
 	}
 	
 	public ArrayList<Condicion> getCondiciones() {
@@ -34,7 +49,7 @@ public class AgregarMetodologiaViewModel {
 	}
 
 	public void agregarMetodologia() {
-	//	manejador.agregarMetodologiaAlArchivo(new Metodologia(nombre, condiciones));
+		manejador.agregarMetodologiaAlArchivo(new Metodologia(nombre, condiciones));
 	}
 
 }

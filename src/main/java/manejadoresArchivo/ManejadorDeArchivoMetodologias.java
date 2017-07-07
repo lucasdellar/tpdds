@@ -9,7 +9,6 @@ import java.io.PrintWriter;
 
 import domain.ConversorFormatoArchivo;
 import domain.IConversorFormatoArchivo;
-import domain.Indicador;
 import domain.Metodologia;
 import domain.DomainExceptions.AgregarMetodologiaAlArchivoException;
 import repositorios.RepositorioMetodologias;
