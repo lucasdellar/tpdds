@@ -1,4 +1,4 @@
-package condiciones;
+package Condiciones;
 
 import java.util.ArrayList;
 import java.util.Comparator;

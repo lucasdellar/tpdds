@@ -3,16 +3,17 @@ package domain;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import condiciones.Condicion;
+import Condiciones.Condicion;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
 
 public class Metodologia {
 
-	
+	String nombre;
 	ArrayList<Condicion> condiciones;
 
-	public Metodologia(ArrayList<Condicion> condiciones){
+	public Metodologia(String nombre, ArrayList<Condicion> condiciones){
+		this.nombre = nombre;
 		this.condiciones = condiciones;
 	}
 	

@@ -1,4 +1,4 @@
-package condiciones;
+package Condiciones;
 
 public class Crecimiento {
 

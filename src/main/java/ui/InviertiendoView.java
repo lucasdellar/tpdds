@@ -32,7 +32,7 @@ import ui.ViewModels.AgregarMetodologiaViewModel;
 import ui.ViewModels.ArchivoViewModel;
 import ui.ViewModels.EmpresaViewModel;
 import ui.ViewModels.EvaluarEmpresaViewModel;
-import ui.ViewModels.EvaluarMetolodigaViewModel;
+import ui.ViewModels.EvaluarMetodologiaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
 
 public class InviertiendoView extends MainWindow<InviertiendoViewModel> implements ErrorViewer{
@@ -40,9 +40,11 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	public InviertiendoView() {
 		super(new InviertiendoViewModel());
 		archivoIndicadores.setRuta("indicadores.txt");
+		archivoMetodologias.setRuta("metodologias.txt");
 	}
 	private Archivo archivoEmpresas = new Archivo();
 	private Archivo archivoIndicadores = new Archivo();
+	private Archivo archivoMetodologias = new Archivo();
 	private EmpresaViewModel empresaViewModel;
 
 	protected void openArchivoDialog() {
@@ -118,6 +120,8 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		crearBoton(mainPanel, "Agregar Indicador").onClick(() -> openCrearIndicadorDialog());
 		this.getModelObject().actualizarEmpresas();
 		
+		crearBoton(mainPanel, "Agregar Metodología").onClick(() -> openAgregarMetodologiaDialog());
+		
 		crearBoton(mainPanel, "Evaluar Empresa con Indicador").onClick(() -> openEvaluarEmpresaDialog());
 		this.getModelObject().actualizarEmpresas();
 	}
@@ -137,13 +141,13 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	
 
 	private void openAgregarMetodologiaDialog() {
-		AgregarMetodologiaViewModel agregarViewModel = new AgregarMetodologiaViewModel();
+		AgregarMetodologiaViewModel agregarViewModel = new AgregarMetodologiaViewModel(archivoMetodologias.getRuta());
 		AgregarMetodologiaDialog agregarMetodologiaDialog = new AgregarMetodologiaDialog(this, agregarViewModel);
 		agregarMetodologiaDialog.open();
 	}
 	
 	private void openEvaluarMetodologiaDialog() {
-    	EvaluarMetolodigaViewModel evaluarViewModel = new EvaluarMetolodigaViewModel();
+    	EvaluarMetodologiaViewModel evaluarViewModel = new EvaluarMetodologiaViewModel();
     	EvaluarMetolodigaDialog evaluarMetodologiaDialog = new EvaluarMetolodigaDialog(this, evaluarViewModel);
     	evaluarMetodologiaDialog.open();
     }

@@ -1,6 +1,7 @@
 package ui.Dialogs;
 
 import org.uqbar.arena.layout.ColumnLayout;
+import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
@@ -15,12 +16,7 @@ public class AgregarMetodologiaDialog extends  Dialog<AgregarMetodologiaViewMode
 
 	public AgregarMetodologiaDialog(WindowOwner owner, AgregarMetodologiaViewModel model) {
 		super(owner, model);
-		// TODO Auto-generated constructor stub
-	}
-
-	public void open() {
-		// TODO Auto-generated method stub
-		
+		this.setTitle("Agregar Metodología");
 	}
 
 	@Override
@@ -28,11 +24,10 @@ public class AgregarMetodologiaDialog extends  Dialog<AgregarMetodologiaViewMode
 		Panel form = new Panel(mainPanel);
         form.setLayout(new ColumnLayout(2));
         
-        new Label(form).setText("Ingrese el nombre del indicador a agregar");
+        new Label(form).setText("Ingrese el nombre de la metodología a agregar");
         new TextBox(form).bindValueToProperty("nombre");        
         
-        new Label(form).setText("Ingrese la formula del indicador");
-        new TextBox(form).bindValueToProperty("formula");    
+        this.crearBoton(mainPanel, "Agregar Condiciones").onClick(() -> openAgregarCondicionDialog());   
         
         this.onAccept(() -> this.getModelObject().agregarMetodologia());
 		
@@ -41,9 +36,16 @@ public class AgregarMetodologiaDialog extends  Dialog<AgregarMetodologiaViewMode
 	
 	public void openAgregarCondicionDialog(){
 		
-		AgregarCondicionViewModel agregarViewModel = new AgregarMetodologiaViewModel();
-		AgregarCondicionDialog agregarMetodologiaDialog = new AgregarMetodologiaDialog(this, agregarViewModel);
-		AgregarCondicionDialog.open();
-		
+		AgregarCondicionViewModel agregarViewModel = new AgregarCondicionViewModel();
+		AgregarCondicionDialog agregarCondicionDialog = new AgregarCondicionDialog(this, agregarViewModel);
+		agregarCondicionDialog.open();
+	}
+	
+	public static Button crearBoton(Panel mainPanel, String textoBoton) {
+		Button boton =	new Button(mainPanel);
+		boton.setCaption(textoBoton)
+		.setHeight(25)
+		.setWidth(217);
+		return boton;
 	}
 }

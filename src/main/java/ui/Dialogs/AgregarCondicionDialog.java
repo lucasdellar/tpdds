@@ -11,12 +11,6 @@ public class AgregarCondicionDialog extends  Dialog<AgregarCondicionViewModel> {
 
 	public AgregarCondicionDialog(WindowOwner owner, AgregarCondicionViewModel model) {
 		super(owner, model);
-		// TODO Auto-generated constructor stub
-	}
-
-	public void open() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

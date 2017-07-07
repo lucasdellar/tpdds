@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import condiciones.Condicion;
-import condiciones.DependeDeValor;
+import Condiciones.Condicion;
+import Condiciones.DependeDeValor;
 import domain.Cuenta;
 import domain.Indicador;
 import domain.DomainExceptions.CriterioException;

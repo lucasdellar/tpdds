@@ -5,18 +5,14 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 
 import ui.ViewModels.AgregarMetodologiaViewModel;
+import ui.ViewModels.EvaluarMetodologiaViewModel;
 
 
-public class EvaluarMetolodigaDialog  extends  Dialog<AgregarMetodologiaViewModel> {
+public class EvaluarMetolodigaDialog  extends  Dialog<EvaluarMetodologiaViewModel> {
 
-	public EvaluarMetolodigaDialog(WindowOwner owner, AgregarMetodologiaViewModel model) {
+	public EvaluarMetolodigaDialog(WindowOwner owner, EvaluarMetodologiaViewModel model) {
 		super(owner, model);
 		// TODO Auto-generated constructor stub
-	}
-
-	public void open() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
