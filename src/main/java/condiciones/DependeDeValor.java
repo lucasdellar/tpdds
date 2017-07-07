@@ -1,33 +1,42 @@
 package condiciones;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import domain.Indicador;
+import comparadores.IComparador;
 import empresas.EmpresaRankeada;
+import repositorios.RepositorioIndicadores;
 
 public class DependeDeValor extends Condicion {
 	
-	Criterio criterio;
-	int valor;
+	private int valor;
 	int anios;
-	IComparador miComparador;
 	
-	public DependeDeValor(ArrayList<Indicador> indicadores, IComparador miComparador, int valor) {
-		super(indicadores);
-		this.valor = valor;
-		this.miComparador = miComparador;
+	public DependeDeValor(RepositorioIndicadores repoIndicadores, IComparador miComparador, int valor) {
+		super(repoIndicadores, miComparador);
+		this.setValor(valor);
 		anios = 0;
 	}
 	
-	public DependeDeValor(ArrayList<Indicador> indicadores, IComparador miComparador, int valor, int anios) {
+	public DependeDeValor(RepositorioIndicadores indicadores, IComparador miComparador, int valor, int anios) {
 		this(indicadores, miComparador, valor);
 		this.anios = anios;
 	}
 
 	@Override
 	public ArrayList<EmpresaRankeada> aplicarCondicion(ArrayList<EmpresaRankeada> empresas) {
-		return (ArrayList<EmpresaRankeada>) empresas.stream().filter(x -> criterio.aplicarCriterio(x, miComparador, anios, valor));
+		List<EmpresaRankeada> unasEmpresas = empresas.stream().filter(x -> getCriterio().aplicarCriterio(x, this)).collect(Collectors.toList());
+		
+		return new ArrayList<EmpresaRankeada>(unasEmpresas);
+	}
+
+	public int getValor() {
+		return valor;
+	}
+
+	void setValor(int valor) {
+		this.valor = valor;
 	}
 
 

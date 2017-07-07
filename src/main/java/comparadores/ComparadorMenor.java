@@ -1,10 +1,9 @@
-package condiciones;
+package comparadores;
 
 public class ComparadorMenor implements IComparador{
 
 	@Override
-	public Boolean comparar(int numeroUno, int numeroDos) {
+	public Boolean comparar(double numeroUno, double numeroDos) {
 		return numeroUno < numeroDos;
 	}
-
 }
