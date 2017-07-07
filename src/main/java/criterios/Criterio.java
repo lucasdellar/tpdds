@@ -1,6 +1,6 @@
 package criterios;
 
-import Condiciones.Condicion;
+import condiciones.Condicion;
 import domain.Indicador;
 import empresas.Empresa;
 

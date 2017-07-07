@@ -2,7 +2,7 @@ package ui.ViewModels;
 
 import java.util.ArrayList;
 
-import Condiciones.Condicion;
+import condiciones.Condicion;
 import domain.Metodologia;
 import manejadoresArchivo.ManejadorDeArchivoIndicadores;
 import manejadoresArchivo.ManejadorDeArchivoMetodologias;
@@ -34,7 +34,7 @@ public class AgregarMetodologiaViewModel {
 	}
 
 	public void agregarMetodologia() {
-		manejador.agregarMetodologiaAlArchivo(new Metodologia(nombre, condiciones));
+	//	manejador.agregarMetodologiaAlArchivo(new Metodologia(nombre, condiciones));
 	}
 
 }

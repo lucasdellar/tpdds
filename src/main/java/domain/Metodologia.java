@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import Condiciones.Condicion;
+import condiciones.Condicion;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
 
