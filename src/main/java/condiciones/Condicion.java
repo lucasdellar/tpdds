@@ -34,11 +34,11 @@ public abstract class Condicion {
 		this.repoIndicadores = repoIndicadores;
 	}
 
-	Criterio getCriterio() {
+	public Criterio getCriterio() {
 		return criterio;
 	}
 
-	void setCriterio(Criterio criterio) {
+	public void setCriterio(Criterio criterio) {
 		this.criterio = criterio;
 	}
 

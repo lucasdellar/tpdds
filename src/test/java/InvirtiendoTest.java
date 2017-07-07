@@ -3,9 +3,11 @@ import domain.*;
 
 import domain.DomainExceptions.*;
 import empresas.Empresa;
+import empresas.EmpresaRankeada;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import parser.*;
 import repositorios.RepositorioEmpresas;
+import repositorios.RepositorioIndicadores;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +19,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import OperacionesMatematicas.ResolutorDeCuentas;
+import comparadores.ComparadorMayor;
+import comparadores.ComparadorMenor;
+import condiciones.Condicion;
+import condiciones.Crecimiento;
+import condiciones.DependeDeValor;
+import criterios.CrecimientoSiempre;
+import criterios.Promedio;
 import ui.ViewModels.CuentaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
 import ui.ViewModels.EmpresaViewModel;
@@ -48,6 +57,87 @@ public class InvirtiendoTest {
         empresaViewModel.setArchivo(archivo);
 	}
 	
+	@Test
+	public void comparadorMenor(){
+		ComparadorMenor comparador = new ComparadorMenor();
+		
+		Assert.assertEquals(comparador.comparar(5, 9), true);
+	}
+	
+	@Test
+	public void comparadorMayor(){
+		ComparadorMayor comparador = new ComparadorMayor();
+		
+		Assert.assertEquals(comparador.comparar(5, 9), false);
+	}
+	
+	@Test
+	public void metodologiaOrdenaCorrectamentePorPesoLasEmpresas(){
+		RepositorioIndicadores repo = new RepositorioIndicadores();
+		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa1");
+		miEmpresa.setCuentas(new ArrayList<>());
+		miEmpresa.aumentarRanking(10);
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		EmpresaRankeada miEmpresa2 = new EmpresaRankeada("testEmpresa2");
+		miEmpresa2.setCuentas(new ArrayList<>());
+		miEmpresa2.aumentarRanking(15);
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		EmpresaRankeada miEmpresa3 = new EmpresaRankeada("testEmpresa3");
+		miEmpresa3.setCuentas(new ArrayList<>());
+		miEmpresa3.aumentarRanking(5);
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		ArrayList<EmpresaRankeada> empresas = new ArrayList<>();
+		empresas.add(miEmpresa);
+		empresas.add(miEmpresa2);
+		empresas.add(miEmpresa3);
+		Metodologia metodologiaTest = new Metodologia("testMetodologia", new ArrayList<>());
+		metodologiaTest.ordenarPorRanking(empresas);
+		Assert.assertEquals(empresas.get(0).getNombre(), "testEmpresa3");
+		Assert.assertEquals(empresas.get(1).getNombre(), "testEmpresa1");
+		Assert.assertEquals(empresas.get(2).getNombre(), "testEmpresa2");
+	}
+	
+	
+	@Test
+	public void condicionDependeDeValorEvaluaCorrectamenteUnaEmpresa(){
+		RepositorioIndicadores repo = new RepositorioIndicadores();
+		DependeDeValor dependeDeValor = new DependeDeValor(repo, new ComparadorMenor(), 100);
+		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
+		dependeDeValor.setCriterio(new Promedio(unIndicador));
+		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
+		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
+		miEmpresa.setCuentas(new ArrayList<>());
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));
+		empresas.add(miEmpresa);		
+		Assert.assertEquals(dependeDeValor.aplicarCondicion(empresas).size(), 1);
+	}
+	
+	@Test
+	public void condicionCrecimientoEvaluaCorrectamenteUnaEmpresa(){
+		RepositorioIndicadores repo = new RepositorioIndicadores();
+		Crecimiento crece = new Crecimiento(repo, new ComparadorMenor());
+		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
+		crece.setCriterio(new CrecimientoSiempre(unIndicador, 2015, 2017));
+		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
+		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
+		miEmpresa.setCuentas(new ArrayList<>());
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));
+		empresas.add(miEmpresa);		
+		Assert.assertEquals(crece.aplicarCondicion(empresas).size(), 1);
+	}	
+	
+	@Test
+	public void metodologiaConCondicionesAceptaCrecimiento(){
+		Crecimiento crece = new Crecimiento(new RepositorioIndicadores(), new ComparadorMayor());
+		ArrayList<Condicion> lista = new ArrayList<>();
+		lista.add(crece);
+		Metodologia metodologia = new Metodologia("testMetodologia", lista);
+		Assert.assertEquals(metodologia.getCondiciones().size(), 1);
+	}
 	
 	@Test
     public void verificarFormatoParser(){

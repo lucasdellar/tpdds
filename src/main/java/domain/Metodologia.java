@@ -10,13 +10,14 @@ import empresas.EmpresaRankeada;
 public class Metodologia {
 
 	String nombre;
-	ArrayList<Condicion> condiciones;
+	private ArrayList<Condicion> condiciones;
 
 	public Metodologia(String nombre, ArrayList<Condicion> condiciones){
 		this.nombre = nombre;
-		this.condiciones = condiciones;
+		this.setCondiciones(condiciones);
 	}
 	
+
 	public ArrayList<EmpresaRankeada> aplicarMetodologia(ArrayList<Empresa> empresas){
 		ArrayList<EmpresaRankeada> misEmpresas = new ArrayList<>();
 		inicializarEmpresasRankeadas(misEmpresas, empresas);
@@ -31,9 +32,9 @@ public class Metodologia {
 		}
 	}
 
-	private void ordenarPorRanking(ArrayList<EmpresaRankeada> misEmpresas) {
+	public void ordenarPorRanking(ArrayList<EmpresaRankeada> misEmpresas) {
 		
-		for(Condicion condicion : condiciones){
+		for(Condicion condicion : getCondiciones()){
 			condicion.aplicarCondicion(misEmpresas);
 		}
 		misEmpresas.sort(new Comparator<EmpresaRankeada>(){
@@ -44,5 +45,14 @@ public class Metodologia {
 			}
 		});
 	}
-	
+
+	public ArrayList<Condicion> getCondiciones() {
+		return condiciones;
+	}
+
+
+	private void setCondiciones(ArrayList<Condicion> condiciones) {
+		this.condiciones = condiciones;
+	}
+
 }
