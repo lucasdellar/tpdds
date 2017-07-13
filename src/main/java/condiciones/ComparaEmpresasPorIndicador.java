@@ -2,6 +2,7 @@ package condiciones;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import comparadores.IComparador;
 import criterios.Criterio;
@@ -23,7 +24,7 @@ public class ComparaEmpresasPorIndicador extends Condicion {
 	}
 
 	@Override
-	public ArrayList<EmpresaRankeada> aplicarCondicion(ArrayList<EmpresaRankeada> empresas) {
+	public List<EmpresaRankeada> aplicar(List<EmpresaRankeada> empresas) {
 		
 		empresas.sort(new Comparator<EmpresaRankeada>(){
 
@@ -38,7 +39,7 @@ public class ComparaEmpresasPorIndicador extends Condicion {
 		return empresas;
 	}
 
-	private void aumentarPeso(ArrayList<EmpresaRankeada> empresas) {
+	private void aumentarPeso(List<EmpresaRankeada> empresas) {
 		for(EmpresaRankeada unaEmp : empresas){
 			unaEmp.aumentarRanking(getPeso() * (empresas.size() - empresas.indexOf(unaEmp)));    // Manera propia de calcularle el peso
 		}

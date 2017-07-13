@@ -25,6 +25,6 @@ public class Sumatoria extends Criterio{
 		sumatoria = unaEmpresa.getCuentas().stream().mapToDouble( x -> this.getIndicador().aplicarIndicador(x.getPeriodo(), 
 					unaEmpresa, unaCondicion.getRepoIndicadores())).sum();
 		
-		return unaCondicion.getComparador().comparar( sumatoria, ((DependeDeValor)unaCondicion).getValor());
+		return unaCondicion.getComparador().comparar(sumatoria, ((DependeDeValor)unaCondicion).getValor());
 	}
 }

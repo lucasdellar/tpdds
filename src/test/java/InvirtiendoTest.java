@@ -12,6 +12,7 @@ import repositorios.RepositorioIndicadores;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,6 +24,7 @@ import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
 import condiciones.ComparaEmpresasPorIndicador;
 import condiciones.Condicion;
+import condiciones.CondicionTaxativa;
 import condiciones.Crecimiento;
 import condiciones.DependeDeValor;
 import criterios.CrecimientoSiempre;
@@ -73,6 +75,34 @@ public class InvirtiendoTest {
 	}
 	
 	@Test
+	public void aplicando_Taxativas(){
+		RepositorioIndicadores repo = new RepositorioIndicadores();
+		Indicador unIndicador = new Indicador("testIndicador", "cuentaTest + 5");
+		
+		EmpresaRankeada empresaUno = new EmpresaRankeada("empresaTestUno");
+		empresaUno.setCuentas(new ArrayList());
+		empresaUno.agregarCuenta(new Cuenta("cuentaTest", "2015", "1300"));
+		
+		EmpresaRankeada empresaDos = new EmpresaRankeada("empresaTestDos");
+		empresaDos.setCuentas(new ArrayList());
+		empresaDos.agregarCuenta(new Cuenta("cuentaTest", "2015", "500"));
+		
+		EmpresaRankeada empresaTres = new EmpresaRankeada("empresaTestTres");
+		empresaTres.setCuentas(new ArrayList());
+		empresaTres.agregarCuenta(new Cuenta("cuentaTest", "2015", "5050"));
+		
+		List<EmpresaRankeada> empresas = new ArrayList<>();
+		empresas.add(empresaUno);
+		empresas.add(empresaDos);
+		empresas.add(empresaTres);
+		
+		CondicionTaxativa taxativa_1 = new CondicionTaxativa(repo, new ComparadorMayor());
+		Metodologia metodologia = new Metodologia("prueba", taxativas, null);
+		
+		
+	}
+	
+	@Test
 	public void compararEmpresasPorIndicador(){
 		RepositorioIndicadores repo = new RepositorioIndicadores();
 		Indicador unIndicador = new Indicador("testIndicador", "cuentaTest + 5");
@@ -98,7 +128,7 @@ public class InvirtiendoTest {
 		empresas.add(empresaTres);
 		
 		compararEmpresasPorIndicador.setPeso(10);
-		compararEmpresasPorIndicador.aplicarCondicion(empresas);
+		compararEmpresasPorIndicador.aplicar(empresas);
 		
 		for(EmpresaRankeada empresa : empresas){
 			System.out.println(empresa.getNombre());
@@ -147,7 +177,7 @@ public class InvirtiendoTest {
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));
 		empresas.add(miEmpresa);		
-		Assert.assertEquals(dependeDeValor.aplicarCondicion(empresas).size(), 1);
+		Assert.assertEquals(dependeDeValor.aplicar(empresas).size(), 1);
 	}
 	
 	@Test
@@ -163,7 +193,7 @@ public class InvirtiendoTest {
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));
 		empresas.add(miEmpresa);		
-		Assert.assertEquals(crece.aplicarCondicion(empresas).size(), 1);
+		Assert.assertEquals(crece.aplicar(empresas).size(), 1);
 	}	
 	
 	@Test

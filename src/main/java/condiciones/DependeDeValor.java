@@ -18,7 +18,7 @@ public class DependeDeValor extends Condicion {
 	}
 	
 	@Override
-	public ArrayList<EmpresaRankeada> aplicarCondicion(ArrayList<EmpresaRankeada> empresas) {
+	public ArrayList<EmpresaRankeada> aplicar(List<EmpresaRankeada> empresas) {
 		List<EmpresaRankeada> unasEmpresas = empresas.stream()
 				.filter(x -> getCriterio().aplicarCriterio(x, this)).collect(Collectors.toList());
 		
