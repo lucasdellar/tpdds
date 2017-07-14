@@ -21,7 +21,7 @@ public class CriterioNAnios extends Criterio{
 	}
 
 	@Override
-	public Boolean aplicarCriterio(Empresa unaEmpresa, Condicion unaCondicion) {
+	public Boolean aplicar(Empresa unaEmpresa, Condicion unaCondicion) {
 		unaEmpresa.getCuentas().sort(new Comparator<Cuenta>(){
 			@Override
 			public int compare(Cuenta cuenta1, Cuenta cuenta2) {
@@ -33,7 +33,7 @@ public class CriterioNAnios extends Criterio{
 		verificarQueNoFaltenCuentas(cuentasAEvaluar);
 		return cuentasAEvaluar.stream().allMatch( x -> unaCondicion.getComparador().
 				comparar(this.getIndicador().aplicarIndicador(x.getPeriodo(), 
-						unaEmpresa, unaCondicion.getRepoIndicadores()), ((DependeDeValor)unaCondicion).getValor()));
+						unaEmpresa, unaCondicion.getRepoIndicadores()), unaCondicion.getValue()));
 	}
 
 	private void verificarQueNoFaltenCuentas(List<Cuenta> cuentasAEvaluar) {

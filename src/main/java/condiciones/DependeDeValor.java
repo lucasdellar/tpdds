@@ -8,7 +8,7 @@ import comparadores.IComparador;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
-public class DependeDeValor extends Condicion {
+/*public class DependeDeValor extends Condicion {
 	
 	private int valor;
 	
@@ -18,9 +18,9 @@ public class DependeDeValor extends Condicion {
 	}
 	
 	@Override
-	public ArrayList<EmpresaRankeada> aplicar(List<EmpresaRankeada> empresas) {
-		List<EmpresaRankeada> unasEmpresas = empresas.stream()
-				.filter(x -> getCriterio().aplicarCriterio(x, this)).collect(Collectors.toList());
+	public List<Empresa> aplicar(List<Empresa> empresas) {
+		List<Empresa> unasEmpresas = empresas.stream()
+				.filter(x -> getCriterio().aplicar(x, this)).collect(Collectors.toList());
 		
 		return new ArrayList<EmpresaRankeada>(unasEmpresas); 
 	}
@@ -35,3 +35,4 @@ public class DependeDeValor extends Condicion {
 
 
 }
+*/

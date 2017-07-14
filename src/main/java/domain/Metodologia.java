@@ -37,7 +37,7 @@ public class Metodologia {
 		}
 	}
 
-	private List<Empresa> obtener_empresas_a_invertir(List<Empresa> empresas){
+	public List<Empresa> obtener_empresas_a_invertir(List<Empresa> empresas){
 		List <Empresa> empresas_a_invertir = new ArrayList<>();
 		for (Empresa empresa : empresas) {
 			if(condiciones_taxativas.stream().allMatch(condicion -> condicion.aplicar(empresa))){

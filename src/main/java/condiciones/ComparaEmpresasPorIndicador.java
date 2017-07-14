@@ -8,6 +8,7 @@ import comparadores.IComparador;
 import criterios.Criterio;
 import domain.Indicador;
 import edu.emory.mathcs.backport.java.util.Collections;
+import empresas.Empresa;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 

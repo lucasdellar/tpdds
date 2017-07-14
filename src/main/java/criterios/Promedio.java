@@ -1,7 +1,6 @@
 package criterios;
 
 import condiciones.Condicion;
-import condiciones.DependeDeValor;
 import domain.Indicador;
 import empresas.Empresa;
 
@@ -13,7 +12,7 @@ public class Promedio extends Criterio{
 	}
 
 	@Override
-	public Boolean aplicarCriterio(Empresa unaEmpresa, Condicion unaCondicion) {
+	public Boolean aplicar(Empresa unaEmpresa, Condicion unaCondicion) {
 		
 		double sumatoria = 0;
 		
@@ -21,7 +20,7 @@ public class Promedio extends Criterio{
 					unaEmpresa, unaCondicion.getRepoIndicadores())).sum();
 		
 		return  unaCondicion.getComparador().comparar( sumatoria / unaEmpresa.getCuentas().size(), 
-				((DependeDeValor) unaCondicion).getValor());
+				unaCondicion.getValue());
 	}
 
 }

@@ -13,8 +13,8 @@ public CriterioCrecimiento(Indicador indicador) {
 		super(indicador);
 	}
 
-protected Boolean cumple(Cuenta x, Condicion unaCondicion, List<Cuenta> cuentasDentroDelIntervalo, Empresa unaEmpresa) {
-		
+
+public Boolean cumple(Empresa unaEmpresa, Condicion unaCondicion, Cuenta x, List<Cuenta> cuentasDentroDelIntervalo) {
 		int posicion = cuentasDentroDelIntervalo.indexOf(x);
 		return posicion == cuentasDentroDelIntervalo.size() - 1 || unaCondicion.getComparador()
 				.comparar(getIndicador().aplicarIndicador(x.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores()),

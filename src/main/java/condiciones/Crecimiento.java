@@ -8,8 +8,7 @@ import comparadores.IComparador;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
-public class Crecimiento extends Condicion
-{
+public class Crecimiento extends Condicion {
 
 	public Crecimiento(RepositorioIndicadores indicadores, IComparador comparador) {
 		super(indicadores, comparador);
@@ -19,7 +18,7 @@ public class Crecimiento extends Condicion
 	public ArrayList<EmpresaRankeada> aplicar(List<EmpresaRankeada> empresas) {
 		
 		List<EmpresaRankeada> unasEmpresas = empresas.stream()
-				.filter(x -> getCriterio().aplicarCriterio(	x, this)).collect(Collectors.toList());
+				.filter(x -> getCriterio().aplicar(	x, this)).collect(Collectors.toList());
 		
 		
 		return new ArrayList<EmpresaRankeada>(unasEmpresas);

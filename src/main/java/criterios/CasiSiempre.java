@@ -23,14 +23,14 @@ public class CasiSiempre extends CriterioCrecimiento{
 	}
 
 	@Override
-	public Boolean aplicarCriterio(Empresa unaEmpresa, Condicion unaCondicion) {
+	public Boolean aplicar(Empresa unaEmpresa, Condicion unaCondicion) {
 		List<Cuenta> cuentasDentroDelIntervalo = unaEmpresa.getCuentas().stream()
 				.filter(x -> Integer.parseInt(x.getPeriodo()) > principio 
 						||  Integer.parseInt(x.getPeriodo()) > fin).collect(Collectors.toList());
 		
 		
 		return cuentasDentroDelIntervalo.stream()
-				.filter( x -> cumple(x, unaCondicion, cuentasDentroDelIntervalo, unaEmpresa))
+				.filter( x -> cumple(unaEmpresa, unaCondicion, x, cuentasDentroDelIntervalo))
 				.count() >= cuentasDentroDelIntervalo.size() - maxIncumplimientos;
 	}
 

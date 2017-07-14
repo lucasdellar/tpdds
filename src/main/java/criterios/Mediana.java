@@ -18,7 +18,7 @@ public class Mediana  extends Criterio{
 	}
 
 	@Override
-	public Boolean aplicarCriterio(Empresa unaEmpresa, Condicion unaCondicion) {
+	public Boolean aplicar(Empresa unaEmpresa, Condicion unaCondicion) {
 		
 		List<Double> indicadoresAplicados = unaEmpresa.getCuentas().stream()
 				.map( x -> 

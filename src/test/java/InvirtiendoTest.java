@@ -28,6 +28,7 @@ import condiciones.CondicionTaxativa;
 import condiciones.Crecimiento;
 import condiciones.DependeDeValor;
 import criterios.CrecimientoSiempre;
+import criterios.CriterioCrecimiento;
 import criterios.Promedio;
 import ui.ViewModels.CuentaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
@@ -75,31 +76,17 @@ public class InvirtiendoTest {
 	}
 	
 	@Test
-	public void aplicando_Taxativas(){
+	public void aplicar_Taxativa(){
 		RepositorioIndicadores repo = new RepositorioIndicadores();
-		Indicador unIndicador = new Indicador("testIndicador", "cuentaTest + 5");
-		
-		EmpresaRankeada empresaUno = new EmpresaRankeada("empresaTestUno");
-		empresaUno.setCuentas(new ArrayList());
-		empresaUno.agregarCuenta(new Cuenta("cuentaTest", "2015", "1300"));
-		
-		EmpresaRankeada empresaDos = new EmpresaRankeada("empresaTestDos");
-		empresaDos.setCuentas(new ArrayList());
-		empresaDos.agregarCuenta(new Cuenta("cuentaTest", "2015", "500"));
-		
-		EmpresaRankeada empresaTres = new EmpresaRankeada("empresaTestTres");
-		empresaTres.setCuentas(new ArrayList());
-		empresaTres.agregarCuenta(new Cuenta("cuentaTest", "2015", "5050"));
-		
-		List<EmpresaRankeada> empresas = new ArrayList<>();
-		empresas.add(empresaUno);
-		empresas.add(empresaDos);
-		empresas.add(empresaTres);
-		
-		CondicionTaxativa taxativa_1 = new CondicionTaxativa(repo, new ComparadorMayor());
-		Metodologia metodologia = new Metodologia("prueba", taxativas, null);
-		
-		
+		CondicionTaxativa taxativa = new CondicionTaxativa(repo, new ComparadorMenor(), 100);
+		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
+		taxativa.setCriterio(new Promedio(unIndicador));
+		Empresa miEmpresa = new Empresa("testEmpresa");
+		miEmpresa.setCuentas(new ArrayList<>());
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));	
+		Assert.assertTrue(taxativa.aplicar(miEmpresa));
 	}
 	
 	@Test
@@ -204,6 +191,8 @@ public class InvirtiendoTest {
 		Metodologia metodologia = new Metodologia("testMetodologia", lista);
 		Assert.assertEquals(metodologia.getCondiciones().size(), 1);
 	}
+	
+	// TEST's PREVIOS ------------------------------------------
 	
 	@Test
     public void verificarFormatoParser(){

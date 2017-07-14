@@ -12,7 +12,7 @@ public abstract class Criterio {
 		this.setIndicador(indicador);
 	}
 	
-	public abstract Boolean aplicarCriterio(Empresa unaEmpresa, Condicion unaCondicion);
+	public abstract Boolean aplicar(Empresa unaEmpresa, Condicion unaCondicion);
 
 	public Indicador getIndicador() {
 		return indicador;

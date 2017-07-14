@@ -14,8 +14,6 @@ import repositorios.RepositorioIndicadores;
 
 public class CondicionTaxativa extends Condicion {
 	
-	int value;
-	
 	public CondicionTaxativa(RepositorioIndicadores indicadores, IComparador comparador, int value) {
 		super(indicadores, comparador);
 		this.value = value;
@@ -23,15 +21,7 @@ public class CondicionTaxativa extends Condicion {
 
 	@Override
 	public Boolean aplicar(Empresa empresa) {
-		return this.getCriterio().aplicarCriterio(empresa, this);
-	}
-	
-	public int getValue() {
-		return value;
-	}
-
-	public void setValue(int value) {
-		this.value = value;
+		return this.getCriterio().aplicar(empresa, this);
 	}
 	
 }
