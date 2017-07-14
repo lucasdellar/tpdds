@@ -1,4 +1,4 @@
-package condiciones;
+/*package condiciones;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,3 +25,4 @@ public class Crecimiento extends Condicion {
 	}
 
 }
+*/

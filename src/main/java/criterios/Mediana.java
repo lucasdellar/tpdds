@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import condiciones.Condicion;
-import condiciones.DependeDeValor;
 import domain.Indicador;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
@@ -34,7 +33,7 @@ public class Mediana  extends Criterio{
 		
 		int size = indicadoresAplicados.size();
 		return  unaCondicion.getComparador().comparar( esPar(size) ? medianaPar(indicadoresAplicados, size) : 
-				medianaImpar(indicadoresAplicados), ((DependeDeValor)unaCondicion).getValor());
+				medianaImpar(indicadoresAplicados), unaCondicion.getValue());
 	}
 
 	private Double medianaImpar(List<Double> indicadoresAplicados) {

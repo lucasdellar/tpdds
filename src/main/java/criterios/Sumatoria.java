@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import condiciones.Condicion;
-import condiciones.DependeDeValor;
 import domain.Cuenta;
 import domain.Indicador;
 import empresas.Empresa;

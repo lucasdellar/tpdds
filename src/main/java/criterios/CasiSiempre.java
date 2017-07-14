@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import condiciones.Condicion;
-import condiciones.DependeDeValor;
 import domain.Cuenta;
 import domain.Indicador;
 import empresas.Empresa;
