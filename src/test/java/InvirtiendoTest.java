@@ -46,7 +46,7 @@ public class InvirtiendoTest {
     File file;
 	
 	@Before
-	public void initObjects() throws IOException{ // Si creamos los objetos aca no funciona los mantiene al salir del metodo.
+	public void initObjects() throws IOException{ 
 		file = new File("cuentasMock.txt");
 		file.createNewFile();
         conversor = new ConversorFormatoArchivo();
@@ -61,32 +61,73 @@ public class InvirtiendoTest {
         empresaViewModel.setArchivo(archivo);
 	}
 	
+	//  *** TEST's Entrega: METODOLOGÍAS ***
+	
 	@Test
 	public void comparadorMenor(){
 		ComparadorMenor comparador = new ComparadorMenor();
-		
 		Assert.assertEquals(comparador.comparar(5, 9), true);
 	}
 	
 	@Test
 	public void comparadorMayor(){
 		ComparadorMayor comparador = new ComparadorMayor();
-		
 		Assert.assertEquals(comparador.comparar(5, 9), false);
 	}
 	
 	@Test
-	public void aplicar_Taxativa(){
+	public void aplicar_Taxativa_unitariamente(){
+		/* Objetivo: aplicar taxativa a una sola empresa (lista con un elemento).
+		 * Resultado: que devuelva la lista con dicha empresa. 
+		 */
 		RepositorioIndicadores repo = new RepositorioIndicadores();
 		CondicionTaxativa taxativa = new CondicionTaxativa(repo, new ComparadorMenor(), 100);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
 		taxativa.setCriterio(new Promedio(unIndicador));
-		Empresa miEmpresa = new Empresa("testEmpresa");
+		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
 		miEmpresa.setCuentas(new ArrayList<>());
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));	
-		Assert.assertTrue(taxativa.aplicar(miEmpresa));
+		
+		List<EmpresaRankeada> empresas = new ArrayList<>();
+		empresas.add(miEmpresa);
+		Assert.assertEquals(taxativa.aplicar(empresas).get(0).getNombre(), miEmpresa.getNombre());
+	}
+	
+	@Test
+	public void aplicar_Taxativa_varias_empresas(){
+		/* Objetivo: filtrar las empresas según la taxativa. La primera empresa
+		 * cumple la condicion, la siguiente no. 
+		 * Resultado: una lista con la única empresa que cumple la condición.
+		 */
+		RepositorioIndicadores repo = new RepositorioIndicadores();
+		CondicionTaxativa taxativa = new CondicionTaxativa(repo, new ComparadorMenor(), 100);
+		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
+		taxativa.setCriterio(new Promedio(unIndicador));
+		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
+		miEmpresa.setCuentas(new ArrayList<>());
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));	
+		
+		EmpresaRankeada otraEmpresa = new EmpresaRankeada("otraEmpresa");
+		otraEmpresa.setCuentas(new ArrayList<>());
+		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3000000"));
+		
+		List<EmpresaRankeada> empresas = new ArrayList<>();
+		empresas.add(miEmpresa);
+		empresas.add(otraEmpresa);
+		Assert.assertEquals(taxativa.aplicar(empresas).size(), 1);
+	}
+	
+	@Test
+	public void agregar_condicion_Taxativa(){
+		CondicionTaxativa crece = new CondicionTaxativa(new RepositorioIndicadores(), new ComparadorMayor());
+		List<Condicion> lista = new ArrayList<>();
+		lista.add(crece);
+		Metodologia metodologia = new Metodologia("testMetodologia", lista);
+		Assert.assertEquals(metodologia.getCondiciones().size(), 1);
 	}
 	
 	@Test
@@ -149,30 +190,13 @@ public class InvirtiendoTest {
 		Assert.assertEquals(empresas.get(1).getNombre(), "testEmpresa1");
 		Assert.assertEquals(empresas.get(2).getNombre(), "testEmpresa2");
 	}
-	
-	
-	@Test
-	public void condicionDependeDeValorEvaluaCorrectamenteUnaEmpresa(){
-		RepositorioIndicadores repo = new RepositorioIndicadores();
-		DependeDeValor dependeDeValor = new DependeDeValor(repo, new ComparadorMenor(), 100);
-		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
-		dependeDeValor.setCriterio(new Promedio(unIndicador));
-		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
-		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
-		miEmpresa.setCuentas(new ArrayList<>());
-		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
-		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
-		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));
-		empresas.add(miEmpresa);		
-		Assert.assertEquals(dependeDeValor.aplicar(empresas).size(), 1);
-	}
-	
+
 	@Test
 	public void condicionCrecimientoEvaluaCorrectamenteUnaEmpresa(){
 		RepositorioIndicadores repo = new RepositorioIndicadores();
-		Crecimiento crece = new Crecimiento(repo, new ComparadorMenor());
+		CondicionTaxativa condicion = new CondicionTaxativa(repo, new ComparadorMenor());
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
-		crece.setCriterio(new CrecimientoSiempre(unIndicador, 2015, 2017));
+		condicion.setCriterio(new CrecimientoSiempre(unIndicador, 2015, 2017));
 		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
 		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
 		miEmpresa.setCuentas(new ArrayList<>());
@@ -180,19 +204,10 @@ public class InvirtiendoTest {
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));
 		empresas.add(miEmpresa);		
-		Assert.assertEquals(crece.aplicar(empresas).size(), 1);
+		Assert.assertEquals(condicion.aplicar(empresas).size(), 1);
 	}	
 	
-	@Test
-	public void metodologiaConCondicionesAceptaCrecimiento(){
-		Crecimiento crece = new Crecimiento(new RepositorioIndicadores(), new ComparadorMayor());
-		ArrayList<Condicion> lista = new ArrayList<>();
-		lista.add(crece);
-		Metodologia metodologia = new Metodologia("testMetodologia", lista);
-		Assert.assertEquals(metodologia.getCondiciones().size(), 1);
-	}
-	
-	// TEST's PREVIOS ------------------------------------------
+	//  *** TEST's PREVIOS ***
 	
 	@Test
     public void verificarFormatoParser(){
@@ -258,7 +273,6 @@ public class InvirtiendoTest {
     	cuentasViewModel.agregarCuenta();
     	cuentasViewModel.agregarCuenta();
     }
-
 
     @Test
     public void viewModelAgregarCuentaAlArchivoCorrectamente(){

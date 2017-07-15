@@ -4,7 +4,7 @@ import comparadores.IComparador;
 import criterios.Criterio;
 import repositorios.RepositorioIndicadores;
 
-public class CondicionPrioridad {
+public class CondicionPrioridad extends Condicion {
 	
 	private Criterio criterio;
 	private int peso;
@@ -18,6 +18,7 @@ public class CondicionPrioridad {
 		this.repoIndicadores = repoIndicadores;
 		this.comparador = comparador;
 	}
+	
 	public Criterio getCriterio() {
 		return criterio;
 	}

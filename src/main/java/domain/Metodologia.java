@@ -12,49 +12,36 @@ import empresas.EmpresaRankeada;
 public class Metodologia {
 
 	String nombre;
-	private List<CondicionTaxativa> condiciones_taxativas;
-	private List<CondicionPrioridad> condiciones_prioritarias;
-
-	public Metodologia(String nombre, List<CondicionTaxativa> condiciones_taxativas,
-			List<CondicionPrioridad> condiciones_prioritarias) {
+	private List<Condicion> condiciones;
+	
+	public Metodologia(String nombre, List<Condicion> condiciones) {
 		this.nombre = nombre;
-		this.condiciones_taxativas = condiciones_taxativas;
-		this.condiciones_prioritarias = condiciones_prioritarias;
+		this.condiciones = condiciones;
 	}
 
 	public List<EmpresaRankeada> aplicarMetodologia(List<Empresa> empresas){
 		List<EmpresaRankeada> misEmpresas = new ArrayList<EmpresaRankeada>();
-		List <Empresa> empresas_a_invertir = obtener_empresas_a_invertir(empresas);
-		inicializarEmpresasRankeadas(misEmpresas, empresas_a_invertir); // Generamos una abstracción adicional para el puntaje.
+		inicializarEmpresasRankeadas(misEmpresas, empresas); 
 		ordenarPorRanking(misEmpresas);
 		
 		return misEmpresas;
 	}
 
 	private void inicializarEmpresasRankeadas(List<EmpresaRankeada> misEmpresas, List<Empresa> empresas) {
+		/* Se crean objetos adicionales para relacionar puntos con cada empresa en particular*/
 		for(Empresa empresa : empresas){
 			misEmpresas.add(new EmpresaRankeada(empresa.getNombre()));
 		}
 	}
 
-	public List<Empresa> obtener_empresas_a_invertir(List<Empresa> empresas){
-		List <Empresa> empresas_a_invertir = new ArrayList<>();
-		for (Empresa empresa : empresas) {
-			if(condiciones_taxativas.stream().allMatch(condicion -> condicion.aplicar(empresa))){
-				empresas_a_invertir.add(empresa);
-			}
-		}
-		
-		return empresas_a_invertir;
-	}
-	
 	public void ordenarPorRanking(List<EmpresaRankeada> misEmpresas) {
-		
-		for(Condicion condicion : getCondiciones()){
-			condicion.aplicar(misEmpresas);
+		/*Se aplican todas las condiciones, tanto taxativas como prioritarias, 
+		 * y luego se ordena la lista por peso.*/
+		for(Condicion condicion : condiciones){
+			misEmpresas = condicion.aplicar(misEmpresas);
 		}
+		
 		misEmpresas.sort(new Comparator<EmpresaRankeada>(){
-
 			@Override
 			public int compare(EmpresaRankeada emp1, EmpresaRankeada emp2) {
 				return emp1.getRanking().compareTo(emp2.getRanking());
@@ -72,20 +59,12 @@ public class Metodologia {
 		this.nombre = nombre;
 	}
 
-	public List<CondicionTaxativa> getCondiciones_taxativas() {
-		return condiciones_taxativas;
+	public List<Condicion> getCondiciones() {
+		return condiciones;
 	}
 
-	public void setCondiciones_taxativas(List<CondicionTaxativa> condiciones_taxativas) {
-		this.condiciones_taxativas = condiciones_taxativas;
+	public void setCondiciones(List<Condicion> condiciones) {
+		this.condiciones = condiciones;
 	}
-
-	public List<CondicionPrioridad> getCondiciones_prioritarias() {
-		return condiciones_prioritarias;
-	}
-
-	public void setCondiciones_prioritarias(List<CondicionPrioridad> condiciones_prioritarias) {
-		this.condiciones_prioritarias = condiciones_prioritarias;
-	}
-
+	
 }

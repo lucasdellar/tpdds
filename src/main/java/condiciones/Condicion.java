@@ -1,11 +1,8 @@
 package condiciones;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import comparadores.IComparador;
 import criterios.Criterio;
-import empresas.Empresa;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
@@ -27,7 +24,7 @@ public abstract class Condicion {
 		this.comparador = comparador;
 	}
 	
-	public abstract Boolean aplicar(Empresa empresa);
+	public abstract List<EmpresaRankeada> aplicar(List<EmpresaRankeada> empresas);
 
 	public RepositorioIndicadores getRepoIndicadores() {
 		return repoIndicadores;
