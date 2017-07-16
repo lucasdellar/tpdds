@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import condiciones.Condicion;
+import condiciones.CondicionTaxativa;
 import domain.Indicador;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
@@ -17,7 +18,7 @@ public class Mediana  extends Criterio{
 	}
 
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, Condicion unaCondicion) {
+	public Boolean aplicar(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
 		
 		List<Double> indicadoresAplicados = unaEmpresa.getCuentas().stream()
 				.map( x -> 

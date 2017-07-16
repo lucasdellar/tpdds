@@ -41,8 +41,8 @@ public class ComparaEmpresasPorIndicador extends Condicion {
 	}
 
 	private void aumentarPeso(List<EmpresaRankeada> empresas) {
-		for(EmpresaRankeada unaEmp : empresas){
-			unaEmp.aumentarRanking(getPeso() * (empresas.size() - empresas.indexOf(unaEmp)));    // Manera propia de calcularle el peso
+		for(EmpresaRankeada empresa : empresas){
+			empresa.aumentarRanking(getPeso() * (empresas.size() - empresas.indexOf(empresa)));    // Manera propia de calcularle el peso
 		}
 		
 	}

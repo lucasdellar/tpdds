@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
 import condiciones.Condicion;
-import condiciones.CondicionPrioridad;
+import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
@@ -13,16 +13,15 @@ public class Metodologia {
 
 	String nombre;
 	private List<CondicionTaxativa> condiciones_taxativas;
-	private List<CondicionPrioridad> condiciones_prioritarias;
+	private List<CondicionPrioritaria> condiciones_prioritarias;
 
-	public Metodologia(String nombre, List<CondicionTaxativa> condiciones_taxativas,
-			List<CondicionPrioridad> condiciones_prioritarias) {
+	public Metodologia(String nombre, List<CondicionTaxativa> condiciones_taxativas, List<CondicionPrioritaria> condiciones_prioritarias) {
 		this.nombre = nombre;
 		this.condiciones_taxativas = condiciones_taxativas;
 		this.condiciones_prioritarias = condiciones_prioritarias;
 	}
 
-	public List<EmpresaRankeada> aplicarMetodologia(List<Empresa> empresas){
+	public List<EmpresaRankeada> aplicarMetodologia(List<Empresa> empresas, String periodo){
 		List<EmpresaRankeada> misEmpresas = new ArrayList<EmpresaRankeada>();
 		List <Empresa> empresas_a_invertir = obtener_empresas_a_invertir(empresas);
 		inicializarEmpresasRankeadas(misEmpresas, empresas_a_invertir); // Generamos una abstracción adicional para el puntaje.
@@ -50,8 +49,8 @@ public class Metodologia {
 	
 	public void ordenarPorRanking(List<EmpresaRankeada> misEmpresas) {
 		
-		for(Condicion condicion : getCondiciones()){
-			condicion.aplicar(misEmpresas);
+		for(CondicionPrioritaria condicion_prioritaria : getCondicionesPrioritarias()){
+			condicion_prioritaria.aplicar(misEmpresas);
 		}
 		misEmpresas.sort(new Comparator<EmpresaRankeada>(){
 
@@ -80,11 +79,11 @@ public class Metodologia {
 		this.condiciones_taxativas = condiciones_taxativas;
 	}
 
-	public List<CondicionPrioridad> getCondiciones_prioritarias() {
+	public List<CondicionPrioritaria> getCondicionesPrioritarias() {
 		return condiciones_prioritarias;
 	}
 
-	public void setCondiciones_prioritarias(List<CondicionPrioridad> condiciones_prioritarias) {
+	public void setCondicionesPrioritarias(List<CondicionPrioritaria> condiciones_prioritarias) {
 		this.condiciones_prioritarias = condiciones_prioritarias;
 	}
 

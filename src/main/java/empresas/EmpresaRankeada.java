@@ -21,5 +21,4 @@ public class EmpresaRankeada extends Empresa{
 		this.ranking = ranking;
 	}
 
-	
 }

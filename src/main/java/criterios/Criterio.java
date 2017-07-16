@@ -1,6 +1,8 @@
 package criterios;
 
 import condiciones.Condicion;
+import condiciones.CondicionTaxativa;
+import condiciones.CondicionPrioritaria;
 import domain.Indicador;
 import empresas.Empresa;
 
@@ -9,10 +11,12 @@ public abstract class Criterio {
 	private Indicador indicador;
 	
 	public Criterio(Indicador indicador){
-		this.setIndicador(indicador);
+		this.indicador = indicador;
 	}
 	
-	public abstract Boolean aplicar(Empresa unaEmpresa, Condicion unaCondicion);
+	public abstract Boolean aplicar(Empresa unaEmpresa, CondicionTaxativa unaCondicion);
+	
+	public abstract Boolean aplicar(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria unaCondicion);
 
 	public Indicador getIndicador() {
 		return indicador;

@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import condiciones.Condicion;
+import condiciones.CondicionTaxativa;
 import domain.Cuenta;
 import domain.Indicador;
 import domain.DomainExceptions.CriterioException;
@@ -20,7 +21,7 @@ public class CriterioNAnios extends Criterio{
 	}
 
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, Condicion unaCondicion) {
+	public Boolean aplicar(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
 		unaEmpresa.getCuentas().sort(new Comparator<Cuenta>(){
 			@Override
 			public int compare(Cuenta cuenta1, Cuenta cuenta2) {
