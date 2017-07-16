@@ -1,11 +1,8 @@
 package condiciones;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import comparadores.IComparador;
 import criterios.Criterio;
-import empresas.Empresa;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 

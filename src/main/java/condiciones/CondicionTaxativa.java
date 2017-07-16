@@ -18,7 +18,7 @@ public class CondicionTaxativa extends Condicion {
 		super(indicadores, comparador);
 		this.value = value;
 	}
-
+		
 	public CondicionTaxativa(RepositorioIndicadores indicadores, IComparador comparador) {
 		/* En ciertos casos la condicion Taxativa puede no requerir de valor alguno. 
 		 * Por ejemplo cuando se quiere aplica el criterio Crecimiento.
