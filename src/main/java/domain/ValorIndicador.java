@@ -1,7 +1,6 @@
 package domain;
 
 import empresas.Empresa;
-import repositorios.Repositorio;
 import repositorios.RepositorioIndicadores;
 
 public class ValorIndicador implements Valor{
@@ -17,6 +16,11 @@ public class ValorIndicador implements Valor{
 	@Override
 	public Double calcular(Empresa unaEmpresa) {
 		return indicador.aplicarIndicador(this.periodo, unaEmpresa, this.repo);
+	}
+	
+	@Override
+	public void setPeriodo(String unPeriodo){
+		this.periodo = unPeriodo;
 	}
 
 }

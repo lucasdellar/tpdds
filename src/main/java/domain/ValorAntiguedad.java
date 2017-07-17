@@ -1,15 +1,9 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
-
 import empresas.Empresa;
-import repositorios.Repositorio;
-import repositorios.RepositorioIndicadores;
 
 public class ValorAntiguedad implements Valor{
 	
@@ -24,6 +18,11 @@ public class ValorAntiguedad implements Valor{
 		
 		Double antiguedad = (periodos.get(maxIndex) - periodos.get(minIndex)) * 1.0;
 		return antiguedad;
+	}
+
+	@Override
+	public void setPeriodo(String periodo) {
+		
 	}
 
 }

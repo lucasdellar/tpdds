@@ -29,8 +29,7 @@ public class CondicionTaxativa extends Condicion {
 
 	public List<EmpresaRankeada> aplicar(List<EmpresaRankeada> empresas) {
 		List<EmpresaRankeada> empresas_a_invertir = empresas.stream()
-			.filter(empresa -> getCriterio().aplicarTaxativa(empresa, this))
-			.collect(Collectors.toList());
+			.filter(empresa -> getCriterio().aplicar(empresa, getValue(), getComparador())).collect(Collectors.toList());
 		return new ArrayList<EmpresaRankeada>(empresas_a_invertir); 
 	}
 

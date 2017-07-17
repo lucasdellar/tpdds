@@ -4,9 +4,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import comparadores.IComparador;
-import criterios.Criterio;
-import domain.Cuenta;
-import domain.Indicador;
 import empresas.Empresa;
 import edu.emory.mathcs.backport.java.util.Collections;
 import empresas.EmpresaRankeada;
@@ -46,7 +43,7 @@ public class CondicionPrioritaria extends Condicion {
 			
 			@Override
 			public int compare(EmpresaRankeada unaEmpresa, EmpresaRankeada otraEmpresa) {
-				if(getCriterio().aplicarPrioritaria(unaEmpresa, otraEmpresa, CondicionPrioritaria.this))
+				if(getCriterio().aplicar(unaEmpresa, getValor(otraEmpresa), getComparador()))
 					return 1;
 				else 
 					return -1;
@@ -63,5 +60,9 @@ public class CondicionPrioritaria extends Condicion {
 	
 	public void setPeso(int peso) {
 		this.peso = peso;
+	}
+	
+	public double getValor(Empresa unaEmpresa) {
+		return this.getCriterio().calcular(unaEmpresa);
 	}
 }

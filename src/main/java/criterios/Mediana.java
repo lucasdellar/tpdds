@@ -3,14 +3,11 @@ package criterios;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import condiciones.Condicion;
-import condiciones.CondicionPrioritaria;
-import condiciones.CondicionTaxativa;
-import domain.Indicador;
+
+import comparadores.IComparador;
 import domain.Valor;
-import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
-import empresas.EmpresaRankeada;
+
 
 public class Mediana  extends Criterio{
 
@@ -18,11 +15,10 @@ public class Mediana  extends Criterio{
 		super(valor);
 	}
 	
-	private Double calcular(Empresa unaEmpresa, Condicion unaCondicion){
+	@Override
+	public double calcular(Empresa unaEmpresa){
 		List<Double> indicadoresAplicados = unaEmpresa.getCuentas().stream()
-				.map( cuenta -> 
-				valor.calcular(cuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores()))
-				.collect(Collectors.toList());
+				.map(unaCuenta -> actualizarPeriodo(unaEmpresa, unaCuenta)).collect(Collectors.toList());
 			
 		indicadoresAplicados.sort(new Comparator<Double>(){
 			@Override
@@ -36,15 +32,8 @@ public class Mediana  extends Criterio{
 	}
 
 	@Override
-	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
-		return  unaCondicion.getComparador().comparar(calcular(unaEmpresa, unaCondicion), 
-				unaCondicion.getValue()); 
-	}
-
-	@Override
-	public Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria unaCondicion) {
-		return unaCondicion.getComparador().comparar(calcular(unaEmpresa, unaCondicion), 
-				calcular(otraEmpresa, unaCondicion));
+	public Boolean aplicar(Empresa unaEmpresa, double unValor, IComparador unComparador) {
+		return  unComparador.comparar(calcular(unaEmpresa), unValor); 
 	}
 	
 	private Double medianaImpar(List<Double> indicadoresAplicados) {
@@ -58,6 +47,4 @@ public class Mediana  extends Criterio{
 	public Boolean esPar(int numero){
 		return numero % 2 == 0;
 	}
-
-	
 }
