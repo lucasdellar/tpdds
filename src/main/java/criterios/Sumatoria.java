@@ -1,7 +1,10 @@
 package criterios;
 
-
 import comparadores.IComparador;
+import condiciones.Condicion;
+import condiciones.CondicionTaxativa;
+import condiciones.CondicionPrioritaria;
+import domain.Indicador;
 import domain.Valor;
 import empresas.Empresa;
 
@@ -12,19 +15,30 @@ public class Sumatoria extends Criterio{
 		super(valor);
 	}
 
-	@Override
-	public double calcular(Empresa unaEmpresa) {
-		return unaEmpresa.getCuentas().stream().mapToDouble(unaCuenta -> actualizarPeriodo(unaEmpresa, unaCuenta)).sum();
+	public double calcular(Empresa unaEmpresa, Condicion unaCondicion) {
+		return unaEmpresa.getCuentas().stream().mapToDouble(unaCuenta -> valor.calcular
+				(unaCuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores())).sum();
 	}
 	
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, double unValor, IComparador unComparador) {
+	public Boolean aplicar(Empresa unaEmpresa, double valor, IComparador comparador) {
 		
 		double sumatoria = 0;
 		
-		sumatoria = calcular(unaEmpresa);
+		sumatoria = calcular(unaEmpresa, condicion_taxativa);
 		
-		return unComparador.comparar(sumatoria, unValor);
+		return condicion_taxativa.getComparador().comparar(sumatoria, condicion_taxativa.getValor());
+	}
+	
+	@Override
+	public Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria condicion_prioritaria) {
+		
+		double sumatoria1, sumatoria2 = 0;
+		
+		sumatoria1 = calcular(unaEmpresa, condicion_prioritaria);
+		sumatoria2 = calcular(otraEmpresa, condicion_prioritaria);
+		
+		return condicion_prioritaria.getComparador().comparar(sumatoria1, sumatoria2);
 	}
 	
 }

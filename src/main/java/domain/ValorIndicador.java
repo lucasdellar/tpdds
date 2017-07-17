@@ -9,8 +9,9 @@ public class ValorIndicador implements Valor{
 	String periodo;
 	RepositorioIndicadores repo;
 
-	public ValorIndicador(Indicador indicador, String periodo, RepositorioIndicadores repo) {
+	public ValorIndicador(Indicador indicador, RepositorioIndicadores repo) {
 		this.indicador = indicador;
+		this.repo = repo;
 	}
 
 	@Override
