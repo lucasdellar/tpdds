@@ -14,7 +14,6 @@ import repositorios.RepositorioIndicadores;
 
 public class ComparaEmpresasPorIndicador extends Condicion {
 
-
 	private String periodo;
 	private Indicador indicador;
 	

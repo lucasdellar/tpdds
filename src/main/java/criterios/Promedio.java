@@ -15,8 +15,8 @@ public class Promedio extends Criterio{
 	
 	public double promediar(Empresa unaEmpresa, Condicion unaCondicion) {
 		double sumatoria = 0;
-		sumatoria = unaEmpresa.getCuentas().stream().mapToDouble( x -> this.getIndicador().aplicarIndicador
-				(x.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores())).sum();
+		sumatoria = unaEmpresa.getCuentas().stream().mapToDouble( unaCuenta -> this.getIndicador().aplicarIndicador
+				(unaCuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores())).sum();
 		return sumatoria / unaEmpresa.getCuentas().size();
 	}
 

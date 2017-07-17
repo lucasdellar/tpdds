@@ -3,9 +3,6 @@ package criterios;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.apache.log4j.helpers.ISO8601DateFormat;
-
 import condiciones.Condicion;
 import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
@@ -20,10 +17,8 @@ public class Mediana  extends Criterio{
 	public Mediana(Indicador indicador) {
 		super(indicador);
 	}
-
-	@Override
-	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
-		
+	
+	private Double obtenerMediana(Empresa unaEmpresa, Condicion unaCondicion){
 		List<Double> indicadoresAplicados = unaEmpresa.getCuentas().stream()
 				.map( cuenta -> 
 				getIndicador().aplicarIndicador(cuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores()))
@@ -37,10 +32,21 @@ public class Mediana  extends Criterio{
 		});
 		
 		int size = indicadoresAplicados.size();
-		return  unaCondicion.getComparador().comparar( esPar(size) ? medianaPar(indicadoresAplicados, size) : 
-				medianaImpar(indicadoresAplicados), unaCondicion.getValue()); 
+		return esPar(size) ? medianaPar(indicadoresAplicados, size) : medianaImpar(indicadoresAplicados);
 	}
 
+	@Override
+	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
+		return  unaCondicion.getComparador().comparar(obtenerMediana(unaEmpresa, unaCondicion), 
+				unaCondicion.getValue()); 
+	}
+
+	@Override
+	public Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria unaCondicion) {
+		return unaCondicion.getComparador().comparar(obtenerMediana(unaEmpresa, unaCondicion), 
+				obtenerMediana(otraEmpresa, unaCondicion));
+	}
+	
 	private Double medianaImpar(List<Double> indicadoresAplicados) {
 		return indicadoresAplicados.get(indicadoresAplicados.size() / 2);
 	}
@@ -53,9 +59,5 @@ public class Mediana  extends Criterio{
 		return numero % 2 == 0;
 	}
 
-	@Override
-	public Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria unaCondicion) {
-		throw new CriterioParaCondicionIncorrectaException("No se puede utilizar este criterio para el tipo de condicion Prioritaria.");
-	}
 	
 }
