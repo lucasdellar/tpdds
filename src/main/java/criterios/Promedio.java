@@ -21,7 +21,6 @@ public class Promedio extends Criterio{
 	@Override
 	public Boolean aplicar(Empresa unaEmpresa, double unValor, IComparador comparador) {
 		double promedio = calcular(unaEmpresa);
-		
 		return  comparador.comparar(promedio, unValor);
 	}
 }

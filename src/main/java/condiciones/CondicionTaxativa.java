@@ -10,13 +10,13 @@ import repositorios.RepositorioIndicadores;
 
 public class CondicionTaxativa extends Condicion {
 	
-	private int value;
+	private int valor;
 	
 	public CondicionTaxativa(RepositorioIndicadores indicadores, IComparador comparador, int valor) {
 		/* Para el caso en el que la condicion requiera de un valor 
 		 */
 		super(indicadores, comparador);
-		this.value = valor;
+		this.valor = valor;
 	}
 		
 	public CondicionTaxativa(RepositorioIndicadores indicadores, IComparador comparador) {
@@ -29,16 +29,16 @@ public class CondicionTaxativa extends Condicion {
 
 	public List<EmpresaRankeada> aplicar(List<EmpresaRankeada> empresas) {
 		List<EmpresaRankeada> empresas_a_invertir = empresas.stream()
-			.filter(empresa -> getCriterio().aplicar(empresa, getValue(), getComparador())).collect(Collectors.toList());
+			.filter(empresa -> getCriterio().aplicar(empresa, getValor(), getComparador())).collect(Collectors.toList());
 		return new ArrayList<EmpresaRankeada>(empresas_a_invertir); 
 	}
 
-	public int getValue() {
-		return value;
+	public int getValor() {
+		return valor;
 	}
 
 	public void setValue(int value) {
-		this.value = value;
+		this.valor = value;
 	}
 	
 }

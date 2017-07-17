@@ -14,7 +14,7 @@ public class CriterioPorValor extends Criterio {
 	public Boolean aplicar(Empresa unaEmpresa, double unValor, IComparador unComparador) {
 		return unComparador.comparar(calcular(unaEmpresa), unValor);
 	}
-	
+
 	@Override
 	public double calcular(Empresa unaEmpresa){
 		return valor.calcular(unaEmpresa);
