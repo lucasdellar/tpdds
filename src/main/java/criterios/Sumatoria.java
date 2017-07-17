@@ -1,6 +1,5 @@
 package criterios;
 
-
 import comparadores.IComparador;
 import domain.Valor;
 import empresas.Empresa;

@@ -25,6 +25,9 @@ import condiciones.Condicion;
 import condiciones.CondicionTaxativa;
 import condiciones.CondicionPrioritaria;
 import criterios.CriterioCrecimiento;
+import criterios.CriterioNAnios;
+import criterios.CriterioPorValor;
+import criterios.Mediana;
 import criterios.Promedio;
 import criterios.Sumatoria;
 import ui.ViewModels.CuentaViewModel;
@@ -80,7 +83,7 @@ public class InvirtiendoTest {
 		RepositorioIndicadores repo = new RepositorioIndicadores();
 		CondicionTaxativa taxativa = new CondicionTaxativa(repo, new ComparadorMenor(), 100);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
-		Valor valor = new ValorIndicador(unIndicador);
+		Valor valor = new ValorIndicador(unIndicador, taxativa.getRepoIndicadores());
 		taxativa.setCriterio(new Promedio(valor));
 		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
 		miEmpresa.setCuentas(new ArrayList<>());
@@ -425,10 +428,10 @@ public class InvirtiendoTest {
 	@Test
 	public void agregar_condicion_Taxativa(){
 		CondicionTaxativa crece = new CondicionTaxativa(new RepositorioIndicadores(), new ComparadorMayor());
-		List<Condicion> lista = new ArrayList<>();
-		lista.add(crece);
-		Metodologia metodologia = new Metodologia("testMetodologia", lista);
-		Assert.assertEquals(metodologia.getCondiciones().size(), 1);
+		List<Condicion> condiciones_taxativas = new ArrayList<>();
+		condiciones_taxativas.add(crece);
+		Metodologia metodologia = new Metodologia("testMetodologia", condiciones_taxativas, null);
+		Assert.assertEquals(metodologia.getCondiciones_taxativas().size(), 1);
 	}
 	
 	@Test
@@ -473,6 +476,39 @@ public class InvirtiendoTest {
 		empresas.add(miEmpresa);		
 		Assert.assertEquals(condicion.aplicar(empresas).size(), 1);
 	}	
+	
+	@Test
+	public void cumpleCondicionTaxativaConCriterioMediana(){
+		RepositorioIndicadores repo = new RepositorioIndicadores();
+		CondicionTaxativa condicion = new CondicionTaxativa(repo, new ComparadorMayor(), 2);
+		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
+		Valor valor = new ValorIndicador(unIndicador, condicion.getRepoIndicadores());
+		condicion.setCriterio(new Mediana(valor));
+		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
+		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
+		miEmpresa.setCuentas(new ArrayList<>());
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));
+		empresas.add(miEmpresa);		
+		Assert.assertEquals(condicion.aplicar(empresas).size(), 1);
+	}
+	
+	@Test 
+	public void cumpleCondicionTaxativaConCriterioPorValor(){
+		RepositorioIndicadores repo = new RepositorioIndicadores();
+		CondicionTaxativa condicion = new CondicionTaxativa(repo, new ComparadorMayor(), 2);
+		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
+		Valor valor = new ValorIndicador(unIndicador, condicion.getRepoIndicadores());
+		valor.setPeriodo("2015");
+		condicion.setCriterio(new CriterioPorValor(valor));
+		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
+		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
+		miEmpresa.setCuentas(new ArrayList<>());
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		empresas.add(miEmpresa);		
+		Assert.assertEquals(condicion.aplicar(empresas).size(), 1);
+	}
 	
 	//  *** TEST's PREVIOS ***
 	
