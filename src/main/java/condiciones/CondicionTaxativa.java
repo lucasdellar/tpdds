@@ -16,7 +16,7 @@ public class CondicionTaxativa extends Condicion {
 		/* Para el caso en el que la condicion requiera de un valor 
 		 */
 		super(indicadores, comparador);
-		this.value = value;
+		this.value = valor;
 	}
 		
 	public CondicionTaxativa(RepositorioIndicadores indicadores, IComparador comparador) {

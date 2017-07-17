@@ -40,12 +40,16 @@ public class CondicionPrioritaria extends Condicion {
 		}
 	}
 	
-	private void ordenarSegunCriterio(List<EmpresaRankeada> empresas) {
-		empresas.sort(new Comparator<EmpresaRankeada>(){
+	private List<EmpresaRankeada> ordenarSegunCriterio(List<EmpresaRankeada> empresas) {
 
+		empresas.sort(new Comparator<EmpresaRankeada>(){
+			
 			@Override
 			public int compare(EmpresaRankeada unaEmpresa, EmpresaRankeada otraEmpresa) {
-				return getCriterio().aplicar(unaEmpresa, otraEmpresa, this);
+				if(getCriterio().aplicar(unaEmpresa, otraEmpresa, CondicionPrioritaria.this))
+					return 1;
+				else 
+					return -1;
 			}
 		});
 		Collections.reverse(empresas);

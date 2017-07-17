@@ -141,23 +141,26 @@ public class InvirtiendoTest {
 		EmpresaRankeada empresa1 = new EmpresaRankeada("testEmpresa1");
 		empresa1.setCuentas(new ArrayList<>());
 		empresa1.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
-		empresa1.agregarCuenta(new Cuenta("testCuenta", "2016", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2016", "5")); //75
 		empresa1.agregarCuenta(new Cuenta("testCuenta", "2017", "5"));
 		
 		EmpresaRankeada empresa2 = new EmpresaRankeada("testEmpresa2");
+		empresa2.setCuentas(new ArrayList<>());
 		empresa2.agregarCuenta(new Cuenta("testCuenta", "2014", "3"));
-		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "4"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "4")); //60
 		empresa2.agregarCuenta(new Cuenta("testCuenta", "2016", "5"));
 		
 		EmpresaRankeada empresa3 = new EmpresaRankeada("testEmpresa3");
-		empresa2.agregarCuenta(new Cuenta("testCuenta", "2013", "7"));
-		empresa2.agregarCuenta(new Cuenta("testCuenta", "2014", "5"));
-		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "1"));
+		empresa3.setCuentas(new ArrayList<>());
+		empresa3.agregarCuenta(new Cuenta("testCuenta", "2013", "7"));
+		empresa3.agregarCuenta(new Cuenta("testCuenta", "2014", "5")); //65
+		empresa3.agregarCuenta(new Cuenta("testCuenta", "2015", "1"));
 		
 		List<EmpresaRankeada> empresas = new ArrayList<>();
 		empresas.add(empresa1);
 		empresas.add(empresa2);
 		empresas.add(empresa3);
+		
 		Assert.assertEquals(prioritaria.aplicar(empresas).get(0).getNombre(), "testEmpresa1");
 	}
 	
