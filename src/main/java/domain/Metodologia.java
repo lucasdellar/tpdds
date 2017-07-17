@@ -19,7 +19,7 @@ public class Metodologia {
 		this.condiciones = condiciones;
 	}
 
-	public List<EmpresaRankeada> aplicarMetodologia(List<Empresa> empresas, String periodo){
+	public List<EmpresaRankeada> aplicarMetodologia(List<Empresa> empresas){
 		List<EmpresaRankeada> misEmpresas = new ArrayList<EmpresaRankeada>();
 		inicializarEmpresasRankeadas(misEmpresas, empresas); 
 		filtrarYOrdenarPorRanking(misEmpresas);
