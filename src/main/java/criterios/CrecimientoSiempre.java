@@ -8,13 +8,14 @@ import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
 import domain.Cuenta;
 import domain.Indicador;
+import domain.Valor;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
 
 public class CrecimientoSiempre extends CriterioCrecimiento{
 
-	public CrecimientoSiempre(Indicador indicador, int principio, int fin) {
-		super(indicador, principio, fin);
+	public CrecimientoSiempre(Valor valor, int principio, int fin) {
+		super(valor, principio, fin);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
 import domain.Cuenta;
 import domain.Indicador;
+import domain.Valor;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
 
@@ -15,10 +16,10 @@ public class CrecimientoCasiSiempre extends CriterioCrecimiento{
 	
 	public int principio;
 	public int fin;
-	private int maxIncumplimientos;
+	private int maxIncumplimientos; 
 
-	public CrecimientoCasiSiempre(Indicador indicador, int principio, int fin, int maxIncumplimientos) {
-		super(indicador, principio, fin);
+	public CrecimientoCasiSiempre(Valor valor, int principio, int fin, int maxIncumplimientos) {
+		super(valor, principio, fin);
 		this.maxIncumplimientos = maxIncumplimientos;
 	}
 

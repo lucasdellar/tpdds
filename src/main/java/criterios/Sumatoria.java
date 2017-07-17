@@ -4,18 +4,19 @@ import condiciones.Condicion;
 import condiciones.CondicionTaxativa;
 import condiciones.CondicionPrioritaria;
 import domain.Indicador;
+import domain.Valor;
 import empresas.Empresa;
 
 public class Sumatoria extends Criterio{
 
 	
-	public Sumatoria(Indicador indicador) {
-		super(indicador);
+	public Sumatoria(Valor valor) {
+		super(valor);
 	}
 
 	public double sumar(Empresa unaEmpresa, Condicion unaCondicion) {
-		return unaEmpresa.getCuentas().stream().mapToDouble( x -> this.getIndicador().aplicarIndicador
-				(x.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores())).sum();
+		return unaEmpresa.getCuentas().stream().mapToDouble(unaCuenta -> valor.calcular
+				(unaCuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores())).sum();
 	}
 	
 	@Override

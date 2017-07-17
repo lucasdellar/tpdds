@@ -4,18 +4,19 @@ import condiciones.Condicion;
 import condiciones.CondicionTaxativa;
 import condiciones.CondicionPrioritaria;
 import domain.Indicador;
+import domain.Valor;
 import empresas.Empresa;
 
 public class Promedio extends Criterio{
 
 	
-	public Promedio(Indicador indicador) {
-		super(indicador);
+	public Promedio(Valor valor) {
+		super(valor);
 	}
 	
 	public double promediar(Empresa unaEmpresa, Condicion unaCondicion) {
 		double sumatoria = 0;
-		sumatoria = unaEmpresa.getCuentas().stream().mapToDouble( unaCuenta -> this.getIndicador().aplicarIndicador
+		sumatoria = unaEmpresa.getCuentas().stream().mapToDouble( unaCuenta -> valor.calcular
 				(unaCuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores())).sum();
 		return sumatoria / unaEmpresa.getCuentas().size();
 	}

@@ -9,6 +9,7 @@ import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
 import domain.Cuenta;
 import domain.Indicador;
+import domain.Valor;
 import domain.DomainExceptions.CriterioException;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
@@ -17,8 +18,8 @@ public class CriterioNAnios extends Criterio{
 
 	int anios;
 	
-	public CriterioNAnios(Indicador indicador, int anios) {
-		super(indicador);
+	public CriterioNAnios(Valor valor, int anios) {
+		super(valor);
 		this.anios = anios;
 	}
 
@@ -33,7 +34,7 @@ public class CriterioNAnios extends Criterio{
 		List<Cuenta> cuentasAEvaluar = new ArrayList<Cuenta>(unaEmpresa.getCuentas().subList(0, anios));
 		verificarQueNoFaltenCuentas(cuentasAEvaluar);
 		return cuentasAEvaluar.stream().allMatch( x -> unaCondicion.getComparador().
-				comparar(this.getIndicador().aplicarIndicador(x.getPeriodo(), 
+				comparar(this.valor.calcular(x.getPeriodo(), 
 						unaEmpresa, unaCondicion.getRepoIndicadores()), unaCondicion.getValue()));
 	}
 

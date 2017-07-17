@@ -15,29 +15,25 @@ import empresas.EmpresaRankeada;
 public class CriterioPorIndicador extends Criterio {
 
 	private String periodo;
-	private Indicador indicador;
 	
-	public CriterioPorIndicador(Indicador indicador, String periodo) {
-		super(indicador);
+	public CriterioPorIndicador(Valor valor, String periodo) {
+		super(valor);
 		this.periodo = periodo;
-	}
-	
-	private Double obtenerValorIndicador(Empresa unaEmpresa, Condicion unaCondicion){
-		return indicador.aplicarIndicador(periodo, unaEmpresa, unaCondicion.getRepoIndicadores());
 	}
 
 	@Override
 	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
 		return unaCondicion.getComparador().
-				comparar(obtenerValorIndicador(unaEmpresa, unaCondicion), unaCondicion.getValue());
+				comparar(valor.calcular(periodo, unaEmpresa, unaCondicion.getRepoIndicadores()), 
+						unaCondicion.getValue());
 	}
 
 	@Override
 	public Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria unaCondicion) {
 
 		return unaCondicion.getComparador().
-				comparar(obtenerValorIndicador(unaEmpresa, unaCondicion), 
-						 obtenerValorIndicador(otraEmpresa, unaCondicion));
+				comparar(valor.calcular(periodo, unaEmpresa, unaCondicion.getRepoIndicadores()), 
+						valor.calcular(periodo, otraEmpresa, unaCondicion.getRepoIndicadores()));
 	}
 
 }

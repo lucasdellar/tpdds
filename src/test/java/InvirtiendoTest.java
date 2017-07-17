@@ -1,7 +1,6 @@
 import domain.*;
 
 import domain.DomainExceptions.*;
-import domain.Metodologia;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
@@ -84,7 +83,8 @@ public class InvirtiendoTest {
 		RepositorioIndicadores repo = new RepositorioIndicadores();
 		CondicionTaxativa taxativa = new CondicionTaxativa(repo, new ComparadorMenor(), 100);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
-		taxativa.setCriterio(new Promedio(unIndicador));
+		Valor valor = new ValorIndicador(unIndicador);
+		taxativa.setCriterio(new Promedio(valor));
 		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
 		miEmpresa.setCuentas(new ArrayList<>());
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
@@ -105,7 +105,8 @@ public class InvirtiendoTest {
 		RepositorioIndicadores repo = new RepositorioIndicadores();
 		CondicionTaxativa taxativa = new CondicionTaxativa(repo, new ComparadorMenor(), 100);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
-		taxativa.setCriterio(new Promedio(unIndicador));
+		Valor valor = new ValorIndicador(unIndicador);
+		taxativa.setCriterio(new Promedio(valor));
 		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
 		miEmpresa.setCuentas(new ArrayList<>());
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
@@ -135,7 +136,8 @@ public class InvirtiendoTest {
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta * 5");
 		CondicionPrioritaria prioritaria = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 2);
 		repositorio.agregar(unIndicador);
-		prioritaria.setCriterio(new Sumatoria(unIndicador));
+		Valor valor = new ValorIndicador(unIndicador);
+		prioritaria.setCriterio(new Sumatoria(valor));
 		
 		EmpresaRankeada empresa1 = new EmpresaRankeada("testEmpresa1");
 		empresa1.setCuentas(new ArrayList<>());
@@ -186,9 +188,15 @@ public class InvirtiendoTest {
 		Metodologia metodologia = new Metodologia("testMetodologia", condicionesPrioritarias);
 		
 		repositorio.agregar(unIndicador);
-		prioritaria1.setCriterio(new Sumatoria(unIndicador));
-		prioritaria2.setCriterio(new Promedio(otroIndicador));
-		prioritaria3.setCriterio(new Promedio(tercerIndicador));
+		repositorio.agregar(otroIndicador);
+		repositorio.agregar(tercerIndicador);
+		
+		Valor valorUno = new ValorIndicador(unIndicador);
+		Valor valorDos = new ValorIndicador(otroIndicador);
+		Valor valorTres = new ValorIndicador(tercerIndicador);
+		prioritaria1.setCriterio(new Sumatoria(valorUno));
+		prioritaria2.setCriterio(new Promedio(valorDos));
+		prioritaria3.setCriterio(new Promedio(valorTres));
 		
 		Empresa empresa1 = new EmpresaRankeada("testEmpresa1");
 		empresa1.setCuentas(new ArrayList<>());
@@ -270,9 +278,12 @@ public class InvirtiendoTest {
 		Metodologia metodologia = new Metodologia("testMetodologia", condicionesTaxativas);
 		
 		repositorio.agregar(unIndicador);
-		taxativa1.setCriterio(new Sumatoria(unIndicador));
-		taxativa2.setCriterio(new CrecimientoCasiSiempre(otroIndicador));
-		taxativa3.setCriterio(new CrecimientoSiempre(tercerIndicador, 2015, 2017, 1));
+		Valor valorUno = new ValorIndicador(unIndicador);
+		Valor valorDos = new ValorIndicador(otroIndicador);
+		Valor valorTres = new ValorIndicador(tercerIndicador);
+		taxativa1.setCriterio(new Sumatoria(valorUno));
+		taxativa2.setCriterio(new CrecimientoCasiSiempre(valorDos, 2015, 2017, 1));
+		taxativa3.setCriterio(new CrecimientoSiempre(valorTres, 2015, 2017));
 		
 		Empresa empresa1 = new EmpresaRankeada("testEmpresa1");
 		empresa1.setCuentas(new ArrayList<>());
@@ -343,9 +354,9 @@ public class InvirtiendoTest {
 		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
 		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
 		Indicador tercerIndicador = new Indicador("indicadorTestC", "testCuentaC / 2");
-		condicionesTaxativas taxativa1 = new condicionesTaxativas(repositorio, new ComparadorMayor(), 1);
-		condicionesTaxativas taxativa2 = new condicionesTaxativas(repositorio, new ComparadorMenor(), 3);
-		condicionesTaxativas taxativa3 = new condicionesTaxativas(repositorio, new ComparadorMayor(), 5);
+		CondicionTaxativa taxativa1 = new condicionesTaxativas(repositorio, new ComparadorMayor(), 1);
+		CondicionTaxativa taxativa2 = new condicionesTaxativas(repositorio, new ComparadorMenor(), 3);
+		CondicionTaxativa taxativa3 = new condicionesTaxativas(repositorio, new ComparadorMayor(), 5);
 		List<CondicionPrioritaria> condicionesPrioritarias = new ArrayList<>();
 		condicionesTaxativas.add(taxativa1);
 		condicionesTaxativas.add(taxativa2);
@@ -454,7 +465,8 @@ public class InvirtiendoTest {
 		RepositorioIndicadores repo = new RepositorioIndicadores();
 		CondicionTaxativa condicion = new CondicionTaxativa(repo, new ComparadorMenor());
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
-		condicion.setCriterio(new CrecimientoSiempre(unIndicador, 2015, 2017));
+		Valor valor = new ValorIndicador(unIndicador);
+		condicion.setCriterio(new CrecimientoSiempre(valor, 2015, 2017));
 		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
 		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
 		miEmpresa.setCuentas(new ArrayList<>());

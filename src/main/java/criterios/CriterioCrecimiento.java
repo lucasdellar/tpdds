@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import condiciones.Condicion;
 import domain.Cuenta;
 import domain.Indicador;
+import domain.Valor;
 import empresas.Empresa;
 
 public abstract class CriterioCrecimiento extends Criterio {
@@ -13,17 +14,12 @@ public abstract class CriterioCrecimiento extends Criterio {
 	protected int principio;
 	protected int fin;
 	
-	public CriterioCrecimiento(Indicador indicador, int principio, int fin) {
-		super(indicador);
+	public CriterioCrecimiento(Valor valor, int principio, int fin) {
+		super(valor);
 		this.principio = principio;
 		this.fin = fin;
 	}
-	
-	 /* Ésta clase sólo se utiliza para generalizar comportamiento entre
-	  * CrecimientoCasiSiempre y CrecimientoSiempre. No se utilizará como
-	  * criterio en sí mismo.
-	  */
-	
+
 	public List<Cuenta> obtener_cuentasDentroDelIntervalo(Empresa unaEmpresa){
 		return unaEmpresa.getCuentas()
 				.stream()
@@ -34,8 +30,8 @@ public abstract class CriterioCrecimiento extends Criterio {
 	public Boolean cumple(Empresa unaEmpresa, Condicion unaCondicion, Cuenta unaCuenta, List<Cuenta> cuentasDentroDelIntervalo) {
 			int posicion = cuentasDentroDelIntervalo.indexOf(unaCuenta);
 			return posicion == cuentasDentroDelIntervalo.size() - 1 || unaCondicion.getComparador()
-					.comparar(getIndicador().aplicarIndicador(unaCuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores()),
-							getIndicador().aplicarIndicador(cuentasDentroDelIntervalo.get(posicion + 1)
+					.comparar(valor.calcular(unaCuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores()),
+							valor.calcular(cuentasDentroDelIntervalo.get(posicion + 1)
 									.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores()));	
 		}
 

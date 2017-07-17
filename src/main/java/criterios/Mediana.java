@@ -7,21 +7,21 @@ import condiciones.Condicion;
 import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
 import domain.Indicador;
+import domain.Valor;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
 
 public class Mediana  extends Criterio{
 
-	
-	public Mediana(Indicador indicador) {
-		super(indicador);
+	public Mediana(Valor valor) {
+		super(valor);
 	}
 	
 	private Double obtenerMediana(Empresa unaEmpresa, Condicion unaCondicion){
 		List<Double> indicadoresAplicados = unaEmpresa.getCuentas().stream()
 				.map( cuenta -> 
-				getIndicador().aplicarIndicador(cuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores()))
+				valor.calcular(cuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores()))
 				.collect(Collectors.toList());
 			
 		indicadoresAplicados.sort(new Comparator<Double>(){
