@@ -1,13 +1,11 @@
 package criterios;
 
-
 import comparadores.IComparador;
 import domain.Valor;
 import empresas.Empresa;
 
 public class Sumatoria extends Criterio{
 
-	
 	public Sumatoria(Valor valor) {
 		super(valor);
 	}

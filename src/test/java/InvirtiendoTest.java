@@ -21,9 +21,12 @@ import org.junit.Test;
 import OperacionesMatematicas.ResolutorDeCuentas;
 import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
+import condiciones.ComparaEmpresasPorIndicador;
 import condiciones.Condicion;
 import condiciones.CondicionTaxativa;
 import condiciones.CondicionPrioritaria;
+import criterios.CrecimientoCasiSiempre;
+import criterios.CrecimientoSiempre;
 import criterios.CriterioCrecimiento;
 import criterios.Promedio;
 import criterios.Sumatoria;
@@ -102,7 +105,7 @@ public class InvirtiendoTest {
 		RepositorioIndicadores repo = new RepositorioIndicadores();
 		CondicionTaxativa taxativa = new CondicionTaxativa(repo, new ComparadorMenor(), 100);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
-		Valor valor = new ValorIndicador(unIndicador, taxativa.getRepoIndicadores());
+		Valor valor = new ValorIndicador(unIndicador);
 		taxativa.setCriterio(new Promedio(valor));
 		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
 		miEmpresa.setCuentas(new ArrayList<>());
@@ -133,7 +136,7 @@ public class InvirtiendoTest {
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta * 5");
 		CondicionPrioritaria prioritaria = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 2);
 		repositorio.agregar(unIndicador);
-		Valor valor = new ValorIndicador(unIndicador);
+		Valor valor = new ValorIndicador(unIndicador, repo);
 		prioritaria.setCriterio(new Sumatoria(valor));
 		
 		EmpresaRankeada empresa1 = new EmpresaRankeada("testEmpresa1");
