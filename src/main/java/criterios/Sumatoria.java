@@ -19,7 +19,7 @@ public class Sumatoria extends Criterio{
 	}
 	
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, CondicionTaxativa condicion_taxativa) {
+	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa condicion_taxativa) {
 		
 		double sumatoria = 0;
 		
@@ -29,7 +29,7 @@ public class Sumatoria extends Criterio{
 	}
 	
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria condicion_prioritaria) {
+	public Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria condicion_prioritaria) {
 		
 		double sumatoria1, sumatoria2 = 0;
 		

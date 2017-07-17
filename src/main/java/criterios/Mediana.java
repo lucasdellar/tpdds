@@ -4,9 +4,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.helpers.ISO8601DateFormat;
+
 import condiciones.Condicion;
+import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
 import domain.Indicador;
+import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
 
@@ -18,11 +22,11 @@ public class Mediana  extends Criterio{
 	}
 
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
+	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
 		
 		List<Double> indicadoresAplicados = unaEmpresa.getCuentas().stream()
-				.map( x -> 
-				getIndicador().aplicarIndicador(x.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores()))
+				.map( cuenta -> 
+				getIndicador().aplicarIndicador(cuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores()))
 				.collect(Collectors.toList());
 			
 		indicadoresAplicados.sort(new Comparator<Double>(){
@@ -34,7 +38,7 @@ public class Mediana  extends Criterio{
 		
 		int size = indicadoresAplicados.size();
 		return  unaCondicion.getComparador().comparar( esPar(size) ? medianaPar(indicadoresAplicados, size) : 
-				medianaImpar(indicadoresAplicados), unaCondicion.getValue());
+				medianaImpar(indicadoresAplicados), unaCondicion.getValue()); 
 	}
 
 	private Double medianaImpar(List<Double> indicadoresAplicados) {
@@ -47,6 +51,11 @@ public class Mediana  extends Criterio{
 
 	public Boolean esPar(int numero){
 		return numero % 2 == 0;
+	}
+
+	@Override
+	public Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria unaCondicion) {
+		throw new CriterioParaCondicionIncorrectaException("No se puede utilizar este criterio para el tipo de condicion Prioritaria.");
 	}
 	
 }

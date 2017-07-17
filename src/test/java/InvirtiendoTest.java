@@ -26,8 +26,6 @@ import condiciones.ComparaEmpresasPorIndicador;
 import condiciones.Condicion;
 import condiciones.CondicionTaxativa;
 import condiciones.CondicionPrioritaria;
-import condiciones.Crecimiento;
-import condiciones.DependeDeValor;
 import criterios.CrecimientoSiempre;
 import criterios.CriterioCrecimiento;
 import criterios.Promedio;
@@ -285,42 +283,7 @@ public class InvirtiendoTest {
 		Metodologia metodologia = new Metodologia("testMetodologia", lista);
 		Assert.assertEquals(metodologia.getCondiciones().size(), 1);
 	}
-	
-	@Test
-	public void compararEmpresasPorIndicador(){
-		RepositorioIndicadores repo = new RepositorioIndicadores();
-		Indicador unIndicador = new Indicador("testIndicador", "cuentaTest + 5");
-		ComparaEmpresasPorIndicador compararEmpresasPorIndicador = new ComparaEmpresasPorIndicador(repo, new ComparadorMayor(),
-				unIndicador, "2015");
 		
-		EmpresaRankeada empresaUno = new EmpresaRankeada("empresaTestUno");
-		empresaUno.setCuentas(new ArrayList());
-		empresaUno.agregarCuenta(new Cuenta("cuentaTest", "2015", "1300"));
-		
-		EmpresaRankeada empresaDos = new EmpresaRankeada("empresaTestDos");
-		empresaDos.setCuentas(new ArrayList());
-		empresaDos.agregarCuenta(new Cuenta("cuentaTest", "2015", "500"));
-		
-		EmpresaRankeada empresaTres = new EmpresaRankeada("empresaTestTres");
-		empresaTres.setCuentas(new ArrayList());
-		empresaTres.agregarCuenta(new Cuenta("cuentaTest", "2015", "5050"));
-		
-		
-		ArrayList<EmpresaRankeada> empresas = new ArrayList<>();
-		empresas.add(empresaUno);
-		empresas.add(empresaDos);
-		empresas.add(empresaTres);
-		
-		compararEmpresasPorIndicador.setPeso(10);
-		compararEmpresasPorIndicador.aplicar(empresas);
-		
-		for(EmpresaRankeada empresa : empresas){
-			System.out.println(empresa.getNombre());
-		}
-		
-		Assert.assertEquals(empresas.get(0).getNombre(), empresaTres.getNombre());
-	}
-	
 	@Test
 	public void metodologiaOrdenaCorrectamentePorPesoLasEmpresas(){
 		RepositorioIndicadores repo = new RepositorioIndicadores();
@@ -341,7 +304,7 @@ public class InvirtiendoTest {
 		empresas.add(miEmpresa2);
 		empresas.add(miEmpresa3);
 		Metodologia metodologiaTest = new Metodologia("testMetodologia", new ArrayList<>());
-		metodologiaTest.ordenarPorRanking(empresas);
+		metodologiaTest.filtrarYOrdenarPorRanking(empresas);
 		Assert.assertEquals(empresas.get(0).getNombre(), "testEmpresa3");
 		Assert.assertEquals(empresas.get(1).getNombre(), "testEmpresa1");
 		Assert.assertEquals(empresas.get(2).getNombre(), "testEmpresa2");

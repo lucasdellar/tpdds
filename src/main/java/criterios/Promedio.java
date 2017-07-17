@@ -21,14 +21,14 @@ public class Promedio extends Criterio{
 	}
 
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
+	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
 		double promedio = promediar(unaEmpresa, unaCondicion);
 		
 		return  unaCondicion.getComparador().comparar(promedio, unaCondicion.getValue());
 	}
 	
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria condicion_prioritaria) {
+	public Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria condicion_prioritaria) {
 		
 		double promedio1, promedio2 = 0;
 		

@@ -22,7 +22,7 @@ public class Metodologia {
 	public List<EmpresaRankeada> aplicarMetodologia(List<Empresa> empresas, String periodo){
 		List<EmpresaRankeada> misEmpresas = new ArrayList<EmpresaRankeada>();
 		inicializarEmpresasRankeadas(misEmpresas, empresas); 
-		ordenarPorRanking(misEmpresas);
+		filtrarYOrdenarPorRanking(misEmpresas);
 		
 		return misEmpresas;
 	}
@@ -34,7 +34,7 @@ public class Metodologia {
 		}
 	}
 
-	public void ordenarPorRanking(List<EmpresaRankeada> misEmpresas) {
+	public void filtrarYOrdenarPorRanking(List<EmpresaRankeada> misEmpresas) {
 		/*Se aplican todas las condiciones, tanto taxativas como prioritarias, 
 		 * y luego se ordena la lista por ranking.*/
 		for(Condicion condicion : condiciones){

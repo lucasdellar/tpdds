@@ -46,7 +46,7 @@ public class CondicionPrioritaria extends Condicion {
 			
 			@Override
 			public int compare(EmpresaRankeada unaEmpresa, EmpresaRankeada otraEmpresa) {
-				if(getCriterio().aplicar(unaEmpresa, otraEmpresa, CondicionPrioritaria.this))
+				if(getCriterio().aplicarPrioritaria(unaEmpresa, otraEmpresa, CondicionPrioritaria.this))
 					return 1;
 				else 
 					return -1;

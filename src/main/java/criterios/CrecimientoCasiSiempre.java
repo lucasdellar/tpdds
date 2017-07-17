@@ -11,21 +11,38 @@ import domain.Indicador;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
 
-public class CrecimientoSiempre extends CriterioCrecimiento{
+public class CrecimientoCasiSiempre extends CriterioCrecimiento{
+	
+	public int principio;
+	public int fin;
+	private int maxIncumplimientos;
 
-	public CrecimientoSiempre(Indicador indicador, int principio, int fin) {
+	public CrecimientoCasiSiempre(Indicador indicador, int principio, int fin, int maxIncumplimientos) {
 		super(indicador, principio, fin);
+		this.maxIncumplimientos = maxIncumplimientos;
 	}
 
 	@Override
 	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
 		List<Cuenta> cuentasDentroDelIntervalo = obtener_cuentasDentroDelIntervalo(unaEmpresa);
-		
-		return cuentasDentroDelIntervalo.stream().allMatch( x -> cumple(unaEmpresa, unaCondicion, x, cuentasDentroDelIntervalo));
+
+		return cuentasDentroDelIntervalo.stream()
+				.filter( x -> cumple(unaEmpresa, unaCondicion, x, cuentasDentroDelIntervalo))
+				.count() >= cuentasDentroDelIntervalo.size() - maxIncumplimientos;
 	}
 
 	@Override
 	public Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria unaCondicion) {
 		throw new CriterioParaCondicionIncorrectaException("No se puede utilizar este criterio para el tipo de condicion Prioritaria.");
 	}
+
 }
+
+
+
+
+
+
+
+
+

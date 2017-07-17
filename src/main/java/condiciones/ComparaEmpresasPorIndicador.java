@@ -44,7 +44,6 @@ public class ComparaEmpresasPorIndicador extends Condicion {
 		for(EmpresaRankeada empresa : empresas){
 			empresa.aumentarRanking(getPeso() * (empresas.size() - empresas.indexOf(empresa)));    // Manera propia de calcularle el peso
 		}
-		
 	}
 
 }

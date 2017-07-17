@@ -14,9 +14,9 @@ public abstract class Criterio {
 		this.indicador = indicador;
 	}
 	
-	public abstract Boolean aplicar(Empresa unaEmpresa, CondicionTaxativa unaCondicion);
+	public abstract Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion);
 	
-	public abstract Boolean aplicar(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria unaCondicion);
+	public abstract Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria unaCondicion);
 
 	public Indicador getIndicador() {
 		return indicador;

@@ -5,10 +5,12 @@ import java.util.Comparator;
 import java.util.List;
 
 import condiciones.Condicion;
+import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
 import domain.Cuenta;
 import domain.Indicador;
 import domain.DomainExceptions.CriterioException;
+import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
 
 public class CriterioNAnios extends Criterio{
@@ -20,8 +22,7 @@ public class CriterioNAnios extends Criterio{
 		this.anios = anios;
 	}
 
-	@Override
-	public Boolean aplicar(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
+	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
 		unaEmpresa.getCuentas().sort(new Comparator<Cuenta>(){
 			@Override
 			public int compare(Cuenta cuenta1, Cuenta cuenta2) {
@@ -44,6 +45,11 @@ public class CriterioNAnios extends Criterio{
 
 	private Boolean periodoMayor(Cuenta x, Cuenta y) {
 		return Integer.parseInt(x.getPeriodo()) > Integer.parseInt( y .getPeriodo() );
+	}
+
+	@Override
+	public Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria unaCondicion) {
+		throw new CriterioParaCondicionIncorrectaException("No se puede utilizar este criterio para el tipo de condicion Prioritaria.");
 	}
 
 }
