@@ -14,7 +14,7 @@ import repositorios.RepositorioIndicadores;
 public class ValorAntiguedad implements Valor{
 	
 	@Override
-	public Double calcular(String periodo, Empresa unaEmpresa, RepositorioIndicadores repo) {
+	public Double calcular(Empresa unaEmpresa) {
 		
 		List<Integer> periodos = unaEmpresa.getCuentas().stream().map(unaCuenta -> Integer.parseInt(unaCuenta.getPeriodo()))
 								.collect(Collectors.toList());

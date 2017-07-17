@@ -1,4 +1,4 @@
-package condiciones;
+/*package condiciones;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -45,4 +45,4 @@ public class ComparaEmpresasPorIndicador extends Condicion {
 		}
 	}
 
-}
+}*/

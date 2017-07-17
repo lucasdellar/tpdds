@@ -14,7 +14,7 @@ public class Promedio extends Criterio{
 		super(valor);
 	}
 	
-	public double promediar(Empresa unaEmpresa, Condicion unaCondicion) {
+	public double calcular(Empresa unaEmpresa, Condicion unaCondicion) {
 		double sumatoria = 0;
 		sumatoria = unaEmpresa.getCuentas().stream().mapToDouble( unaCuenta -> valor.calcular
 				(unaCuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores())).sum();
@@ -23,7 +23,7 @@ public class Promedio extends Criterio{
 
 	@Override
 	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
-		double promedio = promediar(unaEmpresa, unaCondicion);
+		double promedio = calcular(unaEmpresa, unaCondicion);
 		
 		return  unaCondicion.getComparador().comparar(promedio, unaCondicion.getValue());
 	}
@@ -33,8 +33,8 @@ public class Promedio extends Criterio{
 		
 		double promedio1, promedio2 = 0;
 		
-		promedio1 = promediar(unaEmpresa, condicion_prioritaria);
-		promedio2 = promediar(otraEmpresa, condicion_prioritaria);
+		promedio1 = calcular(unaEmpresa, condicion_prioritaria);
+		promedio2 = calcular(otraEmpresa, condicion_prioritaria);
 		
 		return condicion_prioritaria.getComparador().comparar(promedio1, promedio2);
 	}

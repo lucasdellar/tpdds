@@ -7,14 +7,16 @@ import repositorios.RepositorioIndicadores;
 public class ValorIndicador implements Valor{
 
 	Indicador indicador;
+	String periodo;
+	RepositorioIndicadores repo;
 
-	public ValorIndicador(Indicador indicador) {
+	public ValorIndicador(Indicador indicador, String periodo, RepositorioIndicadores repo) {
 		this.indicador = indicador;
 	}
 
 	@Override
-	public Double calcular(String periodo, Empresa unaEmpresa, RepositorioIndicadores repo) {
-		return indicador.aplicarIndicador(periodo, unaEmpresa, repo);
+	public Double calcular(Empresa unaEmpresa) {
+		return indicador.aplicarIndicador(this.periodo, unaEmpresa, this.repo);
 	}
 
 }

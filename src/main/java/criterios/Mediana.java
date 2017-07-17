@@ -18,7 +18,7 @@ public class Mediana  extends Criterio{
 		super(valor);
 	}
 	
-	private Double obtenerMediana(Empresa unaEmpresa, Condicion unaCondicion){
+	private Double calcular(Empresa unaEmpresa, Condicion unaCondicion){
 		List<Double> indicadoresAplicados = unaEmpresa.getCuentas().stream()
 				.map( cuenta -> 
 				valor.calcular(cuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores()))
@@ -37,14 +37,14 @@ public class Mediana  extends Criterio{
 
 	@Override
 	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
-		return  unaCondicion.getComparador().comparar(obtenerMediana(unaEmpresa, unaCondicion), 
+		return  unaCondicion.getComparador().comparar(calcular(unaEmpresa, unaCondicion), 
 				unaCondicion.getValue()); 
 	}
 
 	@Override
 	public Boolean aplicarPrioritaria(Empresa unaEmpresa, Empresa otraEmpresa, CondicionPrioritaria unaCondicion) {
-		return unaCondicion.getComparador().comparar(obtenerMediana(unaEmpresa, unaCondicion), 
-				obtenerMediana(otraEmpresa, unaCondicion));
+		return unaCondicion.getComparador().comparar(calcular(unaEmpresa, unaCondicion), 
+				calcular(otraEmpresa, unaCondicion));
 	}
 	
 	private Double medianaImpar(List<Double> indicadoresAplicados) {

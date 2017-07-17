@@ -6,5 +6,5 @@ import repositorios.RepositorioIndicadores;
 
 public interface Valor {
 
-	public Double calcular(String periodo, Empresa unaEmpresa, RepositorioIndicadores repo);
+	public Double calcular(Empresa unaEmpresa);
 }

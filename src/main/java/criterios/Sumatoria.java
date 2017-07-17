@@ -14,7 +14,7 @@ public class Sumatoria extends Criterio{
 		super(valor);
 	}
 
-	public double sumar(Empresa unaEmpresa, Condicion unaCondicion) {
+	public double calcular(Empresa unaEmpresa, Condicion unaCondicion) {
 		return unaEmpresa.getCuentas().stream().mapToDouble(unaCuenta -> valor.calcular
 				(unaCuenta.getPeriodo(), unaEmpresa, unaCondicion.getRepoIndicadores())).sum();
 	}
@@ -24,7 +24,7 @@ public class Sumatoria extends Criterio{
 		
 		double sumatoria = 0;
 		
-		sumatoria = sumar(unaEmpresa, condicion_taxativa);
+		sumatoria = calcular(unaEmpresa, condicion_taxativa);
 		
 		return condicion_taxativa.getComparador().comparar(sumatoria, condicion_taxativa.getValue());
 	}
@@ -34,8 +34,8 @@ public class Sumatoria extends Criterio{
 		
 		double sumatoria1, sumatoria2 = 0;
 		
-		sumatoria1 = sumar(unaEmpresa, condicion_prioritaria);
-		sumatoria2 = sumar(otraEmpresa, condicion_prioritaria);
+		sumatoria1 = calcular(unaEmpresa, condicion_prioritaria);
+		sumatoria2 = calcular(otraEmpresa, condicion_prioritaria);
 		
 		return condicion_prioritaria.getComparador().comparar(sumatoria1, sumatoria2);
 	}
