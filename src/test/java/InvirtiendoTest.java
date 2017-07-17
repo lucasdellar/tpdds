@@ -25,11 +25,13 @@ import comparadores.ComparadorMenor;
 import condiciones.ComparaEmpresasPorIndicador;
 import condiciones.Condicion;
 import condiciones.CondicionTaxativa;
+import condiciones.CondicionPrioritaria;
 import condiciones.Crecimiento;
 import condiciones.DependeDeValor;
 import criterios.CrecimientoSiempre;
 import criterios.CriterioCrecimiento;
 import criterios.Promedio;
+import criterios.Sumatoria;
 import ui.ViewModels.CuentaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
 import ui.ViewModels.EmpresaViewModel;
@@ -119,6 +121,157 @@ public class InvirtiendoTest {
 		empresas.add(miEmpresa);
 		empresas.add(otraEmpresa);
 		Assert.assertEquals(taxativa.aplicar(empresas).size(), 1);
+	}
+	
+	@Test
+	public void aplicar_Prioritaria_varias_empresas(){
+		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
+		 * condición prioritaria adherida. La empresa testEmpresa1 debería quedar
+		 * en primer lugar.
+		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
+		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.
+		 */
+		
+		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta * 5");
+		CondicionPrioritaria prioritaria = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 2);
+		repositorio.agregar(unIndicador);
+		prioritaria.setCriterio(new Sumatoria(unIndicador));
+		
+		EmpresaRankeada empresa1 = new EmpresaRankeada("testEmpresa1");
+		empresa1.setCuentas(new ArrayList<>());
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2016", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2017", "5"));
+		
+		EmpresaRankeada empresa2 = new EmpresaRankeada("testEmpresa2");
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2014", "3"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "4"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2016", "5"));
+		
+		EmpresaRankeada empresa3 = new EmpresaRankeada("testEmpresa3");
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2013", "7"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2014", "5"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "1"));
+		
+		List<EmpresaRankeada> empresas = new ArrayList<>();
+		empresas.add(empresa1);
+		empresas.add(empresa2);
+		empresas.add(empresa3);
+		Assert.assertEquals(prioritaria.aplicar(empresas).get(0).getNombre(), "testEmpresa1");
+	}
+	
+	@Test
+	public void metodología_solo_prioritarias(){
+		/*Objetivo: Utilizar una metodología con únicamente condiciones prioritarias
+		 * para verificar que el peso asignado funciona correctamente.
+		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
+		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.
+		 */
+		
+		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta * 5");
+		CondicionPrioritaria prioritaria = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 2);
+		repositorio.agregar(unIndicador);
+		prioritaria.setCriterio(new Sumatoria(unIndicador));
+		
+		EmpresaRankeada empresa1 = new EmpresaRankeada("testEmpresa1");
+		empresa1.setCuentas(new ArrayList<>());
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2016", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2017", "5"));
+		
+		EmpresaRankeada empresa2 = new EmpresaRankeada("testEmpresa2");
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2014", "3"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "4"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2016", "5"));
+		
+		EmpresaRankeada empresa3 = new EmpresaRankeada("testEmpresa3");
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2013", "7"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2014", "5"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "1"));
+		
+		List<EmpresaRankeada> empresas = new ArrayList<>();
+		empresas.add(empresa1);
+		empresas.add(empresa2);
+		empresas.add(empresa3);
+		Assert.assertEquals(prioritaria.aplicar(empresas).get(0).getNombre(), "testEmpresa1");
+	}
+	
+	@Test
+	public void metodología_solo_taxativas(){
+		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
+		 * condición prioritaria adherida. La empresa testEmpresa1 debería quedar
+		 * en primer lugar.
+		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
+		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.
+		 */
+		
+		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta * 5");
+		CondicionPrioritaria prioritaria = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 2);
+		repositorio.agregar(unIndicador);
+		prioritaria.setCriterio(new Sumatoria(unIndicador));
+		
+		EmpresaRankeada empresa1 = new EmpresaRankeada("testEmpresa1");
+		empresa1.setCuentas(new ArrayList<>());
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2016", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2017", "5"));
+		
+		EmpresaRankeada empresa2 = new EmpresaRankeada("testEmpresa2");
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2014", "3"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "4"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2016", "5"));
+		
+		EmpresaRankeada empresa3 = new EmpresaRankeada("testEmpresa3");
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2013", "7"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2014", "5"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "1"));
+		
+		List<EmpresaRankeada> empresas = new ArrayList<>();
+		empresas.add(empresa1);
+		empresas.add(empresa2);
+		empresas.add(empresa3);
+		Assert.assertEquals(prioritaria.aplicar(empresas).get(0).getNombre(), "testEmpresa1");
+	}
+	
+	@Test
+	public void metodología_taxativas_prioritarias(){
+		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
+		 * condición prioritaria adherida. La empresa testEmpresa1 debería quedar
+		 * en primer lugar.
+		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
+		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.
+		 */
+		
+		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta * 5");
+		CondicionPrioritaria prioritaria = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 2);
+		repositorio.agregar(unIndicador);
+		prioritaria.setCriterio(new Sumatoria(unIndicador));
+		
+		EmpresaRankeada empresa1 = new EmpresaRankeada("testEmpresa1");
+		empresa1.setCuentas(new ArrayList<>());
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2016", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuenta", "2017", "5"));
+		
+		EmpresaRankeada empresa2 = new EmpresaRankeada("testEmpresa2");
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2014", "3"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "4"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2016", "5"));
+		
+		EmpresaRankeada empresa3 = new EmpresaRankeada("testEmpresa3");
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2013", "7"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2014", "5"));
+		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "1"));
+		
+		List<EmpresaRankeada> empresas = new ArrayList<>();
+		empresas.add(empresa1);
+		empresas.add(empresa2);
+		empresas.add(empresa3);
+		Assert.assertEquals(prioritaria.aplicar(empresas).get(0).getNombre(), "testEmpresa1");
 	}
 	
 	@Test

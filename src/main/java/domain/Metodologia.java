@@ -36,7 +36,7 @@ public class Metodologia {
 
 	public void ordenarPorRanking(List<EmpresaRankeada> misEmpresas) {
 		/*Se aplican todas las condiciones, tanto taxativas como prioritarias, 
-		 * y luego se ordena la lista por peso.*/
+		 * y luego se ordena la lista por ranking.*/
 		for(Condicion condicion : condiciones){
 			misEmpresas = condicion.aplicar(misEmpresas);
 		}

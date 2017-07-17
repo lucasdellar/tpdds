@@ -36,11 +36,11 @@ public class ComparaEmpresasPorIndicador extends Condicion {
 			}
 		});
 		Collections.reverse(empresas);
-		aumentarPeso(empresas);
+		aumentarRankings(empresas);
 		return empresas;
 	}
 
-	private void aumentarPeso(List<EmpresaRankeada> empresas) {
+	private void aumentarRankings(List<EmpresaRankeada> empresas) {
 		for(EmpresaRankeada empresa : empresas){
 			empresa.aumentarRanking(getPeso() * (empresas.size() - empresas.indexOf(empresa)));    // Manera propia de calcularle el peso
 		}

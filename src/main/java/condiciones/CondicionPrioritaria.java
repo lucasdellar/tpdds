@@ -25,15 +25,9 @@ public class CondicionPrioritaria extends Condicion {
 	@Override
 	public List<EmpresaRankeada> aplicar(List<EmpresaRankeada> empresas) {
 		
-		empresas.sort(new Comparator<EmpresaRankeada>(){
-
-			@Override
-			public int compare(EmpresaRankeada unaEmpresa, EmpresaRankeada otraEmpresa) {
-				return getCriterio().aplicar(unaEmpresa, otraEmpresa, this);
-			}
-		});
-		Collections.reverse(empresas);
+		this.ordenarSegunCriterio(empresas);
 		this.aumentarRankings(empresas);
+		
 		return empresas;
 	}
 
@@ -44,6 +38,19 @@ public class CondicionPrioritaria extends Condicion {
 			 */
 			empresa.aumentarRanking(getPeso() * (empresas.size() - empresas.indexOf(empresa)));
 		}
+	}
+	
+	private void ordenarSegunCriterio(List<EmpresaRankeada> empresas) {
+		empresas.sort(new Comparator<EmpresaRankeada>(){
+
+			@Override
+			public int compare(EmpresaRankeada unaEmpresa, EmpresaRankeada otraEmpresa) {
+				return getCriterio().aplicar(unaEmpresa, otraEmpresa, this);
+			}
+		});
+		Collections.reverse(empresas);
+		this.aumentarRankings(empresas);
+		return empresas;
 	}
 	
 	public int getPeso() {
