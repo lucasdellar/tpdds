@@ -12,11 +12,11 @@ import edu.emory.mathcs.backport.java.util.Collections;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
 
-public class CriterioPorIndicador extends Criterio {
+public class CriterioPorValor extends Criterio {
 
 	private String periodo;
 	
-	public CriterioPorIndicador(Valor valor, String periodo) {
+	public CriterioPorValor(Valor valor, String periodo) {
 		super(valor);
 		this.periodo = periodo;
 	}
@@ -25,7 +25,7 @@ public class CriterioPorIndicador extends Criterio {
 	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
 		return unaCondicion.getComparador().
 				comparar(valor.calcular(periodo, unaEmpresa, unaCondicion.getRepoIndicadores()), 
-						unaCondicion.getValue());
+						unaCondicion.getValor());
 	}
 
 	@Override

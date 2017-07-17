@@ -35,7 +35,7 @@ public class CriterioNAnios extends Criterio{
 		verificarQueNoFaltenCuentas(cuentasAEvaluar);
 		return cuentasAEvaluar.stream().allMatch( x -> unaCondicion.getComparador().
 				comparar(this.valor.calcular(x.getPeriodo(), 
-						unaEmpresa, unaCondicion.getRepoIndicadores()), unaCondicion.getValue()));
+						unaEmpresa, unaCondicion.getRepoIndicadores()), unaCondicion.getValor()));
 	}
 
 	private void verificarQueNoFaltenCuentas(List<Cuenta> cuentasAEvaluar) {

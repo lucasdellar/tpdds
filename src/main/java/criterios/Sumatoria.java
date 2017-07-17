@@ -26,7 +26,7 @@ public class Sumatoria extends Criterio{
 		
 		sumatoria = calcular(unaEmpresa, condicion_taxativa);
 		
-		return condicion_taxativa.getComparador().comparar(sumatoria, condicion_taxativa.getValue());
+		return condicion_taxativa.getComparador().comparar(sumatoria, condicion_taxativa.getValor());
 	}
 	
 	@Override

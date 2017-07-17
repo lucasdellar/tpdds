@@ -38,7 +38,7 @@ public class Mediana  extends Criterio{
 	@Override
 	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
 		return  unaCondicion.getComparador().comparar(calcular(unaEmpresa, unaCondicion), 
-				unaCondicion.getValue()); 
+				unaCondicion.getValor()); 
 	}
 
 	@Override

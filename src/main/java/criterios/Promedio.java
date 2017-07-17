@@ -25,7 +25,7 @@ public class Promedio extends Criterio{
 	public Boolean aplicarTaxativa(Empresa unaEmpresa, CondicionTaxativa unaCondicion) {
 		double promedio = calcular(unaEmpresa, unaCondicion);
 		
-		return  unaCondicion.getComparador().comparar(promedio, unaCondicion.getValue());
+		return  unaCondicion.getComparador().comparar(promedio, unaCondicion.getValor());
 	}
 	
 	@Override
