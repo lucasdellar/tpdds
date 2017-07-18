@@ -24,6 +24,7 @@ public class EvaluarMetodologiaViewModel {
 	private List <Empresa> empresas;
 	private List <Empresa> empresasAEvaluar;
 	private Empresa empresaSeleccionada;
+	private Empresa empresaSeleccionadaAEvaluar;
 	
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
@@ -70,10 +71,18 @@ public class EvaluarMetodologiaViewModel {
 			empresasAEvaluar.add(getEmpresaSeleccionada());
 	}
 	
+	
+	public void removerEmpresaAEvaluar()
+	{
+		if(empresasAEvaluar.contains(getEmpresaSeleccionada())){
+			empresasAEvaluar.remove(empresasAEvaluar.indexOf(getEmpresaSeleccionada()));
+		}
+	}
+	
 	public void evaluarEmpresas()
 	{
-		if(empresasAEvaluar.isEmpty()) 
-			throw new NoSeCargaronEmpresasException("Debe aniadir empresas para poder evaluarlas.");
+		if(empresasAEvaluar.isEmpty() || metodologiaSeleccionada == null) 
+			throw new NoSeCargaronEmpresasException("Debe elegir una metodologia y aniadir empresas para poder evaluarlas.");
 		
 		getMetodologiaSeleccionada().aplicarMetodologia(empresasAEvaluar);
 	}
@@ -100,6 +109,14 @@ public class EvaluarMetodologiaViewModel {
 
 	public void setMetodologiaSeleccionada(Metodologia metodologiaSeleccionada) {
 		this.metodologiaSeleccionada = metodologiaSeleccionada;
+	}
+
+	public Empresa getEmpresaSeleccionadaAEvaluar() {
+		return empresaSeleccionadaAEvaluar;
+	}
+
+	public void setEmpresaSeleccionadaAEvaluar(Empresa empresaSeleccionadaAEvaluar) {
+		this.empresaSeleccionadaAEvaluar = empresaSeleccionadaAEvaluar;
 	}
 	
 	

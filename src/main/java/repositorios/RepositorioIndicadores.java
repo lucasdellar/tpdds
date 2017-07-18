@@ -1,7 +1,16 @@
 package repositorios;
 
 import domain.Indicador;
+import domain.DomainExceptions.IndicadorInexsistenteException;
 
 public class RepositorioIndicadores extends Repositorio<Indicador> {
+
+	public Indicador indicadorDesdeString(String indicadorString) {
+		for(Indicador indicador : this.getLista()){
+			if(indicador.getNombre().equals(indicadorString))
+				return indicador;
+		}
+		throw new IndicadorInexsistenteException("Se busco un indicador inexistente.");
+	}
 
 }

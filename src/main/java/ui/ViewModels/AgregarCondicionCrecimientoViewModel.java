@@ -3,14 +3,19 @@ package ui.ViewModels;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
 
 import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
 import condiciones.Condicion;
+import condiciones.CondicionTaxativa;
 import criterios.CriterioCrecimiento;
+import domain.Indicador;
+import domain.ValorIndicador;
 import repositorios.RepositorioIndicadores;
+import scala.collection.generic.BitOperations.Int;
 import validadores.ValidadorComparador;
 import validadores.ValidadorCrecimiento;
 
@@ -23,6 +28,7 @@ public class AgregarCondicionCrecimientoViewModel {
 	private String inicioPeriodo;
 	private String finPeriodo;
 	private String nombreIndicador;
+	private String maxIncumplimientos;
 	
 	ValidadorComparador validadorComparador;
 	ValidadorCrecimiento validadorCrecimiento;
@@ -65,14 +71,24 @@ public class AgregarCondicionCrecimientoViewModel {
 		this.nombreIndicador = nombreIndicador;
 	}
 
-	public void agregarCondicion(ArrayList<Condicion> condicionesYaAgregadas) {
+	public void agregarCondicion(List<CondicionTaxativa> condicionesYaAgregadas) {
 		validadorComparador.validarString(mayorMenor);
 		validadorCrecimiento.validarIntervalo(inicioPeriodo, finPeriodo);
 		System.out.println(condicionesYaAgregadas.size());
-		/*condicionesYaAgregadas.add(new CriterioCrecimiento(repositorioIndicadores, 
-				mayorMenor.equals("MAYOR") ? new ComparadorMayor() : new ComparadorMenor() ));*/
+		CondicionTaxativa condicionAAgregar =
+				new CondicionTaxativa(repositorioIndicadores, mayorMenor.equals("MAYOR") ? new ComparadorMayor() : new ComparadorMenor());
+		condicionAAgregar.setCriterio(new CriterioCrecimiento(new ValorIndicador(nombreIndicador, repositorioIndicadores), 
+				Integer.parseInt(inicioPeriodo), Integer.parseInt(finPeriodo), Integer.parseInt(getMaxIncumplimientos())));
+		condicionesYaAgregadas.add(condicionAAgregar);
 	}
 
-	
+	public String getMaxIncumplimientos() {
+		return maxIncumplimientos;
+	}
+
+	public void setMaxIncumplimientos(String maxIncumplimientos) {
+		this.maxIncumplimientos = maxIncumplimientos;
+	}
+
 	
 }

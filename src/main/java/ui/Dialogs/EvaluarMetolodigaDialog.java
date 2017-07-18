@@ -62,13 +62,15 @@ public class EvaluarMetolodigaDialog  extends  Dialog<EvaluarMetodologiaViewMode
 		tableEmpresasAEvaluar.bindItemsToProperty("empresasAEvaluar");
 		tableEmpresasAEvaluar.setNumberVisibleRows(6);
 		tableEmpresasAEvaluar.setWidth(3000);
+		tableMeotodologias.bindSelectionToProperty("empresaSeleccionadaAEvaluar");
 
 		InviertiendoView.agregarColumna(tableEmpresasAEvaluar, "Nombre", "nombre");
 
-		InviertiendoView.crearBoton(mainPanel, "Agregar Seleccionada a Empresas a Evaluar");
+		InviertiendoView.crearBoton(mainPanel, "Agregar Seleccionada a Empresas a Evaluar").onClick(() -> this.getModelObject().agregarEmpresaAEvaluar());
+
+		InviertiendoView.crearBoton(mainPanel, "Remover de los seleccionados").onClick(() -> this.getModelObject().removerEmpresaAEvaluar());
 		
-		InviertiendoView.crearBoton(mainPanel, "Evaluar empresas seleccionadas con la metodologia");
-		
+		InviertiendoView.crearBoton(mainPanel, "Evaluar empresas seleccionadas con la metodologia").onClick(() -> this.getModelObject().evaluarEmpresas());
 		
 		Panel tableEmpresasOrdenadasPanel = new Panel(mainPanel).setLayout(new VerticalLayout());
 

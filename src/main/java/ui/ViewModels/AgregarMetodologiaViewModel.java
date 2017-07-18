@@ -3,10 +3,13 @@ package ui.ViewModels;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
 
 import condiciones.Condicion;
+import condiciones.CondicionPrioritaria;
+import condiciones.CondicionTaxativa;
 import domain.Metodologia;
 import manejadoresArchivo.ManejadorDeArchivoMetodologias;
 
@@ -14,7 +17,8 @@ import manejadoresArchivo.ManejadorDeArchivoMetodologias;
 public class AgregarMetodologiaViewModel {
 	
 	String nombre; 
-	private ArrayList<Condicion> condiciones;
+	private List<CondicionTaxativa> condicionesTaxativas;
+	private List<CondicionPrioritaria> condicionesPrioritarias;
 	private ManejadorDeArchivoMetodologias manejador;
 
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
@@ -32,13 +36,6 @@ public class AgregarMetodologiaViewModel {
 	//	condiciones = new ArrayList<>();
 	}
 	
-	public ArrayList<Condicion> getCondiciones() {
-		return condiciones;
-	}
-
-	public void setCondiciones(ArrayList<Condicion> condiciones) {
-		this.condiciones = condiciones;
-	}
 
 	public String getNombre() {
 		return nombre;
@@ -49,7 +46,23 @@ public class AgregarMetodologiaViewModel {
 	}
 
 	public void agregarMetodologia() {
-		//manejador.agregarMetodologiaAlArchivo(new Metodologia(nombre, condiciones));
+		manejador.agregarMetodologiaAlArchivo(new Metodologia(nombre, condicionesTaxativas, condicionesPrioritarias));
+	}
+
+	public List<CondicionTaxativa> getCondicionesTaxativas() {
+		return condicionesTaxativas;
+	}
+
+	public void setCondicionesTaxativas(List<CondicionTaxativa> condicionesTaxativas) {
+		this.condicionesTaxativas = condicionesTaxativas;
+	}
+
+	public List<CondicionPrioritaria> getCondicionesPrioritarias() {
+		return condicionesPrioritarias;
+	}
+
+	public void setCondicionesPrioritarias(List<CondicionPrioritaria> condicionesPrioritarias) {
+		this.condicionesPrioritarias = condicionesPrioritarias;
 	}
 
 }

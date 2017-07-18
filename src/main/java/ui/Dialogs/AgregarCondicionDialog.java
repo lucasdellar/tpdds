@@ -1,6 +1,7 @@
 package ui.Dialogs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
@@ -10,6 +11,8 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 
 import condiciones.Condicion;
+import condiciones.CondicionPrioritaria;
+import condiciones.CondicionTaxativa;
 import repositorios.RepositorioIndicadores;
 import ui.InviertiendoView;
 import ui.ViewModels.AgregarCondicionCrecimientoViewModel;
@@ -18,13 +21,16 @@ import ui.ViewModels.AgregarCondicionViewModel;
 
 public class AgregarCondicionDialog extends  Dialog<AgregarCondicionViewModel> {
 
-	ArrayList<Condicion> condicionesYaAgregadas;
 	RepositorioIndicadores repositorioIndicadores;
+	List<CondicionTaxativa> condicionesTaxativas;
+	List<CondicionPrioritaria> condicionesPrioritarias;
 	
 	
-	public AgregarCondicionDialog(WindowOwner owner, AgregarCondicionViewModel model, ArrayList<Condicion> condicionesYaAgregadas, RepositorioIndicadores repositorioIndicadores) {
+	public AgregarCondicionDialog(WindowOwner owner, AgregarCondicionViewModel model, List<CondicionTaxativa> condicionesTaxativas,
+			List<CondicionPrioritaria> condicionesPrioritarias, RepositorioIndicadores repositorioIndicadores) {
 		super(owner, model);
-		this.condicionesYaAgregadas = condicionesYaAgregadas;
+		this.condicionesTaxativas = condicionesTaxativas;
+		this.condicionesPrioritarias = condicionesPrioritarias;
 		this.repositorioIndicadores = repositorioIndicadores;
 	}
 
@@ -56,7 +62,7 @@ public class AgregarCondicionDialog extends  Dialog<AgregarCondicionViewModel> {
 		AgregarCondicionCrecimientoViewModel agregarViewModel = 
 				new AgregarCondicionCrecimientoViewModel(repositorioIndicadores);
 		AgregarCondicionCrecimientoDialog agregarCondicionDialog 
-		= new AgregarCondicionCrecimientoDialog(this, agregarViewModel, condicionesYaAgregadas);
+		= new AgregarCondicionCrecimientoDialog(this, agregarViewModel, condicionesTaxativas);
 		agregarCondicionDialog.open();
 	}
 

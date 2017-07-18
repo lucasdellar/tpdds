@@ -1,6 +1,7 @@
 package ui.Dialogs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
@@ -11,13 +12,14 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 
 import condiciones.Condicion;
+import condiciones.CondicionTaxativa;
 import ui.ViewModels.AgregarCondicionCrecimientoViewModel;
 
 public class AgregarCondicionCrecimientoDialog extends  Dialog<AgregarCondicionCrecimientoViewModel>{
 
-	ArrayList<Condicion> condicionesYaAgregadas;
+	List<CondicionTaxativa> condicionesYaAgregadas;
 	
-	public AgregarCondicionCrecimientoDialog(WindowOwner owner, AgregarCondicionCrecimientoViewModel model, ArrayList<Condicion> condicionesYaAgregadas) {
+	public AgregarCondicionCrecimientoDialog(WindowOwner owner, AgregarCondicionCrecimientoViewModel model, List<CondicionTaxativa> condicionesYaAgregadas) {
 		super(owner, model);
 		this.condicionesYaAgregadas = condicionesYaAgregadas;
 	}
@@ -36,6 +38,9 @@ public class AgregarCondicionCrecimientoDialog extends  Dialog<AgregarCondicionC
 		
         new Label(form).setText("Ingrese el fin del periodo ");
         new TextBox(form).setWidth(150).bindValueToProperty("finPeriodo");
+        
+        new Label(form).setText("Ingrese la tolerancia maxima de incumplimientos ");
+        new TextBox(form).setWidth(150).bindValueToProperty("maxIncumplimientos");
 		
         new Label(form).setText("Escriba MAYOR o MENOR como criterio para comparar");
         new TextBox(form).setWidth(150).bindValueToProperty("mayorMenor");

@@ -42,7 +42,7 @@ public class AgregarMetodologiaDialog extends  Dialog<AgregarMetodologiaViewMode
 		
 		AgregarCondicionViewModel agregarViewModel = new AgregarCondicionViewModel();
 		AgregarCondicionDialog agregarCondicionDialog = new AgregarCondicionDialog(this, agregarViewModel, 
-				this.getModelObject().getCondiciones(), repositorioIndicadores);
+				this.getModelObject().getCondicionesTaxativas(), this.getModelObject().getCondicionesPrioritarias(), repositorioIndicadores);
 		agregarCondicionDialog.open();
 	}
 	

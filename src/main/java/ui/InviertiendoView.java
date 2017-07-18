@@ -150,7 +150,8 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 	private void openAgregarMetodologiaDialog() {
 		AgregarMetodologiaViewModel agregarViewModel = new AgregarMetodologiaViewModel(archivoMetodologias.getRuta());
-		agregarViewModel.setCondiciones(new ArrayList<>());
+		agregarViewModel.setCondicionesPrioritarias(new ArrayList<>());
+		agregarViewModel.setCondicionesTaxativas(new ArrayList<>());
 		AgregarMetodologiaDialog agregarMetodologiaDialog = new AgregarMetodologiaDialog(this, agregarViewModel, new ManejadorDeArchivoIndicadores(archivoIndicadores.getRuta()).getRepositorioIndicadores());
 		agregarMetodologiaDialog.open();
 	}
