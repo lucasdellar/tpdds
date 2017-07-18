@@ -490,7 +490,7 @@ public class InvirtiendoTest {
 	@Test
 	public void CriterioCrecimiento_FormaEstricta_EvaluaCorrectamente(){
 		RepositorioIndicadores repositorio = new RepositorioIndicadores();
-		CondicionTaxativa condicion = new CondicionTaxativa(repositorio, new ComparadorMayor());
+		CondicionTaxativa condicion = new CondicionTaxativa(repositorio, new ComparadorMenor());
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
 		Valor unValor = new ValorIndicador(unIndicador, condicion.getRepoIndicadores());
 		condicion.setCriterio(new CriterioCrecimiento(unValor, 2015, 2017, 0));
@@ -505,7 +505,7 @@ public class InvirtiendoTest {
 		EmpresaRankeada otraEmpresa = new EmpresaRankeada("testEmpresa2");
 		otraEmpresa.setCuentas(new ArrayList<>());
 		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
-		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "4"));
+		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "7"));
 		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "6"));
 		empresas.add(otraEmpresa);
 		
