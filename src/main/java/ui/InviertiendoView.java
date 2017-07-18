@@ -13,7 +13,10 @@ import org.uqbar.arena.windows.MainWindow;
 import domain.Archivo;
 import domain.Cuenta;
 import empresas.Empresa;
+import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import manejadoresArchivo.ManejadorDeArchivoIndicadores;
+import manejadoresArchivo.ManejadorDeArchivoMetodologias;
+import repositorios.RepositorioEmpresas;
 
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.ui.view.ErrorViewer;
@@ -84,6 +87,8 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		
 		Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
 
+		agregarLabel(mainPanel, "Empresas");
+		
 		Table<Empresa> table = new Table<Empresa>(tablePanel, Empresa.class);
 		table.bindItemsToProperty("repositorioEmpresas.lista");
 		table.setNumberVisibleRows(6);
@@ -151,7 +156,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	}
 	
 	private void openEvaluarMetodologiaDialog() {
-    	EvaluarMetodologiaViewModel evaluarViewModel = new EvaluarMetodologiaViewModel();
+    	EvaluarMetodologiaViewModel evaluarViewModel = new EvaluarMetodologiaViewModel(new ManejadorDeArchivoEmpresas(archivoEmpresas.getRuta()).getRepositorioEmpresas(), new ManejadorDeArchivoMetodologias(archivoMetodologias.getRuta()).getRepositorioMetodologias());
     	EvaluarMetolodigaDialog evaluarMetodologiaDialog = new EvaluarMetolodigaDialog(this, evaluarViewModel);
     	evaluarMetodologiaDialog.open();
     }
@@ -171,7 +176,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		new NumericField(nuevaCuentaPanel).setWidth(150).bindValueToProperty(property);
 	}
 
-	private void agregarLabel(Panel nuevaCuentaPanel, String texto) {
+	public static void agregarLabel(Panel nuevaCuentaPanel, String texto) {
 		new Label(nuevaCuentaPanel).setText(texto);
 	}
 

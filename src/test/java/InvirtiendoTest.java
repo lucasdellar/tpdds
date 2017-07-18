@@ -67,7 +67,7 @@ public class InvirtiendoTest {
         empresaViewModel.setArchivo(archivo);
 	}
 	
-	//  *** TEST's Entrega: METODOLOGÍAS ***
+	//  *** TEST's Entrega: METODOLOGï¿½AS ***
 	
 	@Test
 	public void comparadorMenor(){
@@ -104,9 +104,9 @@ public class InvirtiendoTest {
 	
 	@Test
 	public void aplicar_Taxativa_varias_empresas(){
-		/* Objetivo: filtrar las empresas según la taxativa. La primera empresa
+		/* Objetivo: filtrar las empresas segï¿½n la taxativa. La primera empresa
 		 * cumple la condicion, la siguiente no. 
-		 * Resultado: una lista con la única empresa que cumple la condición.
+		 * Resultado: una lista con la ï¿½nica empresa que cumple la condiciï¿½n.
 		 */
 		RepositorioIndicadores repo = new RepositorioIndicadores();
 		CondicionTaxativa taxativa = new CondicionTaxativa(repo, new ComparadorMenor(), 100);
@@ -132,8 +132,8 @@ public class InvirtiendoTest {
 	
 	@Test
 	public void aplicar_Prioritaria_varias_empresas(){
-		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
-		 * condición prioritaria adherida. La empresa testEmpresa1 debería quedar
+		/*Objetivo: Ordenar la lista de empresas segï¿½n el peso adherido por la
+		 * condiciï¿½n prioritaria adherida. La empresa testEmpresa1 deberï¿½a quedar
 		 * en primer lugar.
 		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
 		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.
@@ -178,9 +178,9 @@ public class InvirtiendoTest {
 	}
 	
 	@Test
-	public void metodología_solo_prioritarias(){
-		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
-		 * condición prioritaria adherida. La empresa testEmpresa1 debería quedar
+	public void metodologia_solo_prioritarias(){
+		/*Objetivo: Ordenar la lista de empresas segï¿½n el peso adherido por la
+		 * condiciï¿½n prioritaria adherida. La empresa testEmpresa1 deberï¿½a quedar
 		 * en primer lugar.
 		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
 		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.
@@ -271,9 +271,9 @@ public class InvirtiendoTest {
 	}
 	
 	@Test
-	public void metodología_solo_taxativas(){
-		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
-		 * condición prioritaria adherida. La empresa testEmpresa1 debería quedar
+	public void metodologia_solo_taxativas(){
+		/*Objetivo: Ordenar la lista de empresas segï¿½n el peso adherido por la
+		 * condiciï¿½n prioritaria adherida. La empresa testEmpresa1 deberï¿½a quedar
 		 * en primer lugar.
 		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
 		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.
@@ -374,9 +374,9 @@ public class InvirtiendoTest {
 	}
 	
 //	@Test
-//	public void metodología_taxativas_prioritarias(){
-//		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
-//		 * condición prioritaria adherida. La empresa testEmpresa1 debería quedar
+//	public void metodologï¿½a_taxativas_prioritarias(){
+//		/*Objetivo: Ordenar la lista de empresas segï¿½n el peso adherido por la
+//		 * condiciï¿½n prioritaria adherida. La empresa testEmpresa1 deberï¿½a quedar
 //		 * en primer lugar.
 //		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
 //		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.

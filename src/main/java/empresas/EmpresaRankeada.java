@@ -1,5 +1,8 @@
 package empresas;
 
+import org.uqbar.commons.utils.Observable;
+
+@Observable
 public class EmpresaRankeada{
 
 	Empresa empresa;

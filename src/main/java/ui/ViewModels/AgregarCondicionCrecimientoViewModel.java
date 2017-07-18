@@ -9,7 +9,7 @@ import org.uqbar.commons.utils.Observable;
 import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
 import condiciones.Condicion;
-import condiciones.Crecimiento;
+import criterios.CriterioCrecimiento;
 import repositorios.RepositorioIndicadores;
 import validadores.ValidadorComparador;
 import validadores.ValidadorCrecimiento;
@@ -69,8 +69,8 @@ public class AgregarCondicionCrecimientoViewModel {
 		validadorComparador.validarString(mayorMenor);
 		validadorCrecimiento.validarIntervalo(inicioPeriodo, finPeriodo);
 		System.out.println(condicionesYaAgregadas.size());
-		condicionesYaAgregadas.add(new Crecimiento(repositorioIndicadores, 
-				mayorMenor.equals("MAYOR") ? new ComparadorMayor() : new ComparadorMenor() ));
+		/*condicionesYaAgregadas.add(new CriterioCrecimiento(repositorioIndicadores, 
+				mayorMenor.equals("MAYOR") ? new ComparadorMayor() : new ComparadorMenor() ));*/
 	}
 
 	

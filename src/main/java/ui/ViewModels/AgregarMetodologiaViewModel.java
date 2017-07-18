@@ -49,7 +49,7 @@ public class AgregarMetodologiaViewModel {
 	}
 
 	public void agregarMetodologia() {
-		manejador.agregarMetodologiaAlArchivo(new Metodologia(nombre, condiciones));
+		//manejador.agregarMetodologiaAlArchivo(new Metodologia(nombre, condiciones));
 	}
 
 }

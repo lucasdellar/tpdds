@@ -36,19 +36,16 @@ public class AgregarCondicionDialog extends  Dialog<AgregarCondicionViewModel> {
 		
         form.setLayout(new ColumnLayout(2));
         
-        InviertiendoView.crearBoton(mainPanel, "Un indicador sea mayor o menor a cierto valor, "
-        		+ "en el último año o durante los últimos N años"
+        InviertiendoView.crearBoton(mainPanel, "Mayor o menor a indicador en ultimos anios"
         		).onClick(() -> openAgregarCondicionNAniosDialog());   
         
-        InviertiendoView.crearBoton(mainPanel, "un indicador sea mayor o menor que el de otra empresa"
+        InviertiendoView.crearBoton(mainPanel, "Un indicador sea mayor o menor que el de otra empresa"
         		).onClick(() -> openAgregarCondicionCompararEmpresaDialog());   
         
-        InviertiendoView.crearBoton(mainPanel, "un promedio, mediana o sumatoria de un cierto "
-        		+ "indicador sea mayor o menor a cierto valor"
+        InviertiendoView.crearBoton(mainPanel, "Operacion matematica en base a indicador comparada con valor"
         		).onClick(() -> openAgregarCondicionOperacionMatematicaDialog());   
         
-        InviertiendoView.crearBoton(mainPanel, "un indicador sea sea siempre o casi siempre creciente o "
-        		+ "decreciente durante un período"
+        InviertiendoView.crearBoton(mainPanel, "Crecimiento en un periodo"
         		).onClick(() -> openAgregarCondicionCrecimientoDialog());   
         
         

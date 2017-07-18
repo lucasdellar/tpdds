@@ -2,12 +2,15 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.uqbar.commons.utils.Observable;
+
 import java.util.Comparator;
 import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
-
+@Observable
 public class Metodologia {
 
 	String nombre;
