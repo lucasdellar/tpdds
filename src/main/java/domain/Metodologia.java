@@ -3,7 +3,6 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
-import condiciones.Condicion;
 import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
 import empresas.Empresa;
@@ -41,7 +40,6 @@ public class Metodologia {
 		for(CondicionTaxativa condicion : condiciones_taxativas){
 			misEmpresas = condicion.aplicar(misEmpresas);
 		}
-
 	}
 
 	public void ordenarPorRanking(List<EmpresaRankeada> misEmpresas) {

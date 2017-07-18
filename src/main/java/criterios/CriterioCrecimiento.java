@@ -30,13 +30,17 @@ public class CriterioCrecimiento extends Criterio {
 	}
 	
 	public Boolean cumple(Empresa unaEmpresa, Cuenta unaCuenta, IComparador unComparador, List<Cuenta> cuentasDentroDelIntervalo) {
+			double unValor = 0;
+			double otroValor = 0;
 			int posicion = cuentasDentroDelIntervalo.indexOf(unaCuenta);
-			
-			double unValor = valor.calcular(unaEmpresa);
-			
-			valor.setPeriodo(cuentasDentroDelIntervalo.get(posicion + 1).getPeriodo());
-			double otroValor = valor.calcular(unaEmpresa);
-			
+			if(posicion != cuentasDentroDelIntervalo.size() - 1){
+				valor.setPeriodo(unaCuenta.getPeriodo());
+				unValor = valor.calcular(unaEmpresa);
+				
+				
+				valor.setPeriodo(cuentasDentroDelIntervalo.get(posicion + 1).getPeriodo());
+				otroValor = valor.calcular(unaEmpresa);
+			}
 			return posicion == cuentasDentroDelIntervalo.size() - 1 || unComparador.comparar(unValor, otroValor);	
 		}
 
