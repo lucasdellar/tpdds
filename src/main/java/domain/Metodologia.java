@@ -12,10 +12,10 @@ import empresas.EmpresaRankeada;
 public class Metodologia {
 
 	String nombre;
-	private List<Condicion> condiciones_taxativas;
-	private List<Condicion> condiciones_prioritarias;
+	private List<CondicionTaxativa> condiciones_taxativas;
+	private List<CondicionPrioritaria> condiciones_prioritarias;
 	
-	public Metodologia(String nombre, List<Condicion> condiciones_taxativas, List<Condicion> condiciones_prioritarias) {
+	public Metodologia(String nombre, List<CondicionTaxativa> condiciones_taxativas, List<CondicionPrioritaria> condiciones_prioritarias) {
 		this.nombre = nombre;
 		this.condiciones_taxativas = condiciones_taxativas;
 		this.condiciones_prioritarias = condiciones_prioritarias;
@@ -38,7 +38,7 @@ public class Metodologia {
 	}
 	
 	private void filtrar_empresas(List<EmpresaRankeada> misEmpresas){
-		for(Condicion condicion : condiciones_taxativas){
+		for(CondicionTaxativa condicion : condiciones_taxativas){
 			misEmpresas = condicion.aplicar(misEmpresas);
 		}
 
@@ -47,14 +47,14 @@ public class Metodologia {
 	public void ordenarPorRanking(List<EmpresaRankeada> misEmpresas) {
 		/*Se aplican todas las condiciones, tanto taxativas como prioritarias, 
 		 * y luego se ordena la lista por ranking.*/
-		for(Condicion condicion : condiciones_prioritarias){
+		for(CondicionPrioritaria condicion : condiciones_prioritarias){
 			misEmpresas = condicion.aplicar(misEmpresas);
 		}
 		
 		misEmpresas.sort(new Comparator<EmpresaRankeada>(){
 			@Override
-			public int compare(EmpresaRankeada emp1, EmpresaRankeada emp2) {
-				return emp1.getRanking().compareTo(emp2.getRanking());
+			public int compare(EmpresaRankeada unaEmpresa, EmpresaRankeada otraEmpresa) {
+				return unaEmpresa.getRanking().compareTo(otraEmpresa.getRanking());
 			}
 		});
 	}
@@ -69,19 +69,19 @@ public class Metodologia {
 		this.nombre = nombre;
 	}
 
-	public List<Condicion> getCondiciones_taxativas() {
+	public List<CondicionTaxativa> getCondiciones_taxativas() {
 		return condiciones_taxativas;
 	}
 
-	public void setCondiciones_taxativas(List<Condicion> condiciones_taxativas) {
+	public void setCondiciones_taxativas(List<CondicionTaxativa> condiciones_taxativas) {
 		this.condiciones_taxativas = condiciones_taxativas;
 	}
 
-	public List<Condicion> getCondiciones_prioritarias() {
+	public List<CondicionPrioritaria> getCondiciones_prioritarias() {
 		return condiciones_prioritarias;
 	}
 
-	public void setCondiciones_prioritarias(List<Condicion> condiciones_prioritarias) {
+	public void setCondiciones_prioritarias(List<CondicionPrioritaria> condiciones_prioritarias) {
 		this.condiciones_prioritarias = condiciones_prioritarias;
 	}
 

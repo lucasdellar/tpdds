@@ -4,7 +4,7 @@ import empresas.Empresa;
 import repositorios.RepositorioIndicadores;
 
 public class ValorIndicador implements Valor{
-
+	
 	Indicador indicador;
 	String periodo;
 	RepositorioIndicadores repo;
