@@ -484,21 +484,56 @@ public class InvirtiendoTest {
 	}
 
 	@Test
-	public void condicionCrecimientoEvaluaCorrectamenteUnaEmpresa(){
-		RepositorioIndicadores repo = new RepositorioIndicadores();
-		CondicionTaxativa condicion = new CondicionTaxativa(repo, new ComparadorMenor());
+	public void CriterioCrecimiento_FormaEstricta_EvaluaCorrectamente(){
+		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+		CondicionTaxativa condicion = new CondicionTaxativa(repositorio, new ComparadorMayor());
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
-		Valor valor = new ValorIndicador(unIndicador);
-		condicion.setCriterio(new CrecimientoSiempre(valor, 2015, 2017));
+		Valor unValor = new ValorIndicador(unIndicador, condicion.getRepoIndicadores());
+		condicion.setCriterio(new CriterioCrecimiento(unValor, 2015, 2017, 0));
 		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
-		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
-		miEmpresa.setCuentas(new ArrayList<>());
-		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
-		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
-		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));
-		empresas.add(miEmpresa);		
+		EmpresaRankeada unaEmpresa = new EmpresaRankeada("testEmpresa1");
+		unaEmpresa.setCuentas(new ArrayList<>());
+		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
+		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));
+		empresas.add(unaEmpresa);
+		
+		EmpresaRankeada otraEmpresa = new EmpresaRankeada("testEmpresa2");
+		otraEmpresa.setCuentas(new ArrayList<>());
+		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
+		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "4"));
+		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "6"));
+		empresas.add(otraEmpresa);
+		
 		Assert.assertEquals(condicion.aplicar(empresas).size(), 1);
-	}	
+		Assert.assertEquals(condicion.aplicar(empresas).get(0).getNombre(), "testEmpresa1");
+	}
+	
+	@Test
+	public void CriterioCrecimiento_FormaPermisiva_EvaluaCorrectamente(){
+		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+		CondicionTaxativa condicion = new CondicionTaxativa(repositorio, new ComparadorMayor());
+		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
+		Valor unValor = new ValorIndicador(unIndicador, condicion.getRepoIndicadores());
+		condicion.setCriterio(new CriterioCrecimiento(unValor, 2015, 2017, 1));
+		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
+		
+		EmpresaRankeada unaEmpresa = new EmpresaRankeada("testEmpresa1");
+		unaEmpresa.setCuentas(new ArrayList<>());
+		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
+		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "4"));
+		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "6"));
+		empresas.add(unaEmpresa);
+		
+		EmpresaRankeada otraEmpresa = new EmpresaRankeada("testEmpresa2");
+		otraEmpresa.setCuentas(new ArrayList<>());
+		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "3"));
+		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "4"));
+		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "5"));
+		empresas.add(otraEmpresa);
+		
+		Assert.assertEquals(condicion.aplicar(empresas).size(), 2);
+	}
 	
 	@Test
 	public void cumpleCondicionTaxativaConCriterioMediana(){
