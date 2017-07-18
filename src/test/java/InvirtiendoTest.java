@@ -472,7 +472,11 @@ public class InvirtiendoTest {
 		empresas.add(miEmpresa);
 		empresas.add(miEmpresa2);
 		empresas.add(miEmpresa3);
-		Metodologia metodologiaTest = new Metodologia("testMetodologia", new ArrayList<>());
+		
+		List<CondicionTaxativa> condiciones_taxativas = new ArrayList<CondicionTaxativa>();
+		List<CondicionPrioritaria> condiciones_prioritarias = new ArrayList<CondicionPrioritaria>();
+		Metodologia metodologiaTest = new Metodologia("testMetodologia", condiciones_taxativas, condiciones_prioritarias);
+		
 		metodologiaTest.ordenarPorRanking(empresas);
 		Assert.assertEquals(empresas.get(0).getNombre(), "testEmpresa3");
 		Assert.assertEquals(empresas.get(1).getNombre(), "testEmpresa1");
