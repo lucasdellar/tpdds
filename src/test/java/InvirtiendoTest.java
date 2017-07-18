@@ -13,6 +13,7 @@ import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
 import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
+import criterios.Criterio;
 import criterios.CriterioCrecimiento;
 import criterios.CriterioPorValor;
 import criterios.Mediana;
@@ -90,15 +91,15 @@ public class InvirtiendoTest {
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
 		Valor valor = new ValorIndicador(unIndicador, taxativa.getRepoIndicadores());
 		taxativa.setCriterio(new Promedio(valor));
-		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
+		Empresa miEmpresa = new Empresa("testEmpresa");
 		miEmpresa.setCuentas(new ArrayList<>());
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));	
-		
+		EmpresaRankeada miEmpresaRankeada = new EmpresaRankeada(miEmpresa);
 		List<EmpresaRankeada> empresas = new ArrayList<>();
-		empresas.add(miEmpresa);
-		Assert.assertEquals(taxativa.aplicar(empresas).get(0).getNombre(), miEmpresa.getNombre());
+		empresas.add(miEmpresaRankeada);
+		Assert.assertEquals(taxativa.aplicar(empresas).get(0).getEmpresa().getNombre(), miEmpresa.getNombre());
 	}
 	
 	@Test
@@ -112,20 +113,21 @@ public class InvirtiendoTest {
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
 		Valor valor = new ValorIndicador(unIndicador, taxativa.getRepoIndicadores());
 		taxativa.setCriterio(new Promedio(valor));
-		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
+		Empresa miEmpresa = new Empresa("testEmpresa");
 		miEmpresa.setCuentas(new ArrayList<>());
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));	
-		
-		EmpresaRankeada otraEmpresa = new EmpresaRankeada("otraEmpresa");
+		EmpresaRankeada miEmpresaRankeada = new EmpresaRankeada(miEmpresa);
+		Empresa otraEmpresa = new Empresa("otraEmpresa");
 		otraEmpresa.setCuentas(new ArrayList<>());
 		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3000000"));
-		
+		EmpresaRankeada otraEmpresaRankeada = new EmpresaRankeada(otraEmpresa);
 		List<EmpresaRankeada> empresas = new ArrayList<>();
-		empresas.add(miEmpresa);
-		empresas.add(otraEmpresa);
+		empresas.add(miEmpresaRankeada);
+		empresas.add(otraEmpresaRankeada);
 		Assert.assertEquals(taxativa.aplicar(empresas).size(), 1);
+		Assert.assertEquals(taxativa.aplicar(empresas).get(0).getEmpresa().getNombre(), miEmpresa.getNombre());
 	}
 	
 	@Test
@@ -144,215 +146,233 @@ public class InvirtiendoTest {
 		Valor valor = new ValorIndicador(unIndicador, prioritaria.getRepoIndicadores());
 		prioritaria.setCriterio(new Sumatoria(valor));
 		
-		EmpresaRankeada empresa1 = new EmpresaRankeada("testEmpresa1");
+		Empresa empresa1 = new Empresa("testEmpresa1");
 		empresa1.setCuentas(new ArrayList<>());
 		empresa1.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
 		empresa1.agregarCuenta(new Cuenta("testCuenta", "2016", "5")); //75
 		empresa1.agregarCuenta(new Cuenta("testCuenta", "2017", "5"));
+		EmpresaRankeada empresa1Rankeada = new EmpresaRankeada(empresa1);
 		
-		EmpresaRankeada empresa2 = new EmpresaRankeada("testEmpresa2");
+		Empresa empresa2 = new Empresa("testEmpresa2");
 		empresa2.setCuentas(new ArrayList<>());
 		empresa2.agregarCuenta(new Cuenta("testCuenta", "2014", "3"));
 		empresa2.agregarCuenta(new Cuenta("testCuenta", "2015", "4")); //60
 		empresa2.agregarCuenta(new Cuenta("testCuenta", "2016", "5"));
+		EmpresaRankeada empresa2Rankeada = new EmpresaRankeada(empresa2);
 		
-		EmpresaRankeada empresa3 = new EmpresaRankeada("testEmpresa3");
+		Empresa empresa3 = new Empresa("testEmpresa3");
 		empresa3.setCuentas(new ArrayList<>());
 		empresa3.agregarCuenta(new Cuenta("testCuenta", "2013", "7"));
 		empresa3.agregarCuenta(new Cuenta("testCuenta", "2014", "5")); //65
 		empresa3.agregarCuenta(new Cuenta("testCuenta", "2015", "1"));
+		EmpresaRankeada empresa3Rankeada = new EmpresaRankeada(empresa3);
 		
 		List<EmpresaRankeada> empresas = new ArrayList<>();
+		empresas.add(empresa1Rankeada);
+		empresas.add(empresa2Rankeada);
+		empresas.add(empresa3Rankeada);
+		
+		Assert.assertEquals(prioritaria.aplicar(empresas).get(0).getEmpresa().getNombre(), "testEmpresa1");
+		Assert.assertEquals(prioritaria.aplicar(empresas).get(1).getEmpresa().getNombre(), "testEmpresa3");
+		Assert.assertEquals(prioritaria.aplicar(empresas).get(2).getEmpresa().getNombre(), "testEmpresa2");
+	}
+	
+	@Test
+	public void metodología_solo_prioritarias(){
+		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
+		 * condición prioritaria adherida. La empresa testEmpresa1 debería quedar
+		 * en primer lugar.
+		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
+		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.
+		 */
+		
+		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
+		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
+		Indicador tercerIndicador = new Indicador("indicadorTestC", "testCuentaC / 2");
+		CondicionPrioritaria prioritaria1 = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 1);
+		CondicionPrioritaria prioritaria2 = new CondicionPrioritaria(repositorio, new ComparadorMenor(), 3);
+		CondicionPrioritaria prioritaria3 = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 5);
+		
+		List<CondicionPrioritaria> condicionesPrioritarias = new ArrayList<>();
+		List<CondicionTaxativa> condicionesTaxativasVacia = new ArrayList<>();
+		
+		condicionesPrioritarias.add(prioritaria1);
+		condicionesPrioritarias.add(prioritaria2);
+		condicionesPrioritarias.add(prioritaria3);
+		Metodologia metodologia = new Metodologia("testMetodologia", condicionesTaxativasVacia, condicionesPrioritarias);
+		
+		repositorio.agregar(unIndicador);
+		repositorio.agregar(otroIndicador);
+		repositorio.agregar(tercerIndicador);
+		
+		Valor valorUno = new ValorIndicador(unIndicador, prioritaria1.getRepoIndicadores());
+		Valor valorDos = new ValorIndicador(otroIndicador, prioritaria2.getRepoIndicadores());
+		Valor valorTres = new ValorIndicador(tercerIndicador, prioritaria3.getRepoIndicadores());
+		prioritaria1.setCriterio(new Sumatoria(valorUno));
+		prioritaria2.setCriterio(new Promedio(valorDos));
+		prioritaria3.setCriterio(new Promedio(valorTres));
+		
+		Empresa empresa1 = new Empresa("testEmpresa1");
+		empresa1.setCuentas(new ArrayList<>());
+		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2015", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2016", "5")); //Sumatoria: 75
+		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2017", "5"));
+		
+		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2015", "15"));
+		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2016", "15")); //Promedio: 15
+		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2017", "15"));
+		
+		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2015", "20"));
+		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2016", "20")); //Promedio: 9.15
+		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2017", "15"));
+		
+		Empresa empresa2 = new Empresa("testEmpresa2");
+		empresa2.setCuentas(new ArrayList<>());
+		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2014", "1"));
+		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2015", "2")); //Sumatoria: 30
+		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2016", "3"));
+		
+		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2014", "5"));
+		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2015", "6")); //Promedio: 5
+		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2016", "7"));
+		
+		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2014", "7"));
+		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2015", "8")); //Promedio: 4
+		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2016", "9"));
+		
+		Empresa empresa3 = new Empresa("testEmpresa3");
+		empresa3.setCuentas(new ArrayList<>());
+		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2013", "10"));
+		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2014", "10")); //Sumatoria: 150
+		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2015", "10"));
+		
+		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2013", "10"));
+		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2014", "10")); //Promedio: 10
+		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2015", "10"));
+		
+		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2013", "25"));
+		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2014", "25")); //Promedio: 12.5
+		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2015", "25"));
+		
+		/* prioritaria1, peso 1 = empresa3, empresa2, empresa1 => Rankings E1 E2 E3: 1*(3-2), 1*(3-1), 1*(3-0).
+		 * prioritaria2, peso 3 = empresa2, empresa3, empresa1 => Rankings E1 E2 E3: 3*(3-2), 3*(3-0) ,3*(3-1).
+		 * prioritaria3, peso 5 = empresa3, empresa1, empresa2 => Rankings E1 E2 E3: 5*(3-1), 5*(3-2), 5*(3-0).
+		 * Rankings E1, E2, E3 = 14, 16, 24 => empresa3, empresa2, empresa1.
+		 */
+		
+		List<Empresa> empresas = new ArrayList<>();
 		empresas.add(empresa1);
 		empresas.add(empresa2);
 		empresas.add(empresa3);
-		
-		Assert.assertEquals(prioritaria.aplicar(empresas).get(0).getNombre(), "testEmpresa1");
-		Assert.assertEquals(prioritaria.aplicar(empresas).get(1).getNombre(), "testEmpresa3");
-		Assert.assertEquals(prioritaria.aplicar(empresas).get(2).getNombre(), "testEmpresa2");
+		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(0).getEmpresa().getNombre(), "testEmpresa1");
+		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(1).getEmpresa().getNombre(), "testEmpresa2");
+		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(2).getEmpresa().getNombre(), "testEmpresa3");
 	}
 	
-//	@Test
-//	public void metodología_solo_prioritarias(){
-//		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
-//		 * condición prioritaria adherida. La empresa testEmpresa1 debería quedar
-//		 * en primer lugar.
-//		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
-//		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.
-//		 */
-//		
-//		RepositorioIndicadores repositorio = new RepositorioIndicadores();
-//		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
-//		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
-//		Indicador tercerIndicador = new Indicador("indicadorTestC", "testCuentaC / 2");
-//		CondicionPrioritaria prioritaria1 = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 1);
-//		CondicionPrioritaria prioritaria2 = new CondicionPrioritaria(repositorio, new ComparadorMenor(), 3);
-//		CondicionPrioritaria prioritaria3 = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 5);
-//		
-//		List<CondicionPrioritaria> condicionesPrioritarias = new ArrayList<>();
-//		List<CondicionTaxativa> condicionesTaxativasVacia = new ArrayList<>();
-//		
-//		condicionesPrioritarias.add(prioritaria1);
-//		condicionesPrioritarias.add(prioritaria2);
-//		condicionesPrioritarias.add(prioritaria3);
-//		Metodologia metodologia = new Metodologia("testMetodologia", condicionesTaxativasVacia, condicionesPrioritarias);
-//		
-//		repositorio.agregar(unIndicador);
-//		repositorio.agregar(otroIndicador);
-//		repositorio.agregar(tercerIndicador);
-//		
-//		Valor valorUno = new ValorIndicador(unIndicador, prioritaria1.getRepoIndicadores());
-//		Valor valorDos = new ValorIndicador(otroIndicador, prioritaria2.getRepoIndicadores());
-//		Valor valorTres = new ValorIndicador(tercerIndicador, prioritaria3.getRepoIndicadores());
-//		prioritaria1.setCriterio(new Sumatoria(valorUno));
-//		prioritaria2.setCriterio(new Promedio(valorDos));
-//		prioritaria3.setCriterio(new Promedio(valorTres));
-//		
-//		Empresa empresa1 = new Empresa("testEmpresa1");
-//		empresa1.setCuentas(new ArrayList<>());
-//		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2015", "5"));
-//		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2016", "5")); //Sumatoria: 75
-//		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2017", "5"));
-//		
-//		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2015", "15"));
-//		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2016", "15")); //Promedio: 15
-//		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2017", "15"));
-//		
-//		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2015", "20"));
-//		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2016", "20")); //Promedio: 9.15
-//		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2017", "15"));
-//		
-//		Empresa empresa2 = new Empresa("testEmpresa2");
-//		empresa2.setCuentas(new ArrayList<>());
-//		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2014", "1"));
-//		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2015", "2")); //Sumatoria: 30
-//		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2016", "3"));
-//		
-//		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2014", "5"));
-//		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2015", "6")); //Promedio: 5
-//		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2016", "7"));
-//		
-//		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2014", "7"));
-//		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2015", "8")); //Promedio: 4
-//		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2016", "9"));
-//		
-//		Empresa empresa3 = new Empresa("testEmpresa3");
-//		empresa3.setCuentas(new ArrayList<>());
-//		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2013", "10"));
-//		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2014", "10")); //Sumatoria: 150
-//		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2015", "10"));
-//		
-//		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2013", "10"));
-//		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2014", "10")); //Promedio: 10
-//		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2015", "10"));
-//		
-//		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2013", "25"));
-//		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2014", "25")); //Promedio: 12.5
-//		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2015", "25"));
-//		
-//		/* prioritaria1, peso 1 = empresa3, empresa2, empresa1 => Rankings E1 E2 E3: 1*(3-2), 1*(3-1), 1*(3-0).
-//		 * prioritaria2, peso 3 = empresa2, empresa3, empresa1 => Rankings E1 E2 E3: 3*(3-2), 3*(3-0) ,3*(3-1).
-//		 * prioritaria3, peso 5 = empresa3, empresa1, empresa2 => Rankings E1 E2 E3: 5*(3-1), 5*(3-2), 5*(3-0).
-//		 * Rankings E1, E2, E3 = 14, 16, 24 => empresa3, empresa2, empresa1.
-//		 */
-//		
-//		List<Empresa> empresas = new ArrayList<>();
-//		empresas.add(empresa1);
-//		empresas.add(empresa2);
-//		empresas.add(empresa3);
-//		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(0).getNombre(), "testEmpresa3");
-//		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(1).getNombre(), "testEmpresa2");
-//		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(2).getNombre(), "testEmpresa1");
-//	}
+	@Test
+	public void metodología_solo_taxativas(){
+		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
+		 * condición prioritaria adherida. La empresa testEmpresa1 debería quedar
+		 * en primer lugar.
+		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
+		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.
+		 */
+		
+		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
+		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
+		Indicador tercerIndicador = new Indicador("indicadorTestC", "testCuentaC / 2");
+		repositorio.agregar(unIndicador);
+		CondicionTaxativa taxativa1 = new CondicionTaxativa(repositorio, new ComparadorMayor(), 20);
+		CondicionTaxativa taxativa2 = new CondicionTaxativa(repositorio, new ComparadorMayor());
+		CondicionTaxativa taxativa3 = new CondicionTaxativa(repositorio, new ComparadorMayor());
+		List<CondicionTaxativa> condicionesTaxativas = new ArrayList<>();
+		List<CondicionPrioritaria> condicionesPrioritarias = new ArrayList<>();
+		condicionesTaxativas.add(taxativa1);
+		condicionesTaxativas.add(taxativa2);
+		condicionesTaxativas.add(taxativa3);
+		
+		Metodologia metodologia = new Metodologia("testMetodologia", condicionesTaxativas, condicionesPrioritarias);
+		
+		Valor valorUno = new ValorIndicador(unIndicador, taxativa1.getRepoIndicadores());
+		Valor valorDos = new ValorIndicador(otroIndicador, taxativa2.getRepoIndicadores());
+		Valor valorTres = new ValorIndicador(tercerIndicador, taxativa3.getRepoIndicadores());
+		taxativa1.setCriterio(new Sumatoria(valorUno));
+		taxativa2.setCriterio(new CriterioCrecimiento(valorDos, 2015, 2017, 1));
+		taxativa3.setCriterio(new CriterioCrecimiento(valorTres, 2015, 2017, 0));
+		
+		Empresa empresa1 = new Empresa("testEmpresa1");
+		empresa1.setCuentas(new ArrayList<>());
+		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2015", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2016", "5")); //Sumatoria: 75
+		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2017", "5"));
+
+		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2015", "15"));
+		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2016", "20")); //CrecimientoCasiSiempre: 15
+		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2017", "25"));
+		
+		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2015", "20"));
+		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2016", "20")); //CrecimientoSiempre: 9.15
+		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2017", "15"));
+		
+		Empresa empresa2 = new Empresa("testEmpresa2");
+		empresa2.setCuentas(new ArrayList<>());
+		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2014", "1"));
+		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2015", "2")); //Sumatoria: 30
+		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2016", "3"));
+		
+		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2014", "4"));
+		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2015", "5")); //Promedio: 5
+		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2016", "6"));
+		
+		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2014", "7"));
+		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2015", "8")); //Promedio: 4
+		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2016", "9"));
+
+		Empresa empresa3 = new Empresa("testEmpresa3");
+		empresa3.setCuentas(new ArrayList<>());
+		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2013", "10"));
+		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2014", "10")); //Sumatoria: 150
+		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2015", "10"));
+		
+		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2013", "10"));
+		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2014", "10")); //Promedio: 10
+		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2015", "10"));
+		
+		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2013", "25"));
+		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2014", "25")); //Promedio: 12.5
+		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2015", "25"));
+		
+		/* prioritaria1, peso 1 = empresa3, empresa2, empresa1 => Rankings E1 E2 E3: 1*(3-2), 1*(3-1), 1*(3-0).
+		 * prioritaria2, peso 3 = empresa2, empresa3, empresa1 => Rankings E1 E2 E3: 3*(3-2), 3*(3-0) ,3*(3-1).
+		 * prioritaria3, peso 5 = empresa3, empresa1, empresa2 => Rankings E1 E2 E3: 5*(3-1), 5*(3-2), 5*(3-0).
+		 * Rankings E1, E2, E3 = 14, 16, 24 => empresa3, empresa2, empresa1.
+		 */
+		
+		List<Empresa> empresas = new ArrayList<>();
+		empresas.add(empresa1);
+		empresas.add(empresa2);
+		empresas.add(empresa3);
+		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(0).getEmpresa().getNombre(), "testEmpresa3");
+		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).size(), 1);
+	}
 	
-//	@Test
-//	public void metodología_solo_taxativas(){
-//		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
-//		 * condición prioritaria adherida. La empresa testEmpresa1 debería quedar
-//		 * en primer lugar.
-//		 * Resultado: Una lista ordenada, con testEmpresa1 en primer lugar, 
-//		 * testEmpresa3 en segundo lugar y testEmpresa2 en el tercer puesto.
-//		 */
-//		
-//		RepositorioIndicadores repositorio = new RepositorioIndicadores();
-//		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
-//		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
-//		Indicador tercerIndicador = new Indicador("indicadorTestC", "testCuentaC / 2");
-//		CondicionTaxativa taxativa1 = new CondicionTaxativa(repositorio, new ComparadorMayor(), 20);
-//		CondicionTaxativa taxativa2 = new CondicionTaxativa(repositorio, new ComparadorMayor());
-//		CondicionTaxativa taxativa3 = new CondicionTaxativa(repositorio, new ComparadorMayor());
-//		List<CondicionTaxativa> condicionesTaxativas = new ArrayList<>();
-//		List<CondicionPrioritaria> condicionesPrioritarias = new ArrayList<>();
-//		condicionesTaxativas.add(taxativa1);
-//		condicionesTaxativas.add(taxativa2);
-//		condicionesTaxativas.add(taxativa3);
-//		
-//		Metodologia metodologia = new Metodologia("testMetodologia", condicionesTaxativas, condicionesPrioritarias);
-//		
-//		repositorio.agregar(unIndicador);
-//		Valor valorUno = new ValorIndicador(unIndicador, taxativa1.getRepoIndicadores());
-//		Valor valorDos = new ValorIndicador(otroIndicador, taxativa2.getRepoIndicadores());
-//		Valor valorTres = new ValorIndicador(tercerIndicador, taxativa3.getRepoIndicadores());
-//		taxativa1.setCriterio(new Mediana(valorUno));
-//		taxativa2.setCriterio(new CriterioCrecimiento(valorDos, 2015, 2017, 1));
-//		taxativa3.setCriterio(new CriterioCrecimiento(valorTres, 2015, 2017, 0));
-//		
-//		Empresa empresa1 = new Empresa("testEmpresa1");
-//		empresa1.setCuentas(new ArrayList<>());
-//		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2015", "5"));
-//		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2016", "5")); //Sumatoria: 15
-//		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2017", "5"));
-//		
-//		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2015", "15"));
-//		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2016", "20")); //CrecimientoCasiSiempre: 15
-//		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2017", "25"));
-//		
-//		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2015", "20"));
-//		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2016", "20")); //CrecimientoSiempre: 9.15
-//		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2017", "15"));
-//		
-//		Empresa empresa2 = new Empresa("testEmpresa2");
-//		empresa2.setCuentas(new ArrayList<>());
-//		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2014", "1"));
-//		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2015", "2")); //Sumatoria: 6
-//		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2016", "3"));
-//		
-//		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2014", "4"));
-//		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2015", "5")); //Promedio: 5
-//		empresa2.agregarCuenta(new Cuenta("testCuentaB", "2016", "6"));
-//		
-//		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2014", "7"));
-//		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2015", "8")); //Promedio: 4
-//		empresa2.agregarCuenta(new Cuenta("testCuentaC", "2016", "9"));
-//		
-//		Empresa empresa3 = new Empresa("testEmpresa3");
-//		empresa3.setCuentas(new ArrayList<>());
-//		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2013", "10"));
-//		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2014", "10")); //Sumatoria: 30
-//		empresa3.agregarCuenta(new Cuenta("testCuentaA", "2015", "10"));
-//		
-//		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2013", "10"));
-//		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2014", "10")); //Promedio: 10
-//		empresa3.agregarCuenta(new Cuenta("testCuentaB", "2015", "10"));
-//		
-//		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2013", "25"));
-//		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2014", "25")); //Promedio: 12.5
-//		empresa3.agregarCuenta(new Cuenta("testCuentaC", "2015", "25"));
-//		
-//		/* prioritaria1, peso 1 = empresa3, empresa2, empresa1 => Rankings E1 E2 E3: 1*(3-2), 1*(3-1), 1*(3-0).
-//		 * prioritaria2, peso 3 = empresa2, empresa3, empresa1 => Rankings E1 E2 E3: 3*(3-2), 3*(3-0) ,3*(3-1).
-//		 * prioritaria3, peso 5 = empresa3, empresa1, empresa2 => Rankings E1 E2 E3: 5*(3-1), 5*(3-2), 5*(3-0).
-//		 * Rankings E1, E2, E3 = 14, 16, 24 => empresa3, empresa2, empresa1.
-//		 */
-//		
-//		List<Empresa> empresas = new ArrayList<>();
-//		empresas.add(empresa1);
-//		empresas.add(empresa2);
-//		empresas.add(empresa3);
-//		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(0).getNombre(), "testEmpresa3");
-//		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).size(), 1);
-//	}
-//	
+	@Test
+	public void calcular_sumatoria(){
+		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
+		repositorio.agregar(unIndicador);
+		Valor unValor = new ValorIndicador(unIndicador, repositorio);
+		Criterio sumatoria = new Sumatoria(unValor);
+		Empresa empresa2 = new Empresa("testEmpresa2");
+		empresa2.setCuentas(new ArrayList<>());
+		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2014", "1"));
+		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2015", "2")); //Sumatoria: 30
+		empresa2.agregarCuenta(new Cuenta("testCuentaA", "2016", "3"));
+		Assert.assertEquals(sumatoria.calcular(empresa2), 30, 0);
+	}
+	
 //	@Test
 //	public void metodología_taxativas_prioritarias(){
 //		/*Objetivo: Ordenar la lista de empresas según el peso adherido por la
@@ -366,10 +386,10 @@ public class InvirtiendoTest {
 //		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
 //		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
 //		Indicador tercerIndicador = new Indicador("indicadorTestC", "testCuentaC / 2");
-//		CondicionTaxativa taxativa1 = new condicionesTaxativas(repositorio, new ComparadorMayor(), 1);
-//		CondicionTaxativa taxativa2 = new condicionesTaxativas(repositorio, new ComparadorMenor(), 3);
-//		CondicionTaxativa taxativa3 = new condicionesTaxativas(repositorio, new ComparadorMayor(), 5);
-//		List<CondicionPrioritaria> condicionesPrioritarias = new ArrayList<>();
+//		CondicionTaxativa taxativa1 = new CondicionTaxativa(repositorio, new ComparadorMayor(), 1);
+//		CondicionTaxativa taxativa2 = new CondicionTaxativa(repositorio, new ComparadorMenor(), 3);
+//		CondicionTaxativa taxativa3 = new CondicionTaxativa(repositorio, new ComparadorMayor(), 5);
+//		List<CondicionTaxativa> condicionesTaxativas = new ArrayList<>();
 //		condicionesTaxativas.add(taxativa1);
 //		condicionesTaxativas.add(taxativa2);
 //		condicionesTaxativas.add(taxativa3);
@@ -435,7 +455,26 @@ public class InvirtiendoTest {
 //		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(0).getNombre(), "testEmpresa3");
 //		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(1).getNombre(), "testEmpresa2");
 //		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(2).getNombre(), "testEmpresa1");
-//	} NO FUNCIONAAAAAAAAAAAAAAAAAAAAAAAAAAAAA why god whyy
+//	}
+	
+	@Test
+	public void agregar_cuenta(){
+		Empresa empresa1 = new Empresa("testEmpresa1");
+		empresa1.setCuentas(new ArrayList<>());
+		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2015", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2016", "5"));
+		empresa1.agregarCuenta(new Cuenta("testCuentaA", "2017", "5"));
+		
+		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2015", "15"));
+		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2016", "20")); 
+		empresa1.agregarCuenta(new Cuenta("testCuentaB", "2017", "25"));
+		
+		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2015", "20"));
+		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2016", "20")); 
+		empresa1.agregarCuenta(new Cuenta("testCuentaC", "2017", "15"));
+		
+		Assert.assertEquals(empresa1.getCuentas().size(), 9);
+	}
 	
 	@Test
 	public void agregar_condicion_Taxativa(){
@@ -460,31 +499,36 @@ public class InvirtiendoTest {
 	@Test
 	public void metodologiaOrdenaCorrectamentePorPesoLasEmpresas(){
 		RepositorioIndicadores repo = new RepositorioIndicadores();
-		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa1");
+		Empresa miEmpresa = new Empresa("testEmpresa1");
 		miEmpresa.setCuentas(new ArrayList<>());
-		miEmpresa.aumentarRanking(10);
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
-		EmpresaRankeada miEmpresa2 = new EmpresaRankeada("testEmpresa2");
+		EmpresaRankeada miEmpresaRankeada = new EmpresaRankeada(miEmpresa);
+		miEmpresaRankeada.aumentarRanking(10);
+		
+		Empresa miEmpresa2 = new Empresa("testEmpresa2");
 		miEmpresa2.setCuentas(new ArrayList<>());
-		miEmpresa2.aumentarRanking(15);
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
-		EmpresaRankeada miEmpresa3 = new EmpresaRankeada("testEmpresa3");
+		EmpresaRankeada miEmpresa2Rankeada = new EmpresaRankeada(miEmpresa2);
+		miEmpresa2Rankeada.aumentarRanking(15);
+		
+		Empresa miEmpresa3 = new Empresa("testEmpresa3");
 		miEmpresa3.setCuentas(new ArrayList<>());
-		miEmpresa3.aumentarRanking(5);
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		EmpresaRankeada miEmpresa3Rankeada = new EmpresaRankeada(miEmpresa3);
+		miEmpresa3Rankeada.aumentarRanking(5);
 		ArrayList<EmpresaRankeada> empresas = new ArrayList<>();
-		empresas.add(miEmpresa);
-		empresas.add(miEmpresa2);
-		empresas.add(miEmpresa3);
+		empresas.add(miEmpresaRankeada);
+		empresas.add(miEmpresa2Rankeada);
+		empresas.add(miEmpresa3Rankeada);
 		
 		List<CondicionTaxativa> condiciones_taxativas = new ArrayList<CondicionTaxativa>();
 		List<CondicionPrioritaria> condiciones_prioritarias = new ArrayList<CondicionPrioritaria>();
 		Metodologia metodologiaTest = new Metodologia("testMetodologia", condiciones_taxativas, condiciones_prioritarias);
 		
 		metodologiaTest.ordenarPorRanking(empresas);
-		Assert.assertEquals(empresas.get(0).getNombre(), "testEmpresa3");
-		Assert.assertEquals(empresas.get(1).getNombre(), "testEmpresa1");
-		Assert.assertEquals(empresas.get(2).getNombre(), "testEmpresa2");
+		Assert.assertEquals(empresas.get(0).getEmpresa().getNombre(), "testEmpresa3");
+		Assert.assertEquals(empresas.get(1).getEmpresa().getNombre(), "testEmpresa1");
+		Assert.assertEquals(empresas.get(2).getEmpresa().getNombre(), "testEmpresa2");
 	}
 
 	@Test
@@ -495,22 +539,25 @@ public class InvirtiendoTest {
 		Valor unValor = new ValorIndicador(unIndicador, condicion.getRepoIndicadores());
 		condicion.setCriterio(new CriterioCrecimiento(unValor, 2015, 2017, 0));
 		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
-		EmpresaRankeada unaEmpresa = new EmpresaRankeada("testEmpresa1");
+		
+		Empresa unaEmpresa = new Empresa("testEmpresa1");
 		unaEmpresa.setCuentas(new ArrayList<>());
 		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
 		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
 		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));
-		empresas.add(unaEmpresa);
+		EmpresaRankeada unaEmpresaRankeada = new EmpresaRankeada(unaEmpresa);
+		empresas.add(unaEmpresaRankeada);
 		
-		EmpresaRankeada otraEmpresa = new EmpresaRankeada("testEmpresa2");
+		Empresa otraEmpresa = new Empresa("testEmpresa2");
 		otraEmpresa.setCuentas(new ArrayList<>());
 		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
 		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "7"));
 		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "6"));
-		empresas.add(otraEmpresa);
+		EmpresaRankeada otraEmpresaRankeada = new EmpresaRankeada(otraEmpresa);
+		empresas.add(otraEmpresaRankeada);
 		
 		Assert.assertEquals(condicion.aplicar(empresas).size(), 1);
-		Assert.assertEquals(condicion.aplicar(empresas).get(0).getNombre(), "testEmpresa1");
+		Assert.assertEquals(condicion.aplicar(empresas).get(0).getEmpresa().getNombre(), "testEmpresa1");
 	}
 	
 	@Test
@@ -522,19 +569,21 @@ public class InvirtiendoTest {
 		condicion.setCriterio(new CriterioCrecimiento(unValor, 2015, 2017, 1));
 		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
 		
-		EmpresaRankeada unaEmpresa = new EmpresaRankeada("testEmpresa1");
+		Empresa unaEmpresa = new Empresa("testEmpresa1");
 		unaEmpresa.setCuentas(new ArrayList<>());
 		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
 		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "4"));
 		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "6"));
-		empresas.add(unaEmpresa);
+		EmpresaRankeada unaEmpresaRankeada = new EmpresaRankeada(unaEmpresa);
+		empresas.add(unaEmpresaRankeada);
 		
-		EmpresaRankeada otraEmpresa = new EmpresaRankeada("testEmpresa2");
+		Empresa otraEmpresa = new Empresa("testEmpresa2");
 		otraEmpresa.setCuentas(new ArrayList<>());
 		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "3"));
 		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "4"));
 		otraEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "5"));
-		empresas.add(otraEmpresa);
+		EmpresaRankeada otraEmpresaRankeada = new EmpresaRankeada(otraEmpresa);
+		empresas.add(otraEmpresaRankeada);
 		
 		Assert.assertEquals(condicion.aplicar(empresas).size(), 2);
 	}
@@ -547,12 +596,13 @@ public class InvirtiendoTest {
 		Valor valor = new ValorIndicador(unIndicador, condicion.getRepoIndicadores());
 		condicion.setCriterio(new Mediana(valor));
 		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
-		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
+		Empresa miEmpresa = new Empresa("testEmpresa");
 		miEmpresa.setCuentas(new ArrayList<>());
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));
-		empresas.add(miEmpresa);		
+		EmpresaRankeada miEmpresaRankeada = new EmpresaRankeada(miEmpresa);
+		empresas.add(miEmpresaRankeada);		
 		Assert.assertEquals(condicion.aplicar(empresas).size(), 1);
 	}
 	
@@ -565,10 +615,11 @@ public class InvirtiendoTest {
 		valor.setPeriodo("2015");
 		condicion.setCriterio(new CriterioPorValor(valor));
 		ArrayList<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
-		EmpresaRankeada miEmpresa = new EmpresaRankeada("testEmpresa");
+		Empresa miEmpresa = new Empresa("testEmpresa");
 		miEmpresa.setCuentas(new ArrayList<>());
 		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
-		empresas.add(miEmpresa);		
+		EmpresaRankeada miEmpresaRankeada = new EmpresaRankeada(miEmpresa);
+		empresas.add(miEmpresaRankeada);		
 		Assert.assertEquals(condicion.aplicar(empresas).size(), 1);
 	}
 	
@@ -580,15 +631,16 @@ public class InvirtiendoTest {
 		Valor unValor = new ValorIndicador(unIndicador, condicion.getRepoIndicadores());
 		condicion.setCriterio(new Sumatoria(unValor));
 		List<EmpresaRankeada> empresas = new ArrayList<EmpresaRankeada>();
-		EmpresaRankeada unaEmpresa = new EmpresaRankeada("testEmpresa");
 		
+		Empresa unaEmpresa = new Empresa("testEmpresa");
 		unaEmpresa.setCuentas(new ArrayList<>());
 		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "5"));
 		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "15"));
 		unaEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "5"));
-		empresas.add(unaEmpresa);
+		EmpresaRankeada unaEmpresaRankeada = new EmpresaRankeada(unaEmpresa);
+		empresas.add(unaEmpresaRankeada);
 		
-		Assert.assertEquals(condicion.aplicar(empresas).get(0).getNombre(), "testEmpresa");
+		Assert.assertEquals(condicion.aplicar(empresas).get(0).getEmpresa().getNombre(), "testEmpresa");
 		Assert.assertEquals(condicion.getCriterio().calcular(unaEmpresa), 50, 0);
 	}
 	

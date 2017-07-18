@@ -23,7 +23,7 @@ public class Metodologia {
 	public List<EmpresaRankeada> aplicarMetodologia(List<Empresa> empresas){
 		List<EmpresaRankeada> misEmpresas = new ArrayList<EmpresaRankeada>();
 		inicializarEmpresasRankeadas(misEmpresas, empresas); 
-		filtrar_empresas(misEmpresas);
+		misEmpresas = filtrar_empresas(misEmpresas);
 		ordenarPorRanking(misEmpresas);
 		
 		return misEmpresas;
@@ -32,14 +32,15 @@ public class Metodologia {
 	private void inicializarEmpresasRankeadas(List<EmpresaRankeada> misEmpresas, List<Empresa> empresas) {
 		/* Se crean objetos adicionales para relacionar puntos con cada empresa en particular*/
 		for(Empresa empresa : empresas){
-			misEmpresas.add(new EmpresaRankeada(empresa.getNombre()));
+			misEmpresas.add(new EmpresaRankeada(empresa));
 		}
 	}
 	
-	private void filtrar_empresas(List<EmpresaRankeada> misEmpresas){
+	private List<EmpresaRankeada> filtrar_empresas(List<EmpresaRankeada> misEmpresas){
 		for(CondicionTaxativa condicion : condiciones_taxativas){
 			misEmpresas = condicion.aplicar(misEmpresas);
 		}
+		return misEmpresas;
 	}
 
 	public void ordenarPorRanking(List<EmpresaRankeada> misEmpresas) {

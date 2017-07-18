@@ -1,11 +1,12 @@
 package empresas;
 
-public class EmpresaRankeada extends Empresa{
+public class EmpresaRankeada{
 
+	Empresa empresa;
 	private Integer ranking;
 	
-	public EmpresaRankeada(String nombre){
-		super(nombre);
+	public EmpresaRankeada(Empresa empresa){
+		this.empresa = empresa;
 		setRanking(0);
 	}
 	
@@ -20,5 +21,10 @@ public class EmpresaRankeada extends Empresa{
 	void setRanking(Integer ranking) {
 		this.ranking = ranking;
 	}
+	
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
 
 }
