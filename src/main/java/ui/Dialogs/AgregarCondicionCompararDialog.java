@@ -33,6 +33,9 @@ public class AgregarCondicionCompararDialog  extends  Dialog<AgregarCondicionCom
         new Label(form).setText("Ingrese el indicador deseado ");
         new TextBox(form).setWidth(150).bindValueToProperty("nombreIndicador");
 
+        new Label(form).setText("Ingrese el periodo");
+        new TextBox(form).setWidth(150).bindValueToProperty("periodo");
+        
         new Label(form).setText("Escriba un peso para la condicion");
         new TextBox(form).setWidth(150).bindValueToProperty("peso");
         

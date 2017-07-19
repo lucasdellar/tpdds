@@ -24,6 +24,7 @@ public class AgregarCondicionCompararViewModel {
 	
 	RepositorioIndicadores repositorioIndicadores;
 	private String nombreIndicador;
+	private String periodo;
 	private String mayorMenor;
 	private String peso;
 	ValidadorComparador validadorComparador;
@@ -42,7 +43,10 @@ public class AgregarCondicionCompararViewModel {
 		
 		CondicionPrioritaria condicionAAgregar =
 			new CondicionPrioritaria(repositorioIndicadores, getMayorMenor().equals("MAYOR") ? new ComparadorMayor() : new ComparadorMenor(), Integer.parseInt(peso));
-		condicionAAgregar.setCriterio(new CriterioPorValor(new ValorIndicador(nombreIndicador, repositorioIndicadores)));
+		
+		ValorIndicador valor = new ValorIndicador(nombreIndicador, repositorioIndicadores);
+		valor.setPeriodo(periodo);
+		condicionAAgregar.setCriterio(new CriterioPorValor(valor));
 		condicionesYaAgregadas.add(condicionAAgregar);
 	}
 
@@ -68,6 +72,14 @@ public class AgregarCondicionCompararViewModel {
 
 	public void setPeso(String peso) {
 		this.peso = peso;
+	}
+
+	public String getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(String periodo) {
+		this.periodo = periodo;
 	}
 
 }
