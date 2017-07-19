@@ -14,12 +14,10 @@ public class ValorIndicador implements Valor{
 		this.repo = repo;
 	}
 
-	@Override
 	public Double calcular(Empresa unaEmpresa) {
 		return repo.indicadorDesdeString(indicador).aplicarIndicador(this.periodo, unaEmpresa, this.repo);
 	}
 	
-	@Override
 	public void setPeriodo(String unPeriodo){
 		this.periodo = unPeriodo;
 	}

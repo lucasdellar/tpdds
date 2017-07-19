@@ -7,7 +7,6 @@ import empresas.Empresa;
 
 public class ValorAntiguedad implements Valor{
 	
-	@Override
 	public Double calcular(Empresa unaEmpresa) {
 		
 		List<Integer> periodos = unaEmpresa.getCuentas().stream().map(unaCuenta -> Integer.parseInt(unaCuenta.getPeriodo()))
@@ -20,7 +19,6 @@ public class ValorAntiguedad implements Valor{
 		return antiguedad;
 	}
 
-	@Override
 	public void setPeriodo(String periodo) {
 		
 	}

@@ -74,7 +74,6 @@ public class AgregarCondicionCrecimientoViewModel {
 	public void agregarCondicion(List<CondicionTaxativa> condicionesYaAgregadas) {
 		validadorComparador.validarString(mayorMenor);
 		validadorCrecimiento.validarIntervalo(inicioPeriodo, finPeriodo);
-		System.out.println(condicionesYaAgregadas.size());
 		CondicionTaxativa condicionAAgregar =
 				new CondicionTaxativa(repositorioIndicadores, mayorMenor.equals("MAYOR") ? new ComparadorMayor() : new ComparadorMenor());
 		condicionAAgregar.setCriterio(new CriterioCrecimiento(new ValorIndicador(nombreIndicador, repositorioIndicadores), 
