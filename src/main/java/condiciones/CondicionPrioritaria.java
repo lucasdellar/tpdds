@@ -23,7 +23,7 @@ public class CondicionPrioritaria extends Condicion {
 	public List<EmpresaRankeada> aplicar(List<EmpresaRankeada> empresas) {
 		
 		this.ordenarSegunCriterio(empresas);
-		this.aumentarRankings(empresas);
+		//this.aumentarRankings(empresas);
 		
 		return empresas;
 	}
@@ -51,6 +51,7 @@ public class CondicionPrioritaria extends Condicion {
 		});
 		Collections.reverse(empresas);
 		this.aumentarRankings(empresas);
+		
 		return empresas;
 	}
 	

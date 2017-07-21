@@ -25,32 +25,33 @@ public class CriterioCrecimiento extends Criterio {
 	public List<Cuenta> obtener_cuentasDentroDelIntervalo(Empresa unaEmpresa){
 		return unaEmpresa.getCuentas()
 				.stream()
-				.filter(unaCuenta -> Integer.parseInt(unaCuenta.getPeriodo()) > principio 
-						||  Integer.parseInt(unaCuenta.getPeriodo()) > fin).collect(Collectors.toList());
+				.filter(unaCuenta ->
+				Integer.parseInt(unaCuenta.getPeriodo()) >= principio 
+						&&  Integer.parseInt(unaCuenta.getPeriodo()) <= fin).collect(Collectors.toList());
 	}
 	
-	public Boolean cumple(Empresa unaEmpresa, Cuenta unaCuenta, IComparador unComparador, List<Cuenta> cuentasDentroDelIntervalo) {
+	public Boolean cumple(Empresa unaEmpresa, String unPeriodo, IComparador unComparador, List<String> periodosDentroDelIntervalo) {
 			double unValor = 0;
 			double otroValor = 0;
-			int posicion = cuentasDentroDelIntervalo.indexOf(unaCuenta);
-			if(posicion != cuentasDentroDelIntervalo.size() - 1){
-				valor.setPeriodo(unaCuenta.getPeriodo());
+			int posicion = periodosDentroDelIntervalo.indexOf(unPeriodo);
+			if(posicion != periodosDentroDelIntervalo.size() - 1){
+				valor.setPeriodo(unPeriodo);
 				unValor = valor.calcular(unaEmpresa);
 				
 				
-				valor.setPeriodo(cuentasDentroDelIntervalo.get(posicion + 1).getPeriodo());
+				valor.setPeriodo(periodosDentroDelIntervalo.get(posicion + 1));
 				otroValor = valor.calcular(unaEmpresa);
 			}
-			return posicion == cuentasDentroDelIntervalo.size() - 1 || unComparador.comparar(unValor, otroValor);	
+			return posicion == periodosDentroDelIntervalo.size() - 1 || unComparador.comparar(unValor, otroValor);	
 		}
 
 	@Override
 	public Boolean aplicar(Empresa unaEmpresa, double unValor, IComparador unComparador) {
 		List<Cuenta> cuentasDentroDelIntervalo = obtener_cuentasDentroDelIntervalo(unaEmpresa);
-
-		return cuentasDentroDelIntervalo.stream()
-				.filter( unaCuenta -> cumple(unaEmpresa, unaCuenta, unComparador, cuentasDentroDelIntervalo))
-				.count() >= cuentasDentroDelIntervalo.size() - maxIncumplimientos;
+		List<String> periodosDentroDelIntervalo = obtenerPeriodos(cuentasDentroDelIntervalo);
+		return periodosDentroDelIntervalo.stream()
+				.filter( unPeriodo -> cumple(unaEmpresa, unPeriodo, unComparador, periodosDentroDelIntervalo))
+				.count() >= periodosDentroDelIntervalo.size() - maxIncumplimientos;
 	}
 	
 	@Override

@@ -1,5 +1,7 @@
 package criterios;
 
+import java.util.List;
+
 import comparadores.IComparador;
 import domain.Valor;
 import empresas.Empresa;
@@ -13,7 +15,8 @@ public class Promedio extends Criterio{
 	@Override
 	public double calcular(Empresa unaEmpresa) {
 		double sumatoria = 0;
-		sumatoria = unaEmpresa.getCuentas().stream().mapToDouble(unaCuenta -> actualizarPeriodo(unaEmpresa, unaCuenta)).sum();
+		List<String> periodos = obtenerPeriodos(unaEmpresa.getCuentas());
+		sumatoria = periodos.stream().mapToDouble(unPeriodo -> actualizarPeriodo(unaEmpresa, unPeriodo)).sum();
 		
 		return sumatoria / unaEmpresa.getCuentas().size();
 	}

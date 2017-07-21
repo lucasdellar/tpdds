@@ -17,8 +17,9 @@ public class Mediana  extends Criterio{
 	
 	@Override
 	public double calcular(Empresa unaEmpresa){
-		List<Double> indicadoresAplicados = unaEmpresa.getCuentas().stream()
-				.map(unaCuenta -> actualizarPeriodo(unaEmpresa, unaCuenta)).collect(Collectors.toList());
+		List<String> periodos = obtenerPeriodos(unaEmpresa.getCuentas());
+		List<Double> indicadoresAplicados = periodos.stream()
+				.map(unPeriodo -> actualizarPeriodo(unaEmpresa, unPeriodo)).collect(Collectors.toList());
 			
 		indicadoresAplicados.sort(new Comparator<Double>(){
 			@Override

@@ -24,5 +24,9 @@ public class ValorAntiguedad implements Valor{
 	public void setPeriodo(String periodo) {
 		
 	}
+	
+	public Indicador getIndicador() {
+		return null;
+	}
 
 }

@@ -1,5 +1,7 @@
 package criterios;
 
+import java.util.List;
+
 import comparadores.IComparador;
 import domain.Valor;
 import empresas.Empresa;
@@ -12,7 +14,8 @@ public class Sumatoria extends Criterio{
 
 	@Override
 	public double calcular(Empresa unaEmpresa) {
-		return unaEmpresa.getCuentas().stream().mapToDouble(unaCuenta -> actualizarPeriodo(unaEmpresa, unaCuenta)).sum();
+		List<String> periodos = obtenerPeriodos(unaEmpresa.getCuentas());
+		return periodos.stream().mapToDouble(unPeriodo -> actualizarPeriodo(unaEmpresa, unPeriodo)).sum();
 	}
 	
 	@Override

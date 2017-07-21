@@ -23,5 +23,9 @@ public class ValorIndicador implements Valor{
 	public void setPeriodo(String unPeriodo){
 		this.periodo = unPeriodo;
 	}
+	
+	public Indicador getIndicador() {
+		return repo.indicadorDesdeString(indicador);
+	}
 
 }
