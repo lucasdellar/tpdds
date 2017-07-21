@@ -56,9 +56,11 @@ public class Metodologia {
 		misEmpresas.sort(new Comparator<EmpresaRankeada>(){
 			@Override
 			public int compare(EmpresaRankeada unaEmpresa, EmpresaRankeada otraEmpresa) {
-				return unaEmpresa.getRanking().compareTo(otraEmpresa.getRanking());
+				return otraEmpresa.getRanking().compareTo(unaEmpresa.getRanking());
 			}
 		});
+		
+		
 	}
 	
 	// Getters and Setters;

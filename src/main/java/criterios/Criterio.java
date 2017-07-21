@@ -12,7 +12,7 @@ import empresas.Empresa;
 
 public abstract class Criterio {
 	
-	protected Valor valor;
+	public Valor valor;
 	
 	public Criterio(Valor valor) {
 		this.valor = valor;

@@ -17,6 +17,7 @@ import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import manejadoresArchivo.ManejadorDeArchivoIndicadores;
 import manejadoresArchivo.ManejadorDeArchivoMetodologias;
 import repositorios.RepositorioEmpresas;
+import repositorios.RepositorioMetodologias;
 
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.ui.view.ErrorViewer;
@@ -44,11 +45,12 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	public InviertiendoView() {
 		super(new InviertiendoViewModel());
 		archivoIndicadores.setRuta("indicadores.txt");
-		archivoMetodologias.setRuta("metodologias.txt");
+		//archivoMetodologias.setRuta("metodologias.txt");
 	}
 	private Archivo archivoEmpresas = new Archivo();
 	private Archivo archivoIndicadores = new Archivo();
-	private Archivo archivoMetodologias = new Archivo();
+	//private Archivo archivoMetodologias = new Archivo();
+	private RepositorioMetodologias repositorioMetodologias = new RepositorioMetodologias();
 	private EmpresaViewModel empresaViewModel;
 
 	protected void openArchivoDialog() {
@@ -84,10 +86,9 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 		mainPanel.setLayout(new VerticalLayout());
 		
+		agregarLabel(mainPanel, "Empresas");
 		
 		Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
-
-		agregarLabel(mainPanel, "Empresas");
 		
 		Table<Empresa> table = new Table<Empresa>(tablePanel, Empresa.class);
 		table.bindItemsToProperty("repositorioEmpresas.lista");
@@ -149,7 +150,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	
 
 	private void openAgregarMetodologiaDialog() {
-		AgregarMetodologiaViewModel agregarViewModel = new AgregarMetodologiaViewModel(archivoMetodologias.getRuta());
+		AgregarMetodologiaViewModel agregarViewModel = new AgregarMetodologiaViewModel(repositorioMetodologias);
 		agregarViewModel.setCondicionesPrioritarias(new ArrayList<>());
 		agregarViewModel.setCondicionesTaxativas(new ArrayList<>());
 		AgregarMetodologiaDialog agregarMetodologiaDialog = new AgregarMetodologiaDialog(this, agregarViewModel, new ManejadorDeArchivoIndicadores(archivoIndicadores.getRuta()).getRepositorioIndicadores());
@@ -157,7 +158,8 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	}
 	
 	private void openEvaluarMetodologiaDialog() {
-    	EvaluarMetodologiaViewModel evaluarViewModel = new EvaluarMetodologiaViewModel(new ManejadorDeArchivoEmpresas(archivoEmpresas.getRuta()).getRepositorioEmpresas(), new ManejadorDeArchivoMetodologias(archivoMetodologias.getRuta()).getRepositorioMetodologias());
+//    	EvaluarMetodologiaViewModel evaluarViewModel = new EvaluarMetodologiaViewModel(new ManejadorDeArchivoEmpresas(archivoEmpresas.getRuta()).getRepositorioEmpresas(), new ManejadorDeArchivoMetodologias(archivoMetodologias.getRuta()).getRepositorioMetodologias());
+    	EvaluarMetodologiaViewModel evaluarViewModel = new EvaluarMetodologiaViewModel(new ManejadorDeArchivoEmpresas(archivoEmpresas.getRuta()).getRepositorioEmpresas(), repositorioMetodologias);
     	EvaluarMetolodigaDialog evaluarMetodologiaDialog = new EvaluarMetolodigaDialog(this, evaluarViewModel);
     	evaluarMetodologiaDialog.open();
     }

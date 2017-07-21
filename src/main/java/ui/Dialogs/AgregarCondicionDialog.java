@@ -15,7 +15,10 @@ import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
 import repositorios.RepositorioIndicadores;
 import ui.InviertiendoView;
+import ui.ViewModels.AgregarCondicionCompararViewModel;
 import ui.ViewModels.AgregarCondicionCrecimientoViewModel;
+import ui.ViewModels.AgregarCondicionMatematicaViewModel;
+import ui.ViewModels.AgregarCondicionNAniosViewModel;
 import ui.ViewModels.AgregarCondicionViewModel;
 
 
@@ -66,19 +69,29 @@ public class AgregarCondicionDialog extends  Dialog<AgregarCondicionViewModel> {
 		agregarCondicionDialog.open();
 	}
 
-	private Object openAgregarCondicionOperacionMatematicaDialog() {
-		// TODO Auto-generated method stub
-		return null;
+	private void openAgregarCondicionOperacionMatematicaDialog() {
+		AgregarCondicionMatematicaViewModel agregarViewModel = 
+				new AgregarCondicionMatematicaViewModel(repositorioIndicadores);
+		AgregarCondicionMatematicaDialog agregarCondicionDialog 
+		= new AgregarCondicionMatematicaDialog(this, agregarViewModel, condicionesTaxativas);
+		agregarCondicionDialog.open();
 	}
 
-	private Object openAgregarCondicionCompararEmpresaDialog() {
-		// TODO Auto-generated method stub
-		return null;
+	private void openAgregarCondicionCompararEmpresaDialog() {
+		AgregarCondicionCompararViewModel agregarViewModel = 
+				new AgregarCondicionCompararViewModel(repositorioIndicadores);
+		AgregarCondicionCompararDialog agregarCondicionDialog 
+		= new AgregarCondicionCompararDialog(this, agregarViewModel, condicionesPrioritarias);
+		agregarCondicionDialog.open();
 	}
 
-	private Object openAgregarCondicionNAniosDialog() {
-		// TODO Auto-generated method stub
-		return null;
+	private void openAgregarCondicionNAniosDialog() {
+		AgregarCondicionNAniosViewModel agregarViewModel = 
+				new AgregarCondicionNAniosViewModel(repositorioIndicadores);
+		AgregarCondicionNAniosDialog agregarCondicionDialog 
+		= new AgregarCondicionNAniosDialog(this, agregarViewModel, condicionesTaxativas);
+		agregarCondicionDialog.open();
+		
 	}
 	
 	@Override

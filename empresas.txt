@@ -1,2 +1,2 @@
-{"nombre":"Primero","cuentas":[{"nombre":"Continuo","periodo":"2016","valor":"25"}]}
 {"nombre":"Segunda","cuentas":[{"nombre":"Patrimonio","periodo":"2016","valor":"200"},{"nombre":"Continuo","periodo":"2016","valor":"1000"}]}
+{"nombre":"Primero","cuentas":[{"nombre":"Continuo","periodo":"2016","valor":"25"},{"nombre":"Patrimonio","periodo":"2016","valor":"200"}]}

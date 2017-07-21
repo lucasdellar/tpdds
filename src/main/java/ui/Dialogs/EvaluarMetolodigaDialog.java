@@ -62,7 +62,7 @@ public class EvaluarMetolodigaDialog  extends  Dialog<EvaluarMetodologiaViewMode
 		tableEmpresasAEvaluar.bindItemsToProperty("empresasAEvaluar");
 		tableEmpresasAEvaluar.setNumberVisibleRows(6);
 		tableEmpresasAEvaluar.setWidth(3000);
-		tableMeotodologias.bindSelectionToProperty("empresaSeleccionadaAEvaluar");
+//		tableMeotodologias.bindSelectionToProperty("empresaSeleccionadaAEvaluar");
 
 		InviertiendoView.agregarColumna(tableEmpresasAEvaluar, "Nombre", "nombre");
 
@@ -81,7 +81,8 @@ public class EvaluarMetolodigaDialog  extends  Dialog<EvaluarMetodologiaViewMode
 		tableEmpresasOrdenadas.setNumberVisibleRows(6);
 		tableEmpresasOrdenadas.setWidth(3000);
 
-		
+		InviertiendoView.agregarColumna(tableEmpresasOrdenadas, "Nombre", "empresa.nombre");
+		InviertiendoView.agregarColumna(tableEmpresasOrdenadas, "Ranking", "ranking");
 	}
 
 }

@@ -269,9 +269,9 @@ public class InvirtiendoTest {
 		empresas.add(empresa1);
 		empresas.add(empresa2);
 		empresas.add(empresa3);
-		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(0).getEmpresa().getNombre(), "testEmpresa1");
-		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(1).getEmpresa().getNombre(), "testEmpresa2");
-		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(2).getEmpresa().getNombre(), "testEmpresa3");
+		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(1).getEmpresa().getNombre(), "testEmpresa1");
+		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(2).getEmpresa().getNombre(), "testEmpresa2");
+		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(0).getEmpresa().getNombre(), "testEmpresa3");
 	}
 	
 	@Test
@@ -445,9 +445,9 @@ public class InvirtiendoTest {
 		Metodologia metodologiaTest = new Metodologia("testMetodologia", condiciones_taxativas, condiciones_prioritarias);
 		
 		metodologiaTest.ordenarPorRanking(empresas);
-		Assert.assertEquals(empresas.get(0).getEmpresa().getNombre(), "testEmpresa3");
+		Assert.assertEquals(empresas.get(2).getEmpresa().getNombre(), "testEmpresa3");
 		Assert.assertEquals(empresas.get(1).getEmpresa().getNombre(), "testEmpresa1");
-		Assert.assertEquals(empresas.get(2).getEmpresa().getNombre(), "testEmpresa2");
+		Assert.assertEquals(empresas.get(0).getEmpresa().getNombre(), "testEmpresa2");
 	}
 
 	@Test
