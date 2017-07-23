@@ -5,9 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import comparadores.IComparador;
-import domain.Cuenta;
 import domain.Valor;
-import domain.DomainExceptions.CriterioException;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
 
@@ -28,12 +26,10 @@ public class CriterioNAnios extends Criterio{
 				return periodo1.compareTo(periodo2);
 			}
 		});
-
 		List<String> periodosAEvaluar = new ArrayList<String>(periodos.subList(0, anios));
 		return periodosAEvaluar.stream().allMatch(unPeriodo -> unComparador.comparar(actualizarPeriodo(unaEmpresa, unPeriodo), unValor));
 	}
 
-	
 	@Override
 	public double calcular(Empresa unaEmpresa){
 		throw new CriterioParaCondicionIncorrectaException("No se puede utilizar este criterio para el tipo de condicion Prioritaria.");

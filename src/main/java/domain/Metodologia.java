@@ -8,6 +8,7 @@ import org.uqbar.commons.utils.Observable;
 import java.util.Comparator;
 import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
+import edu.emory.mathcs.backport.java.util.Collections;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
 @Observable
@@ -53,14 +54,8 @@ public class Metodologia {
 			misEmpresas = condicion.aplicar(misEmpresas);
 		}
 		
-		misEmpresas.sort(new Comparator<EmpresaRankeada>(){
-			@Override
-			public int compare(EmpresaRankeada unaEmpresa, EmpresaRankeada otraEmpresa) {
-				return otraEmpresa.getRanking().compareTo(unaEmpresa.getRanking());
-			}
-		});
-		
-		
+		misEmpresas.sort(Comparator.comparing(EmpresaRankeada::getRanking));
+		Collections.reverse(misEmpresas); // La primera EmpresaRankeada es la de mayor peso.
 	}
 	
 	// Getters and Setters;

@@ -22,8 +22,7 @@ public class CondicionPrioritaria extends Condicion {
 	@Override
 	public List<EmpresaRankeada> aplicar(List<EmpresaRankeada> empresas) {
 		
-		this.ordenarSegunCriterio(empresas);
-		//this.aumentarRankings(empresas);
+		ordenarSegunCriterio(empresas);
 		
 		return empresas;
 	}
@@ -38,7 +37,7 @@ public class CondicionPrioritaria extends Condicion {
 	}
 	
 	private List<EmpresaRankeada> ordenarSegunCriterio(List<EmpresaRankeada> empresas) {
-
+		
 		empresas.sort(new Comparator<EmpresaRankeada>(){
 			
 			@Override
