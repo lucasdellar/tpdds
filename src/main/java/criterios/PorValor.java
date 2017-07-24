@@ -4,9 +4,9 @@ import comparadores.IComparador;
 import domain.Valor;
 import empresas.Empresa;
 
-public class CriterioPorValor extends Criterio {
+public class PorValor extends Criterio {
 	
-	public CriterioPorValor(Valor valor) {
+	public PorValor(Valor valor) {
 		super(valor);
 	}
 

@@ -29,9 +29,10 @@ public class CondicionPrioritaria extends Condicion {
 
 	private void aumentarRankings(List<EmpresaRankeada> empresas) {
 		for(EmpresaRankeada empresa : empresas){
-			/* 
-			 * De la siguiente manera calculamos el peso.
+			
+			/* De la siguiente manera calculamos el peso.
 			 */
+			
 			empresa.aumentarRanking(getPeso() * (empresas.size() - empresas.indexOf(empresa)));
 		}
 	}

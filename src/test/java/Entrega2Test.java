@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -9,41 +8,23 @@ import org.junit.Before;
 import org.junit.Test;
 
 import OperacionesMatematicas.ResolutorDeCuentas;
-import comparadores.ComparadorMayor;
-import comparadores.ComparadorMenor;
-import condiciones.CondicionPrioritaria;
-import condiciones.CondicionTaxativa;
-import criterios.Criterio;
-import criterios.CriterioCrecimiento;
-import criterios.CriterioNAnios;
-import criterios.CriterioPorValor;
-import criterios.Mediana;
-import criterios.Promedio;
-import criterios.Sumatoria;
 import domain.Archivo;
 import domain.ConversorFormatoArchivo;
 import domain.Cuenta;
 import domain.IConversorFormatoArchivo;
-import domain.Indicador;
-import domain.Metodologia;
-import domain.Valor;
-import domain.ValorAntiguedad;
-import domain.ValorIndicador;
 import domain.DomainExceptions.ArchivoInvalidoException;
 import domain.DomainExceptions.CuentaInvalidaException;
 import domain.DomainExceptions.CuentaPreexistenteException;
 import domain.DomainExceptions.ParserException;
 import empresas.Empresa;
-import empresas.EmpresaRankeada;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import repositorios.RepositorioEmpresas;
-import repositorios.RepositorioIndicadores;
 import ui.ViewModels.AgregarEmpresaViewModel;
 import ui.ViewModels.CuentaViewModel;
 import ui.ViewModels.EmpresaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
 
-public class InvirtiendoTest {
+public class Entrega2Test {
 
     IConversorFormatoArchivo conversor;
     ManejadorDeArchivoEmpresas manejador;
@@ -69,7 +50,7 @@ public class InvirtiendoTest {
         empresaViewModel.setArchivo(archivo);
 	}
 	
-	/* TEST's Entrega 1 & 2 */
+	/* ***************************************** TESTS ENTREGA 2 & ENTREGA 3 ********************************************** */
 	
 	@Test
     public void verificarFormatoParser(){

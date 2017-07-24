@@ -34,7 +34,9 @@ public class Metodologia {
 	}
 
 	private void inicializarEmpresasRankeadas(List<EmpresaRankeada> misEmpresas, List<Empresa> empresas) {
+		
 		/* Se crean objetos adicionales para relacionar puntos con cada empresa en particular*/
+		
 		for(Empresa empresa : empresas){
 			misEmpresas.add(new EmpresaRankeada(empresa));
 		}
@@ -48,8 +50,10 @@ public class Metodologia {
 	}
 
 	public void ordenarPorRanking(List<EmpresaRankeada> misEmpresas) {
+		
 		/*Se aplican todas las condiciones, tanto taxativas como prioritarias, 
 		 * y luego se ordena la lista por ranking.*/
+		
 		for(CondicionPrioritaria condicion : condiciones_prioritarias){
 			misEmpresas = condicion.aplicar(misEmpresas);
 		}

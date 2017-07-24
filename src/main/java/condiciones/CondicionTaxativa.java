@@ -1,6 +1,5 @@
 package condiciones;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +14,7 @@ public class CondicionTaxativa extends Condicion {
 	public CondicionTaxativa(RepositorioIndicadores indicadores, IComparador comparador, int valor) {
 		/* Para el caso en el que la condicion requiera de un valor 
 		 */
+		
 		super(indicadores, comparador);
 		this.valor = valor;
 	}
@@ -23,6 +23,7 @@ public class CondicionTaxativa extends Condicion {
 		/* En ciertos casos la condicion Taxativa puede no requerir de valor alguno. 
 		 * Por ejemplo cuando se quiere aplica el criterio Crecimiento.
 		 */
+		
 		super(indicadores, comparador);
 	}
 

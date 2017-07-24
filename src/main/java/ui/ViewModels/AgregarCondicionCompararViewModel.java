@@ -8,8 +8,8 @@ import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
 import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
-import criterios.CriterioCrecimiento;
-import criterios.CriterioPorValor;
+import criterios.Crecimiento;
+import criterios.PorValor;
 import criterios.Mediana;
 import criterios.Promedio;
 import criterios.Sumatoria;
@@ -46,7 +46,7 @@ public class AgregarCondicionCompararViewModel {
 		
 		ValorIndicador valor = new ValorIndicador(nombreIndicador, repositorioIndicadores);
 		valor.setPeriodo(periodo);
-		condicionAAgregar.setCriterio(new CriterioPorValor(valor));
+		condicionAAgregar.setCriterio(new PorValor(valor));
 		condicionesYaAgregadas.add(condicionAAgregar);
 	}
 

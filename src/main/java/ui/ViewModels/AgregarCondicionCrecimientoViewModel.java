@@ -11,7 +11,7 @@ import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
 import condiciones.Condicion;
 import condiciones.CondicionTaxativa;
-import criterios.CriterioCrecimiento;
+import criterios.Crecimiento;
 import domain.Indicador;
 import domain.ValorIndicador;
 import repositorios.RepositorioIndicadores;
@@ -76,7 +76,7 @@ public class AgregarCondicionCrecimientoViewModel {
 		validadorCrecimiento.validarIntervalo(inicioPeriodo, finPeriodo);
 		CondicionTaxativa condicionAAgregar =
 				new CondicionTaxativa(repositorioIndicadores, mayorMenor.equals("MAYOR") ? new ComparadorMayor() : new ComparadorMenor());
-		condicionAAgregar.setCriterio(new CriterioCrecimiento(new ValorIndicador(nombreIndicador, repositorioIndicadores), 
+		condicionAAgregar.setCriterio(new Crecimiento(new ValorIndicador(nombreIndicador, repositorioIndicadores), 
 				Integer.parseInt(inicioPeriodo), Integer.parseInt(finPeriodo), Integer.parseInt(getMaxIncumplimientos())));
 		condicionesYaAgregadas.add(condicionAAgregar);
 	}

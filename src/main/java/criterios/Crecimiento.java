@@ -9,13 +9,13 @@ import domain.Valor;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
 
-public class CriterioCrecimiento extends Criterio {
+public class Crecimiento extends Criterio {
 	
 	protected int principio;
 	protected int fin;
 	private int maxIncumplimientos;
 	
-	public CriterioCrecimiento(Valor valor, int principio, int fin, int maxIncumplimientos) {
+	public Crecimiento(Valor valor, int principio, int fin, int maxIncumplimientos) {
 		super(valor);
 		this.principio = principio;
 		this.fin = fin;

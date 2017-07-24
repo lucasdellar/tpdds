@@ -9,11 +9,11 @@ import domain.Valor;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
 
-public class CriterioNAnios extends Criterio{
+public class NAnios extends Criterio{
 
 	int anios;
 	
-	public CriterioNAnios(Valor valor, int anios) {
+	public NAnios(Valor valor, int anios) {
 		super(valor);
 		this.anios = anios;
 	}
@@ -34,13 +34,5 @@ public class CriterioNAnios extends Criterio{
 	public double calcular(Empresa unaEmpresa){
 		throw new CriterioParaCondicionIncorrectaException("No se puede utilizar este criterio para el tipo de condicion Prioritaria.");
 	}
-
-//	private void verificarQueNoFaltenCuentas(List<Cuenta> cuentasAEvaluar) {
-//		if(Integer.parseInt(cuentasAEvaluar.get(cuentasAEvaluar.size() - 1).getPeriodo()) !=  anios - cuentasAEvaluar.size())
-//			throw new CriterioException("Faltan ingresar cuentas para poder evaluar la empresa. Datos insuficientes.");
-//	}
-//	private Boolean periodoMayor(Cuenta x, Cuenta y) {
-//		return Integer.parseInt(x.getPeriodo()) > Integer.parseInt( y .getPeriodo() );
-//	}
 
 }

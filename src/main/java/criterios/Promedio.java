@@ -18,7 +18,7 @@ public class Promedio extends Criterio{
 		List<String> periodos = obtenerPeriodos(unaEmpresa.getCuentas());
 		sumatoria = periodos.stream().mapToDouble(unPeriodo -> actualizarPeriodo(unaEmpresa, unPeriodo)).sum();
 		
-		return sumatoria / unaEmpresa.getCuentas().size();
+		return sumatoria / periodos.size();
 	}
 
 	@Override
