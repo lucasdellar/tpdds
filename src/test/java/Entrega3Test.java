@@ -27,11 +27,6 @@ import repositorios.RepositorioIndicadores;
 
 public class Entrega3Test {
 
-	@Before
-	public void initObjects() throws IOException{ 
-		
-	}
-
 	/* ********************************************* TESTS DE COMPARADORES ************************************************** */	
 	
 	@Test
