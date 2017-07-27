@@ -21,13 +21,8 @@ public class Mediana  extends Criterio{
 		List<Double> indicadoresAplicados = periodos.stream()
 				.map(unPeriodo -> actualizarPeriodo(unaEmpresa, unPeriodo)).collect(Collectors.toList());
 			
-		indicadoresAplicados.sort(new Comparator<Double>(){
-			@Override
-			public int compare(Double n1, Double n2) {
-				return n1.compareTo(n2);
-			}
-		});
-		
+		indicadoresAplicados.sort(Comparator.comparingDouble(Double::doubleValue));
+
 		int size = indicadoresAplicados.size();
 		return esPar(size) ? medianaPar(indicadoresAplicados, size) : medianaImpar(indicadoresAplicados);
 	}
