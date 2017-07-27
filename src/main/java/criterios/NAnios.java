@@ -27,10 +27,6 @@ public class NAnios extends Criterio{
 		List<String> periodosAEvaluar = new ArrayList<String>(periodos.subList(0, anios));
 		return periodosAEvaluar.stream().allMatch(unPeriodo -> unComparador.comparar(actualizarPeriodo(unaEmpresa, unPeriodo), unValor));
 	}
-	
-	private int toInt(String periodo){
-		return Integer.parseInt(periodo);
-	}
 
 	@Override
 	public double calcular(Empresa unaEmpresa){
