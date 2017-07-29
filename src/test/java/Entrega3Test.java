@@ -153,9 +153,11 @@ public class Entrega3Test {
 		empresas.add(empresa2Rankeada);
 		empresas.add(empresa3Rankeada);
 		
-		Assert.assertEquals(prioritaria.aplicar(empresas).get(0).getEmpresa().getNombre(), "testEmpresa2");
-		Assert.assertEquals(prioritaria.aplicar(empresas).get(1).getEmpresa().getNombre(), "testEmpresa3");
-		Assert.assertEquals(prioritaria.aplicar(empresas).get(2).getEmpresa().getNombre(), "testEmpresa");
+		List<EmpresaRankeada> resultado = prioritaria.aplicar(empresas);
+		
+		Assert.assertEquals(resultado.get(0).getEmpresa().getNombre(), "testEmpresa2");
+		Assert.assertEquals(resultado.get(1).getEmpresa().getNombre(), "testEmpresa3");
+		Assert.assertEquals(resultado.get(2).getEmpresa().getNombre(), "testEmpresa");
 	}
 	
 	/* ********************************************* TESTS DE METODOLOGIA ************************************************** */	
