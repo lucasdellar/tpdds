@@ -7,7 +7,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import OperacionesMatematicas.Multiplicacion;
+import OperacionesMatematicas.Operador;
 import OperacionesMatematicas.ResolutorDeCuentas;
+import OperacionesMatematicas.Resta;
+import OperacionesMatematicas.Suma;
 import domain.Archivo;
 import domain.ConversorFormatoArchivo;
 import domain.Cuenta;
@@ -15,8 +19,13 @@ import domain.IConversorFormatoArchivo;
 import domain.DomainExceptions.ArchivoInvalidoException;
 import domain.DomainExceptions.CuentaInvalidaException;
 import domain.DomainExceptions.CuentaPreexistenteException;
+import domain.DomainExceptions.IndicadorInvalidoException;
 import domain.DomainExceptions.ParserException;
 import empresas.Empresa;
+import expresiones.Expresion;
+import expresiones.ExpresionCompuesta;
+import expresiones.ExpresionCuenta;
+import expresiones.ExpresionNumero;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import repositorios.RepositorioEmpresas;
 import ui.ViewModels.AgregarEmpresaViewModel;
@@ -68,9 +77,69 @@ public class Entrega2Test {
 	}
 	
 	@Test
-	public void resolutorResuelveCorrectamenteLaCuenta(){
-        Assert.assertEquals(ResolutorDeCuentas.resolver("27/9*3+ 1*3+5  *4"), 32, 0);
+	public void expresionCuentaCalculaCorrectamente(){
+		
+		Empresa unaEmpresa = new Empresa("test");
+		unaEmpresa.cuentas = new ArrayList<>();
+		unaEmpresa.agregarCuenta(new Cuenta("patrimonio", "2017", "100"));
+		
+		Expresion expresion = new ExpresionCuenta("patrimonio");
+		Assert.assertEquals(100, expresion.calcular(unaEmpresa, "2017"), 0);
 	}
+
+	@Test (expected = IndicadorInvalidoException.class)
+	public void expresionCuentaFallaPorFaltaDeDatos(){
+		
+		Empresa unaEmpresa = new Empresa("test");
+		unaEmpresa.cuentas = new ArrayList<>();
+		unaEmpresa.agregarCuenta(new Cuenta("patrimonio", "2017", "100"));
+		
+		Expresion expresion = new ExpresionCuenta("fondos");
+		Assert.assertEquals(100, expresion.calcular(unaEmpresa, "2017"), 0);
+	}
+	
+	@Test
+	public void expresionCompuestaCalculaCorrectamente(){
+		
+		// Cálculo: 10 * 100 = 1000.
+		
+		Empresa unaEmpresa = new Empresa("Domingo");
+		unaEmpresa.cuentas = new ArrayList<>();
+		unaEmpresa.agregarCuenta(new Cuenta("USS", "2000", "100"));
+		
+		Expresion expresion1 = new ExpresionNumero(10);
+		Operador operador = new Multiplicacion();
+		Expresion expresion2 = new ExpresionCuenta("USS");
+		Expresion expresionCompuesta = new ExpresionCompuesta(expresion1, operador, expresion2);
+		
+		Assert.assertEquals(1000, expresionCompuesta.calcular(unaEmpresa, "2000"), 0);
+	}
+	
+	@Test 
+	public void expresionesCompuestasConExpresionesCompuestas(){
+		
+		// Cálculo: 10 * 100 + 500 - 3 = 1497.
+		
+		Empresa unaEmpresa = new Empresa("Domingo");
+		unaEmpresa.cuentas = new ArrayList<>();
+		unaEmpresa.agregarCuenta(new Cuenta("USS", "1988", "100"));
+		
+		Operador operadorMul = new Multiplicacion();
+		Operador operadorSum = new Suma();
+		Operador operadorRes = new Resta();
+		Expresion expresion_10 = new ExpresionNumero(10);
+		Expresion expresion_1000 = new ExpresionCuenta("USS");
+		Expresion expresion_500 = new ExpresionNumero(500);
+		Expresion expresion_3 = new ExpresionNumero(3);
+		Expresion expresionCompuesta = new ExpresionCompuesta(expresion_10, operadorMul, expresion_1000);
+		Expresion expresionCompuesta2 = new ExpresionCompuesta(expresion_500, operadorRes, expresion_3);
+		
+		Expresion expresionSuperCompuesta = 
+				new ExpresionCompuesta(expresionCompuesta, operadorSum, expresionCompuesta2);
+		
+		Assert.assertEquals(1497, expresionSuperCompuesta.calcular(unaEmpresa, "1988"), 0);
+	}
+	
 	
 	@Test
 	public void empresaDeFormatoArchivo(){

@@ -1,9 +1,7 @@
 package domain;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.stream.Stream;
+import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
 
@@ -38,7 +36,7 @@ public class Indicador {
 	}
 
 
-	private ArrayList<Cuenta> filtrarCuentasPorAnio(ArrayList<Cuenta> cuentas, String periodo) {
+	private List<Cuenta> filtrarCuentasPorAnio(List<Cuenta> cuentas, String periodo) {
 		ArrayList<Cuenta> cuentasFiltradas = new ArrayList<Cuenta>();
 		for (Cuenta cuenta : cuentas) {
 			if(cuenta.getPeriodo().equals(periodo)) 
@@ -58,7 +56,7 @@ public class Indicador {
 		return aux;
 	}
 
-	private String reemplazarPorLasCuentas(ArrayList<Cuenta> cuentas){
+	private String reemplazarPorLasCuentas(List<Cuenta> cuentas){
 		String aux = getFormula();
 		for (Cuenta cuenta : cuentas) {
 			if(getFormula().contains(cuenta.getNombre()))

@@ -1,8 +1,8 @@
 package OperacionesMatematicas;
 
-public class Resta {
+public class Resta implements Operador {
 	
-	public static double operar(double operando1, double operando2) {
+	public double calcular(double operando1, double operando2) {
 		return operando1 - operando2; 
 	}
 

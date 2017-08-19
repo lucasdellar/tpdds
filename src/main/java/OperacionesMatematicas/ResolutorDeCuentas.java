@@ -19,15 +19,15 @@ public class ResolutorDeCuentas {
 
 	private static void resolverOperacion(char c, ArrayList<String> listaDeNumerosYOperaciones) {
 		
-		while(listaDeNumerosYOperaciones.contains("" + c)){
-			for(int i = 0; i < listaDeNumerosYOperaciones.size(); i++){
-				if(listaDeNumerosYOperaciones.get(i).equals(""+c)){
-					listaDeNumerosYOperaciones.set( i - 1, Operador.doTheMath(listaDeNumerosYOperaciones.get(i-1), listaDeNumerosYOperaciones.get(i+1), c));
-					listaDeNumerosYOperaciones.remove(i+1);
-					listaDeNumerosYOperaciones.remove(i);
-				}
-			}
-		}
+//		while(listaDeNumerosYOperaciones.contains("" + c)){
+//			for(int i = 0; i < listaDeNumerosYOperaciones.size(); i++){
+//				if(listaDeNumerosYOperaciones.get(i).equals(""+c)){
+//					listaDeNumerosYOperaciones.set( i - 1, Operador.doTheMath(listaDeNumerosYOperaciones.get(i-1), listaDeNumerosYOperaciones.get(i+1), c));
+//					listaDeNumerosYOperaciones.remove(i+1);
+//					listaDeNumerosYOperaciones.remove(i);
+//				}
+//			}
+//		}
 	}
 
 	private static ArrayList<String> cuentaEnNumerosYOperaciones(String cuenta) {
