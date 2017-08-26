@@ -8,7 +8,7 @@ import repositorios.RepositorioIndicadores;
 public class ValidadorIndicadores {
 
 	  public void validarFormula(String formula) {
-		  parser.Parser.verificarFormato(formula);
+		  //parser.Parser.verificarFormato(formula);
 	    }
 
 		public void validarQueNoEsteYaCargardo(String nombre, String formula, ManejadorDeArchivoIndicadores manejador) {

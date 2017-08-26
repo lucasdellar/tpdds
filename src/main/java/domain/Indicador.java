@@ -8,6 +8,8 @@ import org.uqbar.commons.utils.Observable;
 import OperacionesMatematicas.ResolutorDeCuentas;
 import domain.DomainExceptions.IndicadorInvalidoException;
 import empresas.Empresa;
+import expresiones.Expresion;
+import parser.Parser;
 import repositorios.RepositorioIndicadores;
 
 @Observable
@@ -15,24 +17,29 @@ public class Indicador {
 	
 	private String nombre;
 	private String formula;
+	private Expresion formula_objetos; // Para testear que funcione y no tocar nada de la UI.
 	RepositorioIndicadores repositorioIndicadores;
 
 	public Indicador(String _nombre, String _formula){
 		setNombre(_nombre);
 		setFormula(_formula);
+		// Esto no tiene que ir acá pero es para ver si funciona.
+		Parser parser = new Parser();
+		this.formula_objetos = parser.obtenerExpresion(formula);
+		//----------------------------------------------------------
 		//repositorioIndicadores = new RepositorioIndicadores(); esto rompia por arena, dejarlo para cuando migremos.
 	}
 	
 	
 	
 	public Double aplicarIndicador(String periodo, Empresa unaEmpresa, RepositorioIndicadores repo){
-		repositorioIndicadores = repo;
-		formula = formula.replaceAll("\\s+","");
-		String cuentaLiteralMatematica = reemplazarPorLasCuentas( filtrarCuentasPorAnio(unaEmpresa.getCuentas(), periodo));
-		cuentaLiteralMatematica = reemplazarPorLosIndicadores(cuentaLiteralMatematica, periodo, unaEmpresa);
-		if(!parser.Parser.chequearQueQuedenSoloNumeros(cuentaLiteralMatematica))
-			throw new IndicadorInvalidoException("Se esta utilizando un indicador sobre una empresa con datos insuficientes.");
-		return ResolutorDeCuentas.resolver(cuentaLiteralMatematica);
+//		repositorioIndicadores = repo;
+//		formula = formula.replaceAll("\\s+","");
+//		String cuentaLiteralMatematica = reemplazarPorLasCuentas( filtrarCuentasPorAnio(unaEmpresa.getCuentas(), periodo));
+//		cuentaLiteralMatematica = reemplazarPorLosIndicadores(cuentaLiteralMatematica, periodo, unaEmpresa);
+//		if(!parser.Parser.chequearQueQuedenSoloNumeros(cuentaLiteralMatematica))
+//			throw new IndicadorInvalidoException("Se esta utilizando un indicador sobre una empresa con datos insuficientes.");
+		return formula_objetos.calcular(unaEmpresa, periodo);
 	}
 
 

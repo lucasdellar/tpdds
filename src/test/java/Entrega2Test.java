@@ -27,6 +27,7 @@ import expresiones.ExpresionCompuesta;
 import expresiones.ExpresionCuenta;
 import expresiones.ExpresionNumero;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
+import parser.Parser;
 import repositorios.RepositorioEmpresas;
 import ui.ViewModels.AgregarEmpresaViewModel;
 import ui.ViewModels.CuentaViewModel;
@@ -42,6 +43,7 @@ public class Entrega2Test {
     EmpresaViewModel empresaViewModel;
     AgregarEmpresaViewModel agregarEmpresaViewModel;
     File file;
+    Parser parser;
 	
 	@Before
 	public void initObjects() throws IOException{ 
@@ -53,6 +55,7 @@ public class Entrega2Test {
         cuentasViewModel = new CuentaViewModel();
         empresaViewModel = new EmpresaViewModel();
         Archivo archivo = new Archivo();
+        parser = new Parser();
         archivo.setRuta("cuentasMock.txt");
         agregarEmpresaViewModel = new AgregarEmpresaViewModel(archivo);
         cuentasViewModel.setArchivo(archivo);
@@ -61,19 +64,36 @@ public class Entrega2Test {
 	
 	/* ***************************************** TESTS ENTREGA 2 & ENTREGA 3 ********************************************** */
 	
+//	@Test
+//    public void verificarFormatoParser(){
+//		parser.Parser.verificarFormato("27");
+//	}
+//	
+//	@Test
+//    public void verificarFormatoParserConPalabra(){
+//		parser.Parser.verificarFormato(" otro + aasd + 5 / as");
+//	}
+//	
+//	@Test(expected = ParserException.class)
+//    public void parserExceptionPorFormato(){
+//		parser.Parser.verificarFormato("aa s27/ asd9*3+1 *3+ 5*dd4");
+//	}
+//	
+	
 	@Test
-    public void verificarFormatoParser(){
-		parser.Parser.verificarFormato("27");
+	public void parsearFormulaSoloNumeros(){
+		Expresion exp = parser.obtenerExpresion("10 * 10 + 2 / 2");
+		Assert.assertEquals(51, exp.calcular(null, null), 0);
 	}
 	
 	@Test
-    public void verificarFormatoParserConPalabra(){
-		parser.Parser.verificarFormato(" otro + aasd + 5 / as");
-	}
-	
-	@Test(expected = ParserException.class)
-    public void parserExceptionPorFormato(){
-		parser.Parser.verificarFormato("aa s27/ asd9*3+1 *3+ 5*dd4");
+	public void parsearFormulaConCuentas(){
+		Expresion exp = parser.obtenerExpresion("ROE * 5 + 100");
+		Empresa unaEmpresa = new Empresa("test");
+		unaEmpresa.cuentas = new ArrayList<>();
+		unaEmpresa.agregarCuenta(new Cuenta("ROE", "1454", "20"));
+		
+		Assert.assertEquals(200, exp.calcular(unaEmpresa, "1454"), 0);
 	}
 	
 	@Test
