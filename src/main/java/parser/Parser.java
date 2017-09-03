@@ -6,10 +6,13 @@ import OperacionesMatematicas.Operador;
 import OperacionesMatematicas.Resta;
 import OperacionesMatematicas.Suma;
 import domain.DomainExceptions.OperacionInvalidaException;
+import domain.DomainExceptions.OperadorInvalidoException;
 import expresiones.Expresion;
 import expresiones.ExpresionCompuesta;
 import expresiones.ExpresionCuenta;
 import expresiones.ExpresionNumero;
+import scala.Char;
+import scala.Int;
 
 public class Parser {
 
@@ -51,9 +54,10 @@ public class Parser {
 		 * si el string tiene números. Si tiene alguno lo considera todo como número e intenta
 		 * convertirlo a Double. Si no tiene numeros, es una Cuenta.
 		 */
-		if(exp.matches(".*\\d+.*"))
-			return new ExpresionNumero(Double.parseDouble(exp));
-		return new ExpresionCuenta(exp);
+		
+		return exp.matches(".*\\d+.*") ?
+			 new ExpresionNumero(Double.parseDouble(exp)) 
+			: new ExpresionCuenta(exp);
 	}
 	
 	private int posicion_ultimo_operador(String formula){
@@ -62,7 +66,7 @@ public class Parser {
 		char op;
 		while(i > 1){
 			op = formula.charAt(i-1);
-			if(esOperador(op))
+			if(esOperador(Char.box(op)))
 				return i;
 			i--;
 		}
@@ -72,24 +76,22 @@ public class Parser {
 	
 	private Operador generar_operador(char operador){
 		
-		Operador unOperador = new Suma(); // Eclipse jode con instanciar algo...
+		//Operador unOperador = new Suma(); // Eclipse jode con instanciar algo...
+		
 		
 		switch(operador){
 		case '+': 
-			unOperador = new Suma();
-			break;
+			return new Suma();
 		case '-':
-			unOperador = new Resta();
-			break;
+			return new Resta();
 		case '*':
-			unOperador = new Multiplicacion();
-			break;
+			return new Multiplicacion();
 		case '/':
-			unOperador = new Division();
-			break;
+			return new Division();
 		}
 		
-		return unOperador;
+		throw new OperadorInvalidoException("La formula del indicador tiene un operador invalido.");
+
 	}
 	
 	private Boolean esExpresionCompuesta(String formula){
@@ -97,7 +99,7 @@ public class Parser {
 		return formula.contains("+") || formula.contains("-") || formula.contains("*") || formula.contains("/");
 	}
 	
-	private Boolean esOperador(char c){
-		return c == '+' || c == '-' || c == '*' || c == '/';
+	private Boolean esOperador(Character character){
+				return character.equals('+') || character.equals('-')|| character.equals('*') || character.equals('/');
 	}
 }

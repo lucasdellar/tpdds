@@ -160,6 +160,16 @@ public class Entrega2Test {
 		Assert.assertEquals(1497, expresionSuperCompuesta.calcular(unaEmpresa, "1988"), 0);
 	}
 	
+	@Test
+	public void parsearFormulaConCuentass(){
+		Expresion exp = parser.obtenerExpresion("100 * USS + 1500 - 150");
+		
+		Empresa unaEmpresa = new Empresa("Domingo");
+		unaEmpresa.cuentas = new ArrayList<>();
+		unaEmpresa.agregarCuenta(new Cuenta("USS", "1988", "100"));
+
+		Assert.assertEquals(11350, exp.calcular(unaEmpresa, "1988"), 0);
+	}
 	
 	@Test
 	public void empresaDeFormatoArchivo(){

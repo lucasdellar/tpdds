@@ -12,6 +12,11 @@ import expresiones.Expresion;
 import parser.Parser;
 import repositorios.RepositorioIndicadores;
 
+// TODO hacer que tambien puede tener indicadores, es decir que no exista expresionCuenta, ni expresionIndicador, sino expresionNoNumerica
+// Un test que prueba (y seguramente la funcionalidad) de si la formula esta mal (ver el parser de la branch master)
+// Borrar comentarios cuando terminemos, meter mas test y hacer el merge con los otros test que ya teniamos
+// Empezar la entrega 4 (?
+
 @Observable
 public class Indicador {
 	
