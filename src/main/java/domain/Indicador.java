@@ -28,8 +28,8 @@ public class Indicador {
 	public Indicador(String _nombre, String _formula){
 		setNombre(_nombre);
 		setFormula(_formula);
-		// Esto no tiene que ir acá pero es para ver si funciona.
-		Parser parser = new Parser();
+		// Esto no tiene que ir acï¿½ pero es para ver si funciona.
+		Parser parser = new Parser(repositorioIndicadores);
 		this.formula_objetos = parser.obtenerExpresion(formula);
 		//----------------------------------------------------------
 		//repositorioIndicadores = new RepositorioIndicadores(); esto rompia por arena, dejarlo para cuando migremos.

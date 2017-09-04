@@ -16,6 +16,7 @@ import domain.Archivo;
 import domain.ConversorFormatoArchivo;
 import domain.Cuenta;
 import domain.IConversorFormatoArchivo;
+import domain.Indicador;
 import domain.DomainExceptions.ArchivoInvalidoException;
 import domain.DomainExceptions.CuentaInvalidaException;
 import domain.DomainExceptions.CuentaPreexistenteException;
@@ -24,11 +25,12 @@ import domain.DomainExceptions.ParserException;
 import empresas.Empresa;
 import expresiones.Expresion;
 import expresiones.ExpresionCompuesta;
-import expresiones.ExpresionCuenta;
+import expresiones.ExpresionNoNumerica;
 import expresiones.ExpresionNumero;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import parser.Parser;
 import repositorios.RepositorioEmpresas;
+import repositorios.RepositorioIndicadores;
 import ui.ViewModels.AgregarEmpresaViewModel;
 import ui.ViewModels.CuentaViewModel;
 import ui.ViewModels.EmpresaViewModel;
@@ -44,6 +46,7 @@ public class Entrega2Test {
     AgregarEmpresaViewModel agregarEmpresaViewModel;
     File file;
     Parser parser;
+    RepositorioIndicadores repo;
 	
 	@Before
 	public void initObjects() throws IOException{ 
@@ -55,11 +58,13 @@ public class Entrega2Test {
         cuentasViewModel = new CuentaViewModel();
         empresaViewModel = new EmpresaViewModel();
         Archivo archivo = new Archivo();
-        parser = new Parser();
+        repo = new RepositorioIndicadores();
+        parser = new Parser(repo);
         archivo.setRuta("cuentasMock.txt");
         agregarEmpresaViewModel = new AgregarEmpresaViewModel(archivo);
         cuentasViewModel.setArchivo(archivo);
         empresaViewModel.setArchivo(archivo);
+        
 	}
 	
 	/* ***************************************** TESTS ENTREGA 2 & ENTREGA 3 ********************************************** */
@@ -103,7 +108,7 @@ public class Entrega2Test {
 		unaEmpresa.cuentas = new ArrayList<>();
 		unaEmpresa.agregarCuenta(new Cuenta("patrimonio", "2017", "100"));
 		
-		Expresion expresion = new ExpresionCuenta("patrimonio");
+		Expresion expresion = new ExpresionNoNumerica("patrimonio", repo);
 		Assert.assertEquals(100, expresion.calcular(unaEmpresa, "2017"), 0);
 	}
 
@@ -114,14 +119,14 @@ public class Entrega2Test {
 		unaEmpresa.cuentas = new ArrayList<>();
 		unaEmpresa.agregarCuenta(new Cuenta("patrimonio", "2017", "100"));
 		
-		Expresion expresion = new ExpresionCuenta("fondos");
+		Expresion expresion = new ExpresionNoNumerica("fondos", repo);
 		Assert.assertEquals(100, expresion.calcular(unaEmpresa, "2017"), 0);
 	}
 	
 	@Test
 	public void expresionCompuestaCalculaCorrectamente(){
 		
-		// Cálculo: 10 * 100 = 1000.
+		// Cï¿½lculo: 10 * 100 = 1000.
 		
 		Empresa unaEmpresa = new Empresa("Domingo");
 		unaEmpresa.cuentas = new ArrayList<>();
@@ -129,7 +134,7 @@ public class Entrega2Test {
 		
 		Expresion expresion1 = new ExpresionNumero(10);
 		Operador operador = new Multiplicacion();
-		Expresion expresion2 = new ExpresionCuenta("USS");
+		Expresion expresion2 = new ExpresionNoNumerica("USS", repo);
 		Expresion expresionCompuesta = new ExpresionCompuesta(expresion1, operador, expresion2);
 		
 		Assert.assertEquals(1000, expresionCompuesta.calcular(unaEmpresa, "2000"), 0);
@@ -138,7 +143,7 @@ public class Entrega2Test {
 	@Test 
 	public void expresionesCompuestasConExpresionesCompuestas(){
 		
-		// Cálculo: 10 * 100 + 500 - 3 = 1497.
+		// Cï¿½lculo: 10 * 100 + 500 - 3 = 1497.
 		
 		Empresa unaEmpresa = new Empresa("Domingo");
 		unaEmpresa.cuentas = new ArrayList<>();
@@ -148,7 +153,7 @@ public class Entrega2Test {
 		Operador operadorSum = new Suma();
 		Operador operadorRes = new Resta();
 		Expresion expresion_10 = new ExpresionNumero(10);
-		Expresion expresion_1000 = new ExpresionCuenta("USS");
+		Expresion expresion_1000 = new ExpresionNoNumerica("USS", repo);
 		Expresion expresion_500 = new ExpresionNumero(500);
 		Expresion expresion_3 = new ExpresionNumero(3);
 		Expresion expresionCompuesta = new ExpresionCompuesta(expresion_10, operadorMul, expresion_1000);
@@ -169,6 +174,16 @@ public class Entrega2Test {
 		unaEmpresa.agregarCuenta(new Cuenta("USS", "1988", "100"));
 
 		Assert.assertEquals(11350, exp.calcular(unaEmpresa, "1988"), 0);
+	}
+	
+	@Test
+	public void parsearFormulaConIndicador(){
+		Expresion exp = parser.obtenerExpresion("100 * popo + 1 - 1");
+		Indicador nuevo = new Indicador("popo", "6");
+		repo.agregar(nuevo);
+		Empresa unaEmpresa = new Empresa("Domingo");
+		unaEmpresa.cuentas = new ArrayList<>();
+		Assert.assertEquals(600, exp.calcular(unaEmpresa, "1988"), 0);
 	}
 	
 	@Test
