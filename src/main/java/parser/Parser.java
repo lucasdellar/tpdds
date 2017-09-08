@@ -5,7 +5,6 @@ import OperacionesMatematicas.Multiplicacion;
 import OperacionesMatematicas.Operador;
 import OperacionesMatematicas.Resta;
 import OperacionesMatematicas.Suma;
-import domain.DomainExceptions.OperacionInvalidaException;
 import domain.DomainExceptions.OperadorInvalidoException;
 import expresiones.Expresion;
 import expresiones.ExpresionCompuesta;
@@ -13,7 +12,6 @@ import expresiones.ExpresionNoNumerica;
 import expresiones.ExpresionNumero;
 import repositorios.RepositorioIndicadores;
 import scala.Char;
-import scala.Int;
 
 public class Parser {
 
@@ -84,9 +82,6 @@ public class Parser {
 	
 	private Operador generar_operador(char operador){
 		
-		//Operador unOperador = new Suma(); // Eclipse jode con instanciar algo...
-		
-		
 		switch(operador){
 		case '+': 
 			return new Suma();
@@ -108,6 +103,6 @@ public class Parser {
 	}
 	
 	private Boolean esOperador(Character character){
-				return character.equals('+') || character.equals('-')|| character.equals('*') || character.equals('/');
+		return character.equals('+') || character.equals('-')|| character.equals('*') || character.equals('/');
 	}
 }

@@ -1,11 +1,10 @@
 package condiciones;
 
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
 
 import comparadores.IComparador;
 import empresas.Empresa;
-import edu.emory.mathcs.backport.java.util.Collections;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 

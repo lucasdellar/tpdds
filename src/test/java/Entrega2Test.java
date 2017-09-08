@@ -69,22 +69,6 @@ public class Entrega2Test {
 	
 	/* ***************************************** TESTS ENTREGA 2 & ENTREGA 3 ********************************************** */
 	
-//	@Test
-//    public void verificarFormatoParser(){
-//		parser.Parser.verificarFormato("27");
-//	}
-//	
-//	@Test
-//    public void verificarFormatoParserConPalabra(){
-//		parser.Parser.verificarFormato(" otro + aasd + 5 / as");
-//	}
-//	
-//	@Test(expected = ParserException.class)
-//    public void parserExceptionPorFormato(){
-//		parser.Parser.verificarFormato("aa s27/ asd9*3+1 *3+ 5*dd4");
-//	}
-//	
-	
 	@Test
 	public void parsearFormulaSoloNumeros(){
 		Expresion exp = parser.obtenerExpresion("10 * 10 + 2 / 2");

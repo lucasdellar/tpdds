@@ -27,10 +27,10 @@ public class ExpresionNoNumerica implements Expresion{
 									 .get(0).getValor();
 			return Double.parseDouble(valor);
 			} else{
-				System.out.println("entre al else");
-				return repo.getLista().stream().filter( x -> x.getNombre().equals(nombreIdentificador)) .collect(Collectors.toList())
-						 .get(0).aplicarIndicador(unPeriodo, unaEmpresa, repo);
-				 
+				return repo.getLista().stream()
+						.filter( x -> x.getNombre().equals(nombreIdentificador))
+						.collect(Collectors.toList())
+						.get(0).aplicarIndicador(unPeriodo, unaEmpresa, repo);
 			}
 			} catch (IndexOutOfBoundsException e) {
 			throw new IndicadorInvalidoException("Se esta utilizando un indicador sobre una empresa con datos insuficientes.");

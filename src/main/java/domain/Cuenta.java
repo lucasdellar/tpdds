@@ -1,6 +1,8 @@
 package domain;
 
 
+import javax.persistence.Entity;
+
 import org.uqbar.commons.utils.Observable;
 
 import ui.ViewModels.CuentaViewModel;
@@ -12,7 +14,6 @@ public class Cuenta implements Comparable<Cuenta>{
 	private String periodo;
 	private String valor;
 	
-
 	public Cuenta() {
 	}
 
