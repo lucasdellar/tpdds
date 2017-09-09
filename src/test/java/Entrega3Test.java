@@ -238,7 +238,7 @@ public class Entrega3Test {
 	@Test
 	public void metodologia_solo_prioritarias(){
 		/*Objetivo: Ordenar la lista de empresas segun el ranking asignado por las
-		 * condiciones prioritarias de la metodología. La empresa testEmpresa1 deberia quedar
+		 * condiciones prioritarias de la metodologï¿½a. La empresa testEmpresa1 deberia quedar
 		 * en primer lugar.
 		 * Resultado: Una lista ordenada, con testEmpresa3 en primer lugar, 
 		 * testEmpresa2 en segundo lugar y testEmpresa3 en el tercer puesto.
