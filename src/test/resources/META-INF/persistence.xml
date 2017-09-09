@@ -8,10 +8,10 @@
     <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	
-    	<class>domain.Cuenta</class>
+<!--     	<class>domain.Cuenta</class>
     	<class>domain.Metodologia</class>
     	<class>domain.Indicador</class>
-    	<class>domain.empresas.Empresa</class>
+    	<class>domain.empresas.Empresa</class> -->
     	
         <properties> 
 	    <property name="hibernate.archive.autodetection" value="class"/>        
