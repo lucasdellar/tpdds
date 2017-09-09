@@ -1,3 +1,5 @@
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,6 +8,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
 import OperacionesMatematicas.Multiplicacion;
 import OperacionesMatematicas.Operador;
@@ -36,7 +40,7 @@ import ui.ViewModels.CuentaViewModel;
 import ui.ViewModels.EmpresaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
 
-public class Entrega2Test {
+public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalEntityManager  {
 
     IConversorFormatoArchivo conversor;
     ManejadorDeArchivoEmpresas manejador;
@@ -68,6 +72,16 @@ public class Entrega2Test {
 	}
 	
 	/* ***************************************** TESTS ENTREGA 2 & ENTREGA 3 ********************************************** */
+	
+	@Test
+	public void contextUp() {
+		assertNotNull(entityManager());
+	}
+
+	@Test
+	public void contextUpWithTransaction() throws Exception {
+		withTransaction(() -> {});
+	}
 	
 	@Test
 	public void parsearFormulaSoloNumeros(){

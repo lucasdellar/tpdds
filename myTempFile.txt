@@ -1,0 +1,4 @@
+{"nombre":"Seven Up","cuentas":[{"nombre":"Patrimonio Neto","periodo":"1000","valor":"2000"}]}
+{"nombre":"Seven Up","cuentas":[{"nombre":"Patrimonio Neto","periodo":"1000","valor":"2000"}]}
+{"nombre":"Seven Up","cuentas":[{"nombre":"Patrimonio Neto","periodo":"1000","valor":"2000"}]}
+{"nombre":"Seven Up","cuentas":[{"nombre":"Patrimonio Neto","periodo":"1000","valor":"2000"}]}
