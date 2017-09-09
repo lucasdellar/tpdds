@@ -1,27 +1,30 @@
 package ui;
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
-import org.uqbar.arena.widgets.*;
+import org.uqbar.arena.widgets.Button;
+import org.uqbar.arena.widgets.Label;
+import org.uqbar.arena.widgets.NumericField;
+import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.MainWindow;
+import org.uqbar.arena.windows.MessageBox;
+import org.uqbar.ui.view.ErrorViewer;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import domain.Archivo;
 import domain.Cuenta;
 import empresas.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import manejadoresArchivo.ManejadorDeArchivoIndicadores;
-import manejadoresArchivo.ManejadorDeArchivoMetodologias;
-import repositorios.RepositorioEmpresas;
 import repositorios.RepositorioMetodologias;
-
-import org.uqbar.arena.windows.MessageBox;
-import org.uqbar.ui.view.ErrorViewer;
-
 import ui.Dialogs.AgregarEmpresaDialog;
 import ui.Dialogs.AgregarIndicadorDialog;
 import ui.Dialogs.AgregarMetodologiaDialog;
@@ -30,7 +33,6 @@ import ui.Dialogs.CrearCuentaDialog;
 import ui.Dialogs.EmpresaDialog;
 import ui.Dialogs.EvaluarEmpresaDialog;
 import ui.Dialogs.EvaluarMetolodigaDialog;
-import ui.ViewModels.AgregarCondicionViewModel;
 import ui.ViewModels.AgregarEmpresaViewModel;
 import ui.ViewModels.AgregarIndicadorViewModel;
 import ui.ViewModels.AgregarMetodologiaViewModel;
@@ -199,6 +201,16 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	}
 
 	public static void main(String[] args) {
+		
+//		EntityManager manager = PerThreadEntityManagers.getEntityManager();
+//		EntityTransaction tx = manager.getTransaction();
+//		
+//		tx.begin();
+//		
+//		Cuenta unaCuenta = new Cuenta("Pepe", "202", "33");
+//		manager.persist(unaCuenta);
+//		
+//		tx.commit();
 		new InviertiendoView().startApplication();
 	}
 

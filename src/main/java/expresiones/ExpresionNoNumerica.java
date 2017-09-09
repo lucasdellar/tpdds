@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import domain.Cuenta;
 import domain.DomainExceptions.IndicadorInvalidoException;
 
-public class ExpresionNoNumerica implements Expresion{
+public class ExpresionNoNumerica extends Expresion{
 
 	String nombreIdentificador;
 	RepositorioIndicadores repo;

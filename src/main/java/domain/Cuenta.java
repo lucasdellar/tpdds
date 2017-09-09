@@ -2,20 +2,25 @@ package domain;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import org.uqbar.commons.utils.Observable;
 
 import ui.ViewModels.CuentaViewModel;
 
 @Observable
+@Entity
 public class Cuenta implements Comparable<Cuenta>{
 	
+	@Id
+	@GeneratedValue
+	long id;
 	private String nombre;
 	private String periodo;
 	private String valor;
-	
-	public Cuenta() {
-	}
+
+	public Cuenta() {}
 
 	public Cuenta(String nombre, String periodo, String valor) {
 		this.nombre = nombre;

@@ -4,16 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
 import OperacionesMatematicas.Multiplicacion;
 import OperacionesMatematicas.Operador;
-import OperacionesMatematicas.ResolutorDeCuentas;
 import OperacionesMatematicas.Resta;
 import OperacionesMatematicas.Suma;
 import domain.Archivo;
@@ -25,7 +28,6 @@ import domain.DomainExceptions.ArchivoInvalidoException;
 import domain.DomainExceptions.CuentaInvalidaException;
 import domain.DomainExceptions.CuentaPreexistenteException;
 import domain.DomainExceptions.IndicadorInvalidoException;
-import domain.DomainExceptions.ParserException;
 import empresas.Empresa;
 import expresiones.Expresion;
 import expresiones.ExpresionCompuesta;
@@ -81,6 +83,20 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 	public void contextUpWithTransaction() throws Exception {
 		withTransaction(() -> {});
 	}
+	
+//	@Test 
+//	public void testPersistence(){
+//		
+//		EntityManager manager = PerThreadEntityManagers.getEntityManager();
+//		EntityTransaction tx = manager.getTransaction();
+//		
+//		tx.begin();
+//		
+//		Cuenta unaCuenta = new Cuenta("Pepe", "202", "33");
+//		manager.persist(una);
+//		
+//		tx.commit();
+//	}
 	
 	@Test
 	public void parsearFormulaSoloNumeros(){

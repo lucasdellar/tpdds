@@ -3,15 +3,25 @@ package empresas;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import org.uqbar.commons.utils.Observable;
 
 import domain.Cuenta;
 
 @Observable
+@Entity
 public class Empresa {
 
+	@Id
+	@GeneratedValue	
+	long id;
 	public String nombre;
 	public List<Cuenta> cuentas;
+	
+	private Empresa(){}
 
 	public Empresa(String aName){
 		this.nombre = aName;

@@ -3,10 +3,12 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import org.uqbar.commons.utils.Observable;
 
-import OperacionesMatematicas.ResolutorDeCuentas;
-import domain.DomainExceptions.IndicadorInvalidoException;
 import empresas.Empresa;
 import expresiones.Expresion;
 import parser.Parser;
@@ -18,12 +20,18 @@ import repositorios.RepositorioIndicadores;
 // Empezar la entrega 4 (?
 
 @Observable
+@Entity
 public class Indicador {
 	
+	@Id
+	@GeneratedValue
+	long id;
 	private String nombre;
 	private String formula;
 	private Expresion formula_objetos; // Para testear que funcione y no tocar nada de la UI.
 	RepositorioIndicadores repositorioIndicadores;
+	
+	private Indicador(){}
 
 	public Indicador(String _nombre, String _formula){
 		setNombre(_nombre);

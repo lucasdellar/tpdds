@@ -1,8 +1,10 @@
 package expresiones;
 
+import domain.DomainExceptions.UnimplementedMethod;
 import empresas.Empresa;
 
-public interface Expresion {
+public abstract class Expresion{
 
-	double calcular(Empresa empresa, String periodo);
+	public abstract double calcular(Empresa empresa, String periodo);
+	
 }

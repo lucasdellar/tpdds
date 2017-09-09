@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import org.uqbar.commons.utils.Observable;
 
 import condiciones.CondicionPrioritaria;
@@ -13,11 +17,16 @@ import empresas.Empresa;
 import empresas.EmpresaRankeada;
 
 @Observable
+@Entity
 public class Metodologia {
-
+	@Id
+	@GeneratedValue
+	long id;
 	String nombre;
 	private List<CondicionTaxativa> condiciones_taxativas;
 	private List<CondicionPrioritaria> condiciones_prioritarias;
+	
+	private Metodologia(){}
 	
 	public Metodologia(String nombre, List<CondicionTaxativa> condiciones_taxativas, List<CondicionPrioritaria> condiciones_prioritarias) {
 		this.nombre = nombre;

@@ -3,7 +3,7 @@ package expresiones;
 import OperacionesMatematicas.Operador;
 import empresas.Empresa;
 
-public class ExpresionCompuesta implements Expresion {
+public class ExpresionCompuesta extends Expresion {
 
 	Expresion primeraExpresion;
 	Expresion segundaExpresion;

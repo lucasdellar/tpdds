@@ -2,7 +2,7 @@ package expresiones;
 
 import empresas.Empresa;
 
-public class ExpresionNumero implements Expresion{
+public class ExpresionNumero extends Expresion{
 	
 	double num;
 	
