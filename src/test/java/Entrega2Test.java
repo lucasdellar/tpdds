@@ -40,7 +40,7 @@ import ui.ViewModels.CuentaViewModel;
 import ui.ViewModels.EmpresaViewModel;
 import ui.ViewModels.InviertiendoViewModel;
 
-public class Entrega2Test {
+public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalEntityManager {
 
     IConversorFormatoArchivo conversor;
     ManejadorDeArchivoEmpresas manejador;
@@ -72,7 +72,7 @@ public class Entrega2Test {
 	
 	/* ***************************************** TESTS ENTREGA 2 & ENTREGA 3 ********************************************** */
 	
-/*	@Test
+	@Test
 	public void contextUp() {
 		assertNotNull(entityManager());
 	}
@@ -80,7 +80,7 @@ public class Entrega2Test {
 	@Test
 	public void contextUpWithTransaction() throws Exception {
 		withTransaction(() -> {});
-	}*/
+	}
 	
 	@Test
 	public void parsearFormulaSoloNumeros(){
