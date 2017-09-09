@@ -1,16 +1,17 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
 
-import java.util.Comparator;
 import condiciones.CondicionPrioritaria;
 import condiciones.CondicionTaxativa;
-import edu.emory.mathcs.backport.java.util.Collections;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
+
 @Observable
 public class Metodologia {
 

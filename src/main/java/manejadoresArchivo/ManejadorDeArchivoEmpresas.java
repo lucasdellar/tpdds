@@ -1,21 +1,19 @@
 package manejadoresArchivo;
 
-import domain.ConversorFormatoArchivo;
-import domain.Cuenta;
-import domain.IConversorFormatoArchivo;
-import domain.DomainExceptions.AgregarCuentaAlArchivoException;
-import empresas.Empresa;
-import repositorios.Repositorio;
-import repositorios.RepositorioEmpresas;
-
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.List;
+
+import domain.ConversorFormatoArchivo;
+import domain.Cuenta;
+import domain.IConversorFormatoArchivo;
+import domain.DomainExceptions.AgregarCuentaAlArchivoException;
+import empresas.Empresa;
+import repositorios.RepositorioEmpresas;
 
 public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 	
@@ -83,7 +81,7 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 		return empresasDeArchivo();
 	}
 
-	public ArrayList<Cuenta> getCuentasDeEmpresa(String empresa) {
+	public List<Cuenta> getCuentasDeEmpresa(String empresa) {
 		
 		for (Empresa unaEmpresa: repositorioEmpresas.getLista()) {
 			if(unaEmpresa.getNombre().equals(empresa)) return unaEmpresa.getCuentas();

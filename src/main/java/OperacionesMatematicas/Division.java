@@ -1,8 +1,13 @@
 package OperacionesMatematicas;
 
-public class Division {
+import domain.DomainExceptions.OperacionInvalidaException;
 
-	public static double operar(double operando1, double operando2) {
-		return operando1 / operando2; 
+public class Division implements Operador{
+
+	public double calcular(double operando1, double operando2) {
+		if(operando2 != 0)
+			return operando1 / operando2; 
+		else 
+			throw new OperacionInvalidaException("Se intento dividir por 0.");
 	}
 }

@@ -3,9 +3,6 @@ package criterios;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
-import org.antlr.v4.runtime.misc.ParseCancellationException;
-
 import comparadores.IComparador;
 import domain.Valor;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
