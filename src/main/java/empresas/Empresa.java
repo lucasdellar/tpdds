@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.uqbar.commons.utils.Observable;
 
@@ -19,6 +20,7 @@ public class Empresa {
 	@GeneratedValue	
 	long id;
 	public String nombre;
+	@OneToMany()
 	public List<Cuenta> cuentas;
 	
 	private Empresa(){}

@@ -202,15 +202,25 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 	public static void main(String[] args) {
 		
-//		EntityManager manager = PerThreadEntityManagers.getEntityManager();
-//		EntityTransaction tx = manager.getTransaction();
-//		
-//		tx.begin();
-//		
-//		Cuenta unaCuenta = new Cuenta("Pepe", "202", "33");
-//		manager.persist(unaCuenta);
-//		
-//		tx.commit();
+	/*EntityManager manager = PerThreadEntityManagers.getEntityManager();
+	EntityTransaction tx = manager.getTransaction();
+	
+		tx.begin();
+		
+		Cuenta unaCuenta = new Cuenta("Pepe", "202", "33");
+		manager.persist(unaCuenta);
+		
+		tx.commit();*/
+		EntityManager manager = PerThreadEntityManagers.getEntityManager();
+		EntityTransaction tx = manager.getTransaction();
+		
+		tx.begin();
+		Empresa miEmpresa = new Empresa("testEmpresa");
+		miEmpresa.setCuentas(new ArrayList<>());
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
+		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));	
+		tx.commit();
 		new InviertiendoView().startApplication();
 	}
 
