@@ -2,7 +2,7 @@ package OperacionesMatematicas;
 
 import domain.DomainExceptions.OperacionInvalidaException;
 
-public class Division implements Operador{
+public class Division {
 
 	public double calcular(double operando1, double operando2) {
 		if(operando2 != 0)

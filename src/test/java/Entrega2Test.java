@@ -146,7 +146,7 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		unaEmpresa.agregarCuenta(new Cuenta("USS", "2000", "100"));
 		
 		Expresion expresion1 = new ExpresionNumero(10);
-		Operador operador = new Multiplicacion();
+		Operador operador = Operador.MULTIPLICACION;
 		Expresion expresion2 = new ExpresionNoNumerica("USS", repo);
 		Expresion expresionCompuesta = new ExpresionCompuesta(expresion1, operador, expresion2);
 		
@@ -162,9 +162,9 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		unaEmpresa.cuentas = new ArrayList<>();
 		unaEmpresa.agregarCuenta(new Cuenta("USS", "1988", "100"));
 		
-		Operador operadorMul = new Multiplicacion();
-		Operador operadorSum = new Suma();
-		Operador operadorRes = new Resta();
+		Operador operadorMul = Operador.MULTIPLICACION;
+		Operador operadorSum = Operador.SUMA;
+		Operador operadorRes = Operador.RESTA;
 		Expresion expresion_10 = new ExpresionNumero(10);
 		Expresion expresion_1000 = new ExpresionNoNumerica("USS", repo);
 		Expresion expresion_500 = new ExpresionNumero(500);

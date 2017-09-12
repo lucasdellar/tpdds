@@ -84,13 +84,13 @@ public class Parser {
 		
 		switch(operador){
 		case '+': 
-			return new Suma();
+			return Operador.SUMA;
 		case '-':
-			return new Resta();
+			return Operador.RESTA;
 		case '*':
-			return new Multiplicacion();
+			return Operador.MULTIPLICACION;
 		case '/':
-			return new Division();
+			return Operador.DIVISION;
 		}
 		
 		throw new OperadorInvalidoException("La formula del indicador tiene un operador invalido.");

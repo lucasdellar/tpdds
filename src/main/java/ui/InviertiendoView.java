@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.junit.Assert;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -21,6 +22,7 @@ import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import domain.Archivo;
 import domain.Cuenta;
+import domain.Indicador;
 import empresas.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import manejadoresArchivo.ManejadorDeArchivoIndicadores;
@@ -202,26 +204,42 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 	public static void main(String[] args) {
 		
-	/*EntityManager manager = PerThreadEntityManagers.getEntityManager();
-	EntityTransaction tx = manager.getTransaction();
-	
-		tx.begin();
-		
-		Cuenta unaCuenta = new Cuenta("Pepe", "202", "33");
-		manager.persist(unaCuenta);
-		
-		tx.commit();*/
 		EntityManager manager = PerThreadEntityManagers.getEntityManager();
 		EntityTransaction tx = manager.getTransaction();
 		
+	/*	--TEST 01: Persist an account.
 		tx.begin();
-		Empresa miEmpresa = new Empresa("testEmpresa");
-		miEmpresa.setCuentas(new ArrayList<>());
-		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
-		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
-		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));	
+		Cuenta unaCuenta = new Cuenta("Pepe", "202", "33");
+		manager.persist(unaCuenta);
 		tx.commit();
-		new InviertiendoView().startApplication();
+		
+		-----------------------------------------------------
+		
+		TEST 02: Persist a company.
+		*/
+//		tx.begin();
+//		Empresa miEmpresa = new Empresa("testEmpresa");
+//		miEmpresa.setCuentas(new ArrayList<>());
+//		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2015", "2"));
+//		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2016", "3"));
+//		miEmpresa.agregarCuenta(new Cuenta("testCuenta", "2017", "4"));	
+//		manager.persist(miEmpresa);
+//		tx.commit();
+		
+//		TEST 03: Find company.
+//		
+//		Empresa laEmpresa = manager.find(Empresa.class, 1l);
+//		Assert.assertEquals(laEmpresa.getCuentas().size(), 3);
+//		System.out.println(laEmpresa.getCuentas().size() == 3);
+		
+		
+		tx.begin();
+		Indicador unIndicador = new Indicador("ROE", "4");
+		manager.persist(unIndicador);
+		tx.commit();
+		
+		
+		//new InviertiendoView().startApplication();
 	}
 
 	@Override

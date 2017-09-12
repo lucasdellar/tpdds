@@ -5,13 +5,26 @@ import repositorios.RepositorioIndicadores;
 
 import java.util.stream.Collectors;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
 import domain.Cuenta;
 import domain.DomainExceptions.IndicadorInvalidoException;
 
+@Entity
+@DiscriminatorValue("ExpNoNum")
 public class ExpresionNoNumerica extends Expresion{
 
+	@Id@GeneratedValue
+	long id;
 	String nombreIdentificador;
+	@Transient
 	RepositorioIndicadores repo;
+	
+	private ExpresionNoNumerica(){}
 	
 	public ExpresionNoNumerica(String identificador, RepositorioIndicadores repo){
 		this.nombreIdentificador= identificador;

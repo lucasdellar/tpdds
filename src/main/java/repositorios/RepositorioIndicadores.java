@@ -1,7 +1,11 @@
 package repositorios;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import domain.Indicador;
 import domain.DomainExceptions.IndicadorInexsistenteException;
+
 
 public class RepositorioIndicadores extends Repositorio<Indicador> {
 

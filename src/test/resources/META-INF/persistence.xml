@@ -10,10 +10,14 @@
     	
     	
     	<class>domain.Cuenta</class>
-    	<class>domain.empresas.Empresa</class>
-<!--     	
+    	<class>empresas.Empresa</class>
+	   	<class>domain.Indicador</class>
+    	<class>expresiones.ExpresionNumero</class>
+ 		<class>expresiones.Expresion</class>
+ 		<class>expresiones.ExpresionCompuesta</class>
+    	<class>expresiones.ExpresionNoNumerica</class>
+ <!--   	       	
     	<class>domain.Metodologia</class>
-    	<class>domain.Indicador</class>
     	 -->
     	
         <properties> 
@@ -23,7 +27,7 @@
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> 
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/persistencia" /> 
             <property name="hibernate.connection.username" value="root" /> 
-            <property name="hibernate.connection.password" value="Porschedid911" /> 
+            <property name="hibernate.connection.password" value="utnso" /> 
 
 <!-- 
             <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver" /> 

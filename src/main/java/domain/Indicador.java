@@ -3,9 +3,13 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.uqbar.commons.utils.Observable;
 
@@ -23,12 +27,15 @@ import repositorios.RepositorioIndicadores;
 @Entity
 public class Indicador {
 	
-	@Id
-	@GeneratedValue
+	@Id@GeneratedValue
 	long id;
 	private String nombre;
 	private String formula;
+
+	
 	private Expresion formula_objetos; // Para testear que funcione y no tocar nada de la UI.
+	
+	@Transient
 	RepositorioIndicadores repositorioIndicadores;
 	
 	private Indicador(){}

@@ -11,3 +11,6 @@
 {"nombre":"Seven Up","cuentas":[{"id":0,"nombre":"Patrimonio Neto","periodo":"1000","valor":"2000"}]}
 {"nombre":"Seven Up","cuentas":[{"id":0,"nombre":"Patrimonio Neto","periodo":"1000","valor":"2000"}]}
 {"nombre":"Seven Up","cuentas":[{"id":0,"nombre":"Patrimonio Neto","periodo":"1000","valor":"2000"}]}
+{"id":0,"nombre":"Seven Up","cuentas":[{"id":0,"nombre":"Patrimonio Neto","periodo":"1000","valor":"2000"}]}
+{"id":0,"nombre":"Seven Up","cuentas":[{"id":0,"nombre":"Patrimonio Neto","periodo":"1000","valor":"2000"}]}
+{"id":0,"nombre":"Seven Up","cuentas":[{"id":0,"nombre":"Patrimonio Neto","periodo":"1000","valor":"2000"}]}
