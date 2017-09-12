@@ -18,8 +18,6 @@ import domain.DomainExceptions.IndicadorInvalidoException;
 @DiscriminatorValue("ExpNoNum")
 public class ExpresionNoNumerica extends Expresion{
 
-	@Id@GeneratedValue
-	long id;
 	String nombreIdentificador;
 	@Transient
 	RepositorioIndicadores repo;

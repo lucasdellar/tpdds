@@ -15,8 +15,6 @@ import empresas.Empresa;
 @DiscriminatorValue("ExpComp")
 public class ExpresionCompuesta extends Expresion {
 
-	@Id@GeneratedValue
-	long id;
 	@JoinColumn(name = "exp_id")
 	Expresion primeraExpresion;
 	@JoinColumn(name = "exp_id")

@@ -14,8 +14,12 @@ import empresas.Empresa;
 
 @DiscriminatorColumn(name = "Tipo")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@MappedSuperclass
 public abstract class Expresion{
 	
+
+	@Id@GeneratedValue
+	long id;
 	public abstract double calcular(Empresa empresa, String periodo);
 	
 }

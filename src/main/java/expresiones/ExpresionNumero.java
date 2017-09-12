@@ -11,8 +11,6 @@ import empresas.Empresa;
 @DiscriminatorValue("ExpNum")
 public class ExpresionNumero extends Expresion{
 	
-	@Id@GeneratedValue
-	long id;
 	double num;
 	
 	private ExpresionNumero(){}

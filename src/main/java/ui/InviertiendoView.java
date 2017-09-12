@@ -204,8 +204,8 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 	public static void main(String[] args) {
 		
-		EntityManager manager = PerThreadEntityManagers.getEntityManager();
-		EntityTransaction tx = manager.getTransaction();
+		//EntityManager manager = PerThreadEntityManagers.getEntityManager();
+		//EntityTransaction tx = manager.getTransaction();
 		
 	/*	--TEST 01: Persist an account.
 		tx.begin();
@@ -233,10 +233,10 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 //		System.out.println(laEmpresa.getCuentas().size() == 3);
 		
 		
-		tx.begin();
+		/*tx.begin();
 		Indicador unIndicador = new Indicador("ROE", "4");
 		manager.persist(unIndicador);
-		tx.commit();
+		tx.commit();*/
 		
 		
 		//new InviertiendoView().startApplication();

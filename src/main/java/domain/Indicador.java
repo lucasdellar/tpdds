@@ -32,9 +32,7 @@ public class Indicador {
 	private String nombre;
 	private String formula;
 
-	
-	private Expresion formula_objetos; // Para testear que funcione y no tocar nada de la UI.
-	
+	private Expresion formula_objetos;
 	@Transient
 	RepositorioIndicadores repositorioIndicadores;
 	
