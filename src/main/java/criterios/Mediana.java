@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import comparadores.IComparador;
+import comparadores.Comparador;
 import domain.Valor;
 import empresas.Empresa;
 
@@ -28,7 +28,7 @@ public class Mediana  extends Criterio{
 	}
 
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, double unValor, IComparador unComparador) {
+	public Boolean aplicar(Empresa unaEmpresa, double unValor, Comparador unComparador) {
 		return  unComparador.comparar(calcular(unaEmpresa), unValor); 
 	}
 	

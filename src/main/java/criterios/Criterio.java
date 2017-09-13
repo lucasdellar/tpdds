@@ -3,7 +3,7 @@ package criterios;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import comparadores.IComparador;
+import comparadores.Comparador;
 import domain.Cuenta;
 import domain.Valor;
 import empresas.Empresa;
@@ -32,6 +32,6 @@ public abstract class Criterio {
 	
 	public abstract double calcular(Empresa unaEmpresa);
 	
-	public abstract Boolean aplicar(Empresa unaEmpresa, double unValor, IComparador unComparador);
+	public abstract Boolean aplicar(Empresa unaEmpresa, double unValor, Comparador unComparador);
 	
 }

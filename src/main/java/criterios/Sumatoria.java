@@ -2,7 +2,7 @@ package criterios;
 
 import java.util.List;
 
-import comparadores.IComparador;
+import comparadores.Comparador;
 import domain.Valor;
 import empresas.Empresa;
 
@@ -19,7 +19,7 @@ public class Sumatoria extends Criterio{
 	}
 	
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, double unValor, IComparador unComparador) {
+	public Boolean aplicar(Empresa unaEmpresa, double unValor, Comparador unComparador) {
 		
 		double sumatoria = 0;
 		

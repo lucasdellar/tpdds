@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
 
+import comparadores.Comparador;
 import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
 import condiciones.Condicion;
@@ -75,7 +76,7 @@ public class AgregarCondicionCrecimientoViewModel {
 		validadorComparador.validarString(mayorMenor);
 		validadorCrecimiento.validarIntervalo(inicioPeriodo, finPeriodo);
 		CondicionTaxativa condicionAAgregar =
-				new CondicionTaxativa(repositorioIndicadores, mayorMenor.equals("MAYOR") ? new ComparadorMayor() : new ComparadorMenor());
+				new CondicionTaxativa(repositorioIndicadores, mayorMenor.equals("MAYOR") ? Comparador.MAYOR : Comparador.MENOR);
 		condicionAAgregar.setCriterio(new Crecimiento(new ValorIndicador(nombreIndicador, repositorioIndicadores), 
 				Integer.parseInt(inicioPeriodo), Integer.parseInt(finPeriodo), Integer.parseInt(getMaxIncumplimientos())));
 		condicionesYaAgregadas.add(condicionAAgregar);

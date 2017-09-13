@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
 
+import comparadores.Comparador;
 import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
 import condiciones.CondicionPrioritaria;
@@ -42,7 +43,7 @@ public class AgregarCondicionCompararViewModel {
 		validadorComparador.validarString(getMayorMenor());
 		
 		CondicionPrioritaria condicionAAgregar =
-			new CondicionPrioritaria(repositorioIndicadores, getMayorMenor().equals("MAYOR") ? new ComparadorMayor() : new ComparadorMenor(), Integer.parseInt(peso));
+			new CondicionPrioritaria(repositorioIndicadores, getMayorMenor().equals("MAYOR") ? Comparador.MAYOR : Comparador.MENOR, Integer.parseInt(peso));
 		
 		ValorIndicador valor = new ValorIndicador(nombreIndicador, repositorioIndicadores);
 		valor.setPeriodo(periodo);

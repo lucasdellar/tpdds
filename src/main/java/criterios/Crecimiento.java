@@ -3,7 +3,7 @@ package criterios;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import comparadores.IComparador;
+import comparadores.Comparador;
 import domain.Cuenta;
 import domain.Valor;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
@@ -30,7 +30,7 @@ public class Crecimiento extends Criterio {
 						&&  Integer.parseInt(unaCuenta.getPeriodo()) <= fin).collect(Collectors.toList());
 	}
 	
-	public Boolean cumple(Empresa unaEmpresa, String unPeriodo, IComparador unComparador, List<String> periodosDentroDelIntervalo) {
+	public Boolean cumple(Empresa unaEmpresa, String unPeriodo, Comparador unComparador, List<String> periodosDentroDelIntervalo) {
 			double unValor = 0;
 			double otroValor = 0;
 			int posicion = periodosDentroDelIntervalo.indexOf(unPeriodo);
@@ -46,7 +46,7 @@ public class Crecimiento extends Criterio {
 		}
 
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, double unValor, IComparador unComparador) {
+	public Boolean aplicar(Empresa unaEmpresa, double unValor, Comparador unComparador) {
 		List<Cuenta> cuentasDentroDelIntervalo = obtener_cuentasDentroDelIntervalo(unaEmpresa);
 		List<String> periodosDentroDelIntervalo = obtenerPeriodos(cuentasDentroDelIntervalo);
 		return periodosDentroDelIntervalo.stream()

@@ -2,7 +2,7 @@ package criterios;
 
 import java.util.List;
 
-import comparadores.IComparador;
+import comparadores.Comparador;
 import domain.Valor;
 import empresas.Empresa;
 
@@ -22,7 +22,7 @@ public class Promedio extends Criterio{
 	}
 
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, double unValor, IComparador comparador) {
+	public Boolean aplicar(Empresa unaEmpresa, double unValor, Comparador comparador) {
 		double promedio = calcular(unaEmpresa);
 		return  comparador.comparar(promedio, unValor);
 	}

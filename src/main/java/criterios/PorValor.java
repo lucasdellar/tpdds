@@ -1,6 +1,6 @@
 package criterios;
 
-import comparadores.IComparador;
+import comparadores.Comparador;
 import domain.Valor;
 import empresas.Empresa;
 
@@ -11,7 +11,7 @@ public class PorValor extends Criterio {
 	}
 
 	@Override
-	public Boolean aplicar(Empresa unaEmpresa, double unValor, IComparador unComparador) {
+	public Boolean aplicar(Empresa unaEmpresa, double unValor, Comparador unComparador) {
 		return unComparador.comparar(calcular(unaEmpresa), unValor);
 	}
 

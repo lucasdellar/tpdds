@@ -3,7 +3,7 @@ package condiciones;
 import java.util.Collections;
 import java.util.List;
 
-import comparadores.IComparador;
+import comparadores.Comparador;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
@@ -13,7 +13,7 @@ public class CondicionPrioritaria extends Condicion {
 	
 	private int peso;
 	
-	public CondicionPrioritaria(RepositorioIndicadores indicadores, IComparador comparador, int peso) {
+	public CondicionPrioritaria(RepositorioIndicadores indicadores, Comparador comparador, int peso) {
 		super(indicadores, comparador);
 		this.peso = peso;
 	}

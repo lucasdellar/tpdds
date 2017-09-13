@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import comparadores.Comparador;
 import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
 import condiciones.CondicionPrioritaria;
@@ -31,21 +32,19 @@ public class Entrega3Test {
 	
 	@Test
 	public void comparadorMenor(){
-		ComparadorMenor comparador = new ComparadorMenor();
-		Assert.assertEquals(comparador.comparar(5, 9), true);
+		Assert.assertEquals(Comparador.MENOR.comparar(5, 9), true);
 	}
 	
 	@Test
 	public void comparadorMayor(){
-		ComparadorMayor comparador = new ComparadorMayor();
-		Assert.assertEquals(comparador.comparar(5, 9), false);
+		Assert.assertEquals(Comparador.MAYOR.comparar(5, 9), false);
 	}
 	
 	/* ********************************************* TESTS DE CONDICIONES ************************************************** */	
 	
 	@Test
 	public void agregar_condicion_Taxativa(){
-		CondicionTaxativa crece = new CondicionTaxativa(new RepositorioIndicadores(), new ComparadorMayor());
+		CondicionTaxativa crece = new CondicionTaxativa(new RepositorioIndicadores(), Comparador.MAYOR);
 		List<CondicionTaxativa> condiciones_taxativas = new ArrayList<>();
 		condiciones_taxativas.add(crece);
 		Metodologia metodologia = new Metodologia("testMetodologia", condiciones_taxativas, null);
@@ -59,7 +58,7 @@ public class Entrega3Test {
 		 */
 		
 		RepositorioIndicadores repo = new RepositorioIndicadores();
-		CondicionTaxativa taxativa = new CondicionTaxativa(repo, new ComparadorMenor(), 100);
+		CondicionTaxativa taxativa = new CondicionTaxativa(repo, Comparador.MENOR, 100);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
 		repo.agregar(unIndicador);
 		Valor valor = new ValorIndicador(unIndicador.getNombre(), taxativa.getRepoIndicadores());
@@ -82,7 +81,7 @@ public class Entrega3Test {
 		 * Resultado: una lista con la unica empresa que cumple la condicion.
 		 */
 		RepositorioIndicadores repo = new RepositorioIndicadores();
-		CondicionTaxativa taxativa = new CondicionTaxativa(repo, new ComparadorMenor(), 100);
+		CondicionTaxativa taxativa = new CondicionTaxativa(repo, Comparador.MENOR, 100);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
 		repo.agregar(unIndicador);
 		Valor valor = new ValorIndicador(unIndicador.getNombre(), taxativa.getRepoIndicadores());
@@ -106,7 +105,7 @@ public class Entrega3Test {
 	
 	@Test
 	public void agregar_condicion_Prioritaria(){
-		CondicionPrioritaria unaCondicion = new CondicionPrioritaria(new RepositorioIndicadores(), new ComparadorMayor(), 5);
+		CondicionPrioritaria unaCondicion = new CondicionPrioritaria(new RepositorioIndicadores(), Comparador.MAYOR, 5);
 		List<CondicionPrioritaria> condiciones_prioritarias = new ArrayList<>();
 		List<CondicionTaxativa> condiciones_taxativas = new ArrayList<>();
 		condiciones_prioritarias.add(unaCondicion);
@@ -126,7 +125,7 @@ public class Entrega3Test {
 		
 		RepositorioIndicadores repositorio = new RepositorioIndicadores();
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta * 5");
-		CondicionPrioritaria prioritaria = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 2);
+		CondicionPrioritaria prioritaria = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 2);
 		repositorio.agregar(unIndicador);
 		Valor valor = new ValorIndicador(unIndicador.getNombre(), prioritaria.getRepoIndicadores());
 		prioritaria.setCriterio(new Sumatoria(valor));
@@ -211,9 +210,9 @@ public class Entrega3Test {
 		repositorio.agregar(unIndicador);
 		repositorio.agregar(otroIndicador);
 		repositorio.agregar(tercerIndicador);
-		CondicionTaxativa taxativa1 = new CondicionTaxativa(repositorio, new ComparadorMayor(), 20);
-		CondicionTaxativa taxativa2 = new CondicionTaxativa(repositorio, new ComparadorMayor());
-		CondicionTaxativa taxativa3 = new CondicionTaxativa(repositorio, new ComparadorMayor());
+		CondicionTaxativa taxativa1 = new CondicionTaxativa(repositorio, Comparador.MAYOR, 20);
+		CondicionTaxativa taxativa2 = new CondicionTaxativa(repositorio, Comparador.MAYOR);
+		CondicionTaxativa taxativa3 = new CondicionTaxativa(repositorio, Comparador.MAYOR);
 		List<CondicionTaxativa> condicionesTaxativas = new ArrayList<>();
 		List<CondicionPrioritaria> condicionesPrioritarias = new ArrayList<>();
 		condicionesTaxativas.add(taxativa1);
@@ -248,9 +247,9 @@ public class Entrega3Test {
 		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
 		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
 		Indicador tercerIndicador = new Indicador("indicadorTestC", "testCuentaC / 2");
-		CondicionPrioritaria prioritaria1 = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 1);
-		CondicionPrioritaria prioritaria2 = new CondicionPrioritaria(repositorio, new ComparadorMenor(), 3);
-		CondicionPrioritaria prioritaria3 = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 5);
+		CondicionPrioritaria prioritaria1 = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 1);
+		CondicionPrioritaria prioritaria2 = new CondicionPrioritaria(repositorio, Comparador.MENOR, 3);
+		CondicionPrioritaria prioritaria3 = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 5);
 		
 		List<CondicionPrioritaria> condicionesPrioritarias = new ArrayList<>();
 		List<CondicionTaxativa> condicionesTaxativasVacia = new ArrayList<>();
@@ -312,7 +311,7 @@ public class Entrega3Test {
 	@Test
 	public void CrecimientoEvaluaEstrictoCorrectamente(){
 		RepositorioIndicadores repositorio = new RepositorioIndicadores();
-		CondicionTaxativa condicion = new CondicionTaxativa(repositorio, new ComparadorMenor());
+		CondicionTaxativa condicion = new CondicionTaxativa(repositorio, Comparador.MENOR);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
 		repositorio.agregar(unIndicador);
 		Valor unValor = new ValorIndicador(unIndicador.getNombre(), condicion.getRepoIndicadores());
@@ -338,7 +337,7 @@ public class Entrega3Test {
 	@Test
 	public void CrecimientoEvaluaPermisivoCorrectamente(){
 		RepositorioIndicadores repositorio = new RepositorioIndicadores();
-		CondicionTaxativa condicion = new CondicionTaxativa(repositorio, new ComparadorMayor());
+		CondicionTaxativa condicion = new CondicionTaxativa(repositorio, Comparador.MAYOR);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
 		repositorio.agregar(unIndicador);
 		Valor unValor = new ValorIndicador(unIndicador.getNombre(), condicion.getRepoIndicadores());
@@ -364,7 +363,7 @@ public class Entrega3Test {
 	@Test
 	public void cumpleCondicionTaxativaConCriterioMediana(){
 		RepositorioIndicadores repo = new RepositorioIndicadores();
-		CondicionTaxativa condicion = new CondicionTaxativa(repo, new ComparadorMayor(), 2);
+		CondicionTaxativa condicion = new CondicionTaxativa(repo, Comparador.MAYOR, 2);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
 		repo.agregar(unIndicador);
 		Valor valor = new ValorIndicador(unIndicador.getNombre(), condicion.getRepoIndicadores());
@@ -379,7 +378,7 @@ public class Entrega3Test {
 	@Test 
 	public void cumpleCondicionTaxativaConCriterioPorValor(){
 		RepositorioIndicadores repo = new RepositorioIndicadores();
-		CondicionTaxativa condicion = new CondicionTaxativa(repo, new ComparadorMayor(), 2);
+		CondicionTaxativa condicion = new CondicionTaxativa(repo, Comparador.MAYOR, 2);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta + 1");
 		repo.agregar(unIndicador);
 		Valor valor = new ValorIndicador(unIndicador.getNombre(), condicion.getRepoIndicadores());
@@ -397,7 +396,7 @@ public class Entrega3Test {
 	@Test
 	public void cumpleCondicionPrioritariaConCriterioSumatoria(){
 		RepositorioIndicadores repositorio = new RepositorioIndicadores();
-		CondicionPrioritaria condicion = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 5);
+		CondicionPrioritaria condicion = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 5);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta * 2");
 		repositorio.agregar(unIndicador);
 		Valor unValor = new ValorIndicador(unIndicador.getNombre(), condicion.getRepoIndicadores());
@@ -415,7 +414,7 @@ public class Entrega3Test {
 	@Test
 	public void cumpleCondicionPrioritariaConCriterioPromedio(){
 		RepositorioIndicadores repositorio = new RepositorioIndicadores();
-		CondicionPrioritaria condicion = new CondicionPrioritaria(repositorio, new ComparadorMayor(), 5);
+		CondicionPrioritaria condicion = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 5);
 		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta * 2");
 		repositorio.agregar(unIndicador);
 		Valor unValor = new ValorIndicador(unIndicador.getNombre(), condicion.getRepoIndicadores());

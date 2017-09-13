@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
 
+import comparadores.Comparador;
 import comparadores.ComparadorMayor;
 import comparadores.ComparadorMenor;
 import condiciones.CondicionTaxativa;
@@ -40,7 +41,7 @@ public class AgregarCondicionNAniosViewModel {
 		validadorComparador.validarString(getMayorMenor());
 		
 		CondicionTaxativa condicionAAgregar =
-				new CondicionTaxativa(repositorioIndicadores, getMayorMenor().equals("MAYOR") ? new ComparadorMayor() : new ComparadorMenor());
+				new CondicionTaxativa(repositorioIndicadores, getMayorMenor().equals("MAYOR") ? Comparador.MAYOR : Comparador.MENOR);
 		
 		condicionAAgregar.setCriterio(new NAnios(new ValorIndicador(nombreIndicador, repositorioIndicadores), Integer.parseInt(anios)));
 		

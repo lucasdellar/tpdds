@@ -1,7 +1,7 @@
 package condiciones;
 
 import java.util.List;
-import comparadores.IComparador;
+import comparadores.Comparador;
 import criterios.Criterio;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
@@ -10,9 +10,9 @@ public abstract class Condicion {
 	
 	private Criterio criterio;
 	private RepositorioIndicadores repoIndicadores;
-	private IComparador comparador;
+	private Comparador comparador;
 	
-	public Condicion(RepositorioIndicadores indicadores, IComparador comparador){
+	public Condicion(RepositorioIndicadores indicadores, Comparador comparador){
 		this.setRepoIndicadores(indicadores);
 		this.comparador = comparador;
 	}
@@ -35,11 +35,11 @@ public abstract class Condicion {
 		this.criterio = criterio;
 	}
 
-	public IComparador getComparador() {
+	public Comparador getComparador() {
 		return comparador;
 	}
 
-	void setComparador(IComparador comparador) {
+	void setComparador(Comparador comparador) {
 		this.comparador = comparador;
 	}
 	

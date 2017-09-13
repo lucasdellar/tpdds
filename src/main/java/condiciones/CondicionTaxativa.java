@@ -3,7 +3,7 @@ package condiciones;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import comparadores.IComparador;
+import comparadores.Comparador;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
@@ -11,7 +11,7 @@ public class CondicionTaxativa extends Condicion {
 	
 	private int valor;
 	
-	public CondicionTaxativa(RepositorioIndicadores indicadores, IComparador comparador, int valor) {
+	public CondicionTaxativa(RepositorioIndicadores indicadores, Comparador comparador, int valor) {
 		/* Para el caso en el que la condicion requiera de un valor 
 		 */
 		
@@ -19,7 +19,7 @@ public class CondicionTaxativa extends Condicion {
 		this.valor = valor;
 	}
 		
-	public CondicionTaxativa(RepositorioIndicadores indicadores, IComparador comparador) {
+	public CondicionTaxativa(RepositorioIndicadores indicadores, Comparador comparador) {
 		/* En ciertos casos la condicion Taxativa puede no requerir de valor alguno. 
 		 * Por ejemplo cuando se quiere aplica el criterio Crecimiento.
 		 */
