@@ -9,8 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
 import org.uqbar.commons.utils.Observable;
 
 import empresas.Empresa;
@@ -31,7 +33,8 @@ public class Indicador {
 	long id;
 	private String nombre;
 	private String formula;
-
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Expresion formula_objetos;
 	@Transient
 	RepositorioIndicadores repositorioIndicadores;

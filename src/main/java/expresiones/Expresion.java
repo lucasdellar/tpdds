@@ -14,7 +14,7 @@ import empresas.Empresa;
 
 @DiscriminatorColumn(name = "Tipo")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@MappedSuperclass
+@Entity
 public abstract class Expresion{
 	
 

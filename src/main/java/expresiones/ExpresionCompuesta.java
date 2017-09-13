@@ -1,12 +1,13 @@
 package expresiones;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import OperacionesMatematicas.Operador;
 import empresas.Empresa;
@@ -14,10 +15,9 @@ import empresas.Empresa;
 @Entity
 @DiscriminatorValue("ExpComp")
 public class ExpresionCompuesta extends Expresion {
-
-	@JoinColumn(name = "exp_id")
+	@OneToOne(cascade = CascadeType.PERSIST)
 	Expresion primeraExpresion;
-	@JoinColumn(name = "exp_id")
+	@OneToOne(cascade = CascadeType.PERSIST)
 	Expresion segundaExpresion;
 	@Enumerated(EnumType.STRING)
 	Operador operador;
