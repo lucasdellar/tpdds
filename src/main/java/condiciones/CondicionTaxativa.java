@@ -3,13 +3,18 @@ package condiciones;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
+
 import comparadores.Comparador;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
+@Entity
 public class CondicionTaxativa extends Condicion {
 	
 	private int valor;
+	
+	private CondicionTaxativa(){}
 	
 	public CondicionTaxativa(RepositorioIndicadores indicadores, Comparador comparador, int valor) {
 		/* Para el caso en el que la condicion requiera de un valor 

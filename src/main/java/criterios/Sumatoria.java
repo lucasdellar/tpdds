@@ -2,12 +2,17 @@ package criterios;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+
 import comparadores.Comparador;
 import domain.Valor;
 import empresas.Empresa;
 
+@Entity
 public class Sumatoria extends Criterio{
 
+	private Sumatoria(){}
+	
 	public Sumatoria(Valor valor) {
 		super(valor);
 	}

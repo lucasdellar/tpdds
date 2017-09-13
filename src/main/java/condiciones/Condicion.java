@@ -1,16 +1,33 @@
 package condiciones;
 
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
 import comparadores.Comparador;
 import criterios.Criterio;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity
 public abstract class Condicion {
 	
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Criterio criterio;
+	@Transient
 	private RepositorioIndicadores repoIndicadores;
+	@Enumerated
 	private Comparador comparador;
+	
+	public Condicion(){}
 	
 	public Condicion(RepositorioIndicadores indicadores, Comparador comparador){
 		this.setRepoIndicadores(indicadores);

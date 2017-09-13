@@ -3,14 +3,20 @@ package criterios;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import javax.persistence.Entity;
+
 import comparadores.Comparador;
 import domain.Valor;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
 
+@Entity
 public class NAnios extends Criterio{
 
 	int anios;
+	
+	private NAnios(){}
 	
 	public NAnios(Valor valor, int anios) {
 		super(valor);

@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.Cascade;
 import org.uqbar.commons.utils.Observable;
 
 import domain.Cuenta;

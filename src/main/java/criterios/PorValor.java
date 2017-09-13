@@ -1,10 +1,15 @@
 package criterios;
 
+import javax.persistence.Entity;
+
 import comparadores.Comparador;
 import domain.Valor;
 import empresas.Empresa;
 
+@Entity
 public class PorValor extends Criterio {
+	
+	private PorValor(){}
 	
 	public PorValor(Valor valor) {
 		super(valor);

@@ -3,9 +3,14 @@ package domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
+
 import empresas.Empresa;
 
-public class ValorAntiguedad implements Valor{
+@Entity
+public class ValorAntiguedad extends Valor{
+	
+	private ValorAntiguedad(){}
 	
 	public Double calcular(Empresa unaEmpresa) {
 		

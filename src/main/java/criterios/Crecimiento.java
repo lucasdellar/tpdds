@@ -3,17 +3,22 @@ package criterios;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
+
 import comparadores.Comparador;
 import domain.Cuenta;
 import domain.Valor;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
 
+@Entity
 public class Crecimiento extends Criterio {
 	
 	protected int principio;
 	protected int fin;
 	private int maxIncumplimientos;
+	
+	private Crecimiento(){}
 	
 	public Crecimiento(Valor valor, int principio, int fin, int maxIncumplimientos) {
 		super(valor);

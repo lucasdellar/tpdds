@@ -1,13 +1,24 @@
 package domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 import empresas.Empresa;
 
-public interface Valor {
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity
+public abstract class Valor {
+	
+	@Id@GeneratedValue
+	long id;
 
-	public Double calcular(Empresa unaEmpresa);
+	public abstract Double calcular(Empresa unaEmpresa);
 
-	public void setPeriodo(String periodo);
+	public abstract void setPeriodo(String periodo);
 
-	public Indicador getIndicador();
+	public abstract Indicador getIndicador();
 
 }

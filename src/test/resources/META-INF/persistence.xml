@@ -9,6 +9,7 @@
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	
     	
+    	<class>domain.Metodologia</class>
     	<class>domain.Cuenta</class>
     	<class>empresas.Empresa</class>
 	   	<class>domain.Indicador</class>
@@ -16,8 +17,20 @@
  		<class>expresiones.Expresion</class>
  		<class>expresiones.ExpresionCompuesta</class>
     	<class>expresiones.ExpresionNoNumerica</class>
- <!--   	       	
-    	<class>domain.Metodologia</class>
+		<class>domain.Valor</class>
+    	<class>domain.ValorAntiguedad</class>
+    	<class>domain.ValorIndicador</class>
+    	<class>domain.ValorNumerico</class>
+    	<class>condiciones.CondicionPrioritaria</class>
+    	<class>condiciones.CondicionTaxativa</class>
+    	<class>criterios.Criterio</class>
+    	<class>criterios.Crecimiento</class>
+    	<class>criterios.Mediana</class>
+    	<class>criterios.NAnios</class>
+    	<class>criterios.PorValor</class>
+    	<class>criterios.Promedio</class>
+    	<class>criterios.Sumatoria</class>
+      <!--		Remember my words... 	       	
     	 -->
     	
         <properties> 

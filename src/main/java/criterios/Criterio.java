@@ -3,14 +3,29 @@ package criterios;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
+
 import comparadores.Comparador;
 import domain.Cuenta;
 import domain.Valor;
 import empresas.Empresa;
 
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity
 public abstract class Criterio {
 	
+	@Id@GeneratedValue
+	long id;
+	@OneToOne(cascade = CascadeType.PERSIST)
 	public Valor valor;
+	
+	protected Criterio(){}
 	
 	public Criterio(Valor valor) {
 		this.valor = valor;

@@ -3,15 +3,19 @@ package condiciones;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.Entity;
+
 import comparadores.Comparador;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
-
+@Entity
 public class CondicionPrioritaria extends Condicion {
 	
 	private int peso;
+	
+	private CondicionPrioritaria(){}
 	
 	public CondicionPrioritaria(RepositorioIndicadores indicadores, Comparador comparador, int peso) {
 		super(indicadores, comparador);

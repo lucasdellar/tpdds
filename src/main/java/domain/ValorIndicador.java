@@ -1,13 +1,21 @@
 package domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
 import empresas.Empresa;
 import repositorios.RepositorioIndicadores;
 
-public class ValorIndicador implements Valor{
+@Entity
+public class ValorIndicador extends Valor{
 	
 	String indicador;
 	String periodo;
+	
+	@Transient
 	RepositorioIndicadores repo;
+	
+	private ValorIndicador(){}
 
 	public ValorIndicador(String indicador, RepositorioIndicadores repo) {
 		this.indicador = indicador;

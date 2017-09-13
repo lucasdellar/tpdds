@@ -1,10 +1,10 @@
 package ui;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import org.junit.Assert;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -20,12 +20,21 @@ import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.ui.view.ErrorViewer;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
+import comparadores.Comparador;
+import condiciones.CondicionPrioritaria;
+import condiciones.CondicionTaxativa;
+import criterios.Promedio;
+import criterios.Sumatoria;
 import domain.Archivo;
 import domain.Cuenta;
 import domain.Indicador;
+import domain.Metodologia;
+import domain.Valor;
+import domain.ValorIndicador;
 import empresas.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import manejadoresArchivo.ManejadorDeArchivoIndicadores;
+import repositorios.RepositorioIndicadores;
 import repositorios.RepositorioMetodologias;
 import ui.Dialogs.AgregarEmpresaDialog;
 import ui.Dialogs.AgregarIndicadorDialog;
@@ -242,6 +251,40 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 //		Indicador otroIndicador = manager.find(Indicador.class, 1l);
 //		System.out.println(otroIndicador.getFormula());
 //		
+		
+		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
+		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
+		Indicador tercerIndicador = new Indicador("indicadorTestC", "testCuentaC / 2");
+		CondicionPrioritaria prioritaria1 = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 1);
+		CondicionPrioritaria prioritaria2 = new CondicionPrioritaria(repositorio, Comparador.MENOR, 3);
+		CondicionPrioritaria prioritaria3 = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 5);
+		
+		List<CondicionPrioritaria> condicionesPrioritarias = new ArrayList<>();
+		List<CondicionTaxativa> condicionesTaxativasVacia = new ArrayList<>();
+		
+		condicionesPrioritarias.add(prioritaria1);
+		condicionesPrioritarias.add(prioritaria2);
+		condicionesPrioritarias.add(prioritaria3);
+		Metodologia metodologia = new Metodologia("testMetodologia", condicionesTaxativasVacia, condicionesPrioritarias);
+		
+		repositorio.agregar(unIndicador);
+		repositorio.agregar(otroIndicador);
+		repositorio.agregar(tercerIndicador);
+		
+		Valor valorUno = new ValorIndicador(unIndicador.getNombre(), prioritaria1.getRepoIndicadores());
+		Valor valorDos = new ValorIndicador(otroIndicador.getNombre(), prioritaria2.getRepoIndicadores());
+		Valor valorTres = new ValorIndicador(tercerIndicador.getNombre(), prioritaria3.getRepoIndicadores());
+		prioritaria1.setCriterio(new Sumatoria(valorUno));
+		prioritaria2.setCriterio(new Promedio(valorDos));
+		prioritaria3.setCriterio(new Promedio(valorTres));
+		
+    	tx.begin();
+    	
+    	manager.persist(metodologia);
+    	
+    	tx.commit();
+		
 		//new InviertiendoView().startApplication();
 	}
 

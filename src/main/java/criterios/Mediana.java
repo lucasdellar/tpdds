@@ -4,13 +4,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
+
 import comparadores.Comparador;
 import domain.Valor;
 import empresas.Empresa;
 
-
+@Entity
 public class Mediana  extends Criterio{
 
+	private Mediana(){}
+	
 	public Mediana(Valor valor) {
 		super(valor);
 	}

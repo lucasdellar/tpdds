@@ -2,12 +2,17 @@ package criterios;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+
 import comparadores.Comparador;
 import domain.Valor;
 import empresas.Empresa;
 
+@Entity
 public class Promedio extends Criterio{
 
+	private Promedio(){}
+	
 	public Promedio(Valor valor) {
 		super(valor);
 	}

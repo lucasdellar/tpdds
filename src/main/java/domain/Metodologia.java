@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.uqbar.commons.utils.Observable;
 
@@ -19,11 +20,15 @@ import empresas.EmpresaRankeada;
 @Observable
 @Entity
 public class Metodologia {
-	@Id
-	@GeneratedValue
+	
+	@Id@GeneratedValue
 	long id;
 	String nombre;
+	//@OneToMany(cascade = CascadeType.PERSIST)
+	@Transient
 	private List<CondicionTaxativa> condiciones_taxativas;
+	//@OneToMany(cascade = CascadeType.PERSIST)
+	@Transient
 	private List<CondicionPrioritaria> condiciones_prioritarias;
 	
 	private Metodologia(){}

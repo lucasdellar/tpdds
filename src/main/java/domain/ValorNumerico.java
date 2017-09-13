@@ -2,9 +2,11 @@ package domain;
 
 import empresas.Empresa;
 
-public class ValorNumerico implements Valor {
+public class ValorNumerico extends Valor {
 	
 	Double numero;
+	
+	private ValorNumerico(){}
 	
 	public ValorNumerico(Double numero){
 		this.numero = numero;
