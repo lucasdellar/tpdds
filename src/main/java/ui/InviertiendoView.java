@@ -1,6 +1,5 @@
 package ui;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -20,21 +19,11 @@ import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.ui.view.ErrorViewer;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
-import comparadores.Comparador;
-import condiciones.CondicionPrioritaria;
-import condiciones.CondicionTaxativa;
-import criterios.Promedio;
-import criterios.Sumatoria;
 import domain.Archivo;
 import domain.Cuenta;
-import domain.Indicador;
-import domain.Metodologia;
-import domain.Valor;
-import domain.ValorIndicador;
 import empresas.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
 import manejadoresArchivo.ManejadorDeArchivoIndicadores;
-import repositorios.RepositorioIndicadores;
 import repositorios.RepositorioMetodologias;
 import ui.Dialogs.AgregarEmpresaDialog;
 import ui.Dialogs.AgregarIndicadorDialog;
@@ -55,54 +44,30 @@ import ui.ViewModels.InviertiendoViewModel;
 
 public class InviertiendoView extends MainWindow<InviertiendoViewModel> implements ErrorViewer{
 
-	public InviertiendoView() {
-		super(new InviertiendoViewModel());
-		archivoIndicadores.setRuta("indicadores.txt");
-		//archivoMetodologias.setRuta("metodologias.txt");
-	}
 	private Archivo archivoEmpresas = new Archivo();
 	private Archivo archivoIndicadores = new Archivo();
-	//private Archivo archivoMetodologias = new Archivo();
 	private RepositorioMetodologias repositorioMetodologias = new RepositorioMetodologias();
 	private EmpresaViewModel empresaViewModel;
-
-	protected void openArchivoDialog() {
-		ArchivoDialog archivoDialog = new ArchivoDialog(this, new ArchivoViewModel());
-		archivoDialog.onAccept(() -> {
-			archivoEmpresas.setRuta(archivoDialog.getRutaArchivo());
-			this.getModelObject().setRutaArchivo(archivoDialog.getRutaArchivo());
-			//this.getModelObject().mostrarCuentas(); 
-		});
-		archivoDialog.open();
-	}
-
-	protected void openCrearCuentaDialog() {
-		CrearCuentaDialog crearCuentaDialog = new CrearCuentaDialog(this,archivoEmpresas);
-		crearCuentaDialog.getModelObject().setEmpresa(this.getModelObject().getEmpresa());
-		crearCuentaDialog.open();
-		//this.getModelObject().actualizarEmpresas();
-	}
-
-	protected void openEmpresaDialog() {
-		empresaViewModel = new EmpresaViewModel(archivoEmpresas);
-		EmpresaDialog empresaDialog = new EmpresaDialog(this, empresaViewModel);
-		empresaDialog.open();
-	}
 	
+	public InviertiendoView() {
+		super(new InviertiendoViewModel());
+		//archivoIndicadores.setRuta("indicadores.txt");
+	}
 	
 	@Override
 	public void createContents(Panel mainPanel) {
-		
+
 		openArchivoDialog();
 		this.setTitle("Invirtiendo");
+
 		this.getDelegate().setErrorViewer(this);
 
 		mainPanel.setLayout(new VerticalLayout());
-		
+
 		agregarLabel(mainPanel, "Empresas");
-		
+	
 		Panel tablePanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
-		
+
 		Table<Empresa> table = new Table<Empresa>(tablePanel, Empresa.class);
 		table.bindItemsToProperty("repositorioEmpresas.lista");
 		table.setNumberVisibleRows(6);
@@ -147,8 +112,37 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		
 		crearBoton(mainPanel, "Evaluar empresa con Metodologia").onClick(() -> openEvaluarMetodologiaDialog());
 	}
+	
+	/*********************************DIALOGS*********************************/
 
+	protected void openArchivoDialog() {
+		ArchivoDialog archivoDialog = new ArchivoDialog(this, new ArchivoViewModel());
+		archivoDialog.onAccept(() -> {
+			archivoEmpresas.setRuta(archivoDialog.getRutaArchivo());
+			this.getModelObject().setRutaArchivo(archivoDialog.getRutaArchivo());
+		});
+		archivoDialog.open();
+	}
+	
+	protected void openCrearCuentaDialog() {
+		CrearCuentaDialog crearCuentaDialog = new CrearCuentaDialog(this,archivoEmpresas);
+		crearCuentaDialog.getModelObject().setEmpresa(this.getModelObject().getEmpresa());
+		crearCuentaDialog.open();
+	}
+	
+	protected void openEmpresaDialog() {
+		empresaViewModel = new EmpresaViewModel(archivoEmpresas);
+		EmpresaDialog empresaDialog = new EmpresaDialog(this, empresaViewModel);
+		empresaDialog.open();
+	}
 
+	private void openCrearEmpresaDialog() {
+		AgregarEmpresaViewModel agregarViewModel = new AgregarEmpresaViewModel(archivoEmpresas);
+		AgregarEmpresaDialog agregarEmpresaDialog = new AgregarEmpresaDialog(this, agregarViewModel);
+		agregarEmpresaDialog.onAccept(() -> {agregarViewModel.agregarEmpresa(); this.getModelObject().actualizarEmpresas();});
+		agregarEmpresaDialog.open();
+	}
+	
     private void openEvaluarEmpresaDialog() {
     	EvaluarEmpresaViewModel evaluarViewModel = new EvaluarEmpresaViewModel(this.getModelObject().getEmpresa(), new ManejadorDeArchivoIndicadores(archivoIndicadores.getRuta()).getRepositorioIndicadores());
     	EvaluarEmpresaDialog evaluarIndicadorDialog = new EvaluarEmpresaDialog(this, evaluarViewModel);
@@ -171,19 +165,13 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	}
 	
 	private void openEvaluarMetodologiaDialog() {
-//    	EvaluarMetodologiaViewModel evaluarViewModel = new EvaluarMetodologiaViewModel(new ManejadorDeArchivoEmpresas(archivoEmpresas.getRuta()).getRepositorioEmpresas(), new ManejadorDeArchivoMetodologias(archivoMetodologias.getRuta()).getRepositorioMetodologias());
     	EvaluarMetodologiaViewModel evaluarViewModel = new EvaluarMetodologiaViewModel(new ManejadorDeArchivoEmpresas(archivoEmpresas.getRuta()).getRepositorioEmpresas(), repositorioMetodologias);
     	EvaluarMetolodigaDialog evaluarMetodologiaDialog = new EvaluarMetolodigaDialog(this, evaluarViewModel);
     	evaluarMetodologiaDialog.open();
     }
 	
-	private void openCrearEmpresaDialog() {
-    	AgregarEmpresaViewModel agregarViewModel = new AgregarEmpresaViewModel(archivoEmpresas);
- 		AgregarEmpresaDialog agregarEmpresaDialog = new AgregarEmpresaDialog(this, agregarViewModel);
- 		agregarEmpresaDialog.onAccept(() -> {agregarViewModel.agregarEmpresa(); this.getModelObject().actualizarEmpresas();});
- 		agregarEmpresaDialog.open();
- 	}
-
+	/*********************************VIEW ELEMENTS*********************************/
+	
 	private void agregarTextBox(Panel nuevaCuentaPanel, String property) {
 		new TextBox(nuevaCuentaPanel).setWidth(150).bindValueToProperty(property);
 	}
@@ -213,9 +201,9 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 	public static void main(String[] args) {
 		
-		EntityManager manager = PerThreadEntityManagers.getEntityManager();
+		/*EntityManager manager = PerThreadEntityManagers.getEntityManager();
 		EntityTransaction tx = manager.getTransaction();
-		
+		*/
 	/*	--TEST 01: Persist an account.
 		tx.begin();
 		Cuenta unaCuenta = new Cuenta("Pepe", "202", "33");
@@ -252,41 +240,45 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 //		System.out.println(otroIndicador.getFormula());
 //		
 		
-		RepositorioIndicadores repositorio = new RepositorioIndicadores();
-		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
-		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
-		Indicador tercerIndicador = new Indicador("indicadorTestC", "testCuentaC / 2");
-		CondicionPrioritaria prioritaria1 = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 1);
-		CondicionPrioritaria prioritaria2 = new CondicionPrioritaria(repositorio, Comparador.MENOR, 3);
-		CondicionPrioritaria prioritaria3 = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 5);
+//		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+//		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
+//		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
+//		Indicador tercerIndicador = new Indicador("indicadorTestC", "testCuentaC / 2");
+//		CondicionPrioritaria prioritaria1 = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 1);
+//		CondicionPrioritaria prioritaria2 = new CondicionPrioritaria(repositorio, Comparador.MENOR, 3);
+//		CondicionPrioritaria prioritaria3 = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 5);
+//		
+//		List<CondicionPrioritaria> condicionesPrioritarias = new ArrayList<>();
+//		List<CondicionTaxativa> condicionesTaxativasVacia = new ArrayList<>();
+//		
+//		condicionesPrioritarias.add(prioritaria1);
+//		condicionesPrioritarias.add(prioritaria2);
+//		condicionesPrioritarias.add(prioritaria3);
 		
-		List<CondicionPrioritaria> condicionesPrioritarias = new ArrayList<>();
-		List<CondicionTaxativa> condicionesTaxativasVacia = new ArrayList<>();
+//		repositorio.agregar(unIndicador);
+//		repositorio.agregar(otroIndicador);
+//		repositorio.agregar(tercerIndicador);
+//		
+//		Valor valorUno = new ValorIndicador(unIndicador.getNombre(), prioritaria1.getRepoIndicadores());
+//		Valor valorDos = new ValorIndicador(otroIndicador.getNombre(), prioritaria2.getRepoIndicadores());
+//		Valor valorTres = new ValorIndicador(tercerIndicador.getNombre(), prioritaria3.getRepoIndicadores());
+//		prioritaria1.setCriterio(new Sumatoria(valorUno));
+//		prioritaria2.setCriterio(new Promedio(valorDos));
+//		prioritaria3.setCriterio(new Promedio(valorTres));
 		
-		condicionesPrioritarias.add(prioritaria1);
-		condicionesPrioritarias.add(prioritaria2);
-		condicionesPrioritarias.add(prioritaria3);
-		Metodologia metodologia = new Metodologia("testMetodologia", condicionesTaxativasVacia, condicionesPrioritarias);
-		
-		repositorio.agregar(unIndicador);
-		repositorio.agregar(otroIndicador);
-		repositorio.agregar(tercerIndicador);
-		
-		Valor valorUno = new ValorIndicador(unIndicador.getNombre(), prioritaria1.getRepoIndicadores());
-		Valor valorDos = new ValorIndicador(otroIndicador.getNombre(), prioritaria2.getRepoIndicadores());
-		Valor valorTres = new ValorIndicador(tercerIndicador.getNombre(), prioritaria3.getRepoIndicadores());
-		prioritaria1.setCriterio(new Sumatoria(valorUno));
-		prioritaria2.setCriterio(new Promedio(valorDos));
-		prioritaria3.setCriterio(new Promedio(valorTres));
-		
-    	tx.begin();
-    	
-    	manager.persist(metodologia);
-    	
-    	tx.commit();
-		
-		//new InviertiendoView().startApplication();
+//    	tx.begin();
+//    	
+//    	Metodologia metodologia = new Metodologia("testMetodologia", null, null);
+//    	manager.persist(metodologia);
+//    	
+//    	tx.commit();
+//		RepositorioEmpresas repo = new RepositorioEmpresas();
+//		
+//		repo.traerEmpresas("empresas.txt");
+		new InviertiendoView().startApplication();
 	}
+	
+	/*********************************MESSAGES*********************************/
 
 	@Override
 	public void showInfo(String message) {

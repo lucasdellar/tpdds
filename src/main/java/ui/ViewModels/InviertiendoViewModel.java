@@ -51,7 +51,7 @@ public class InviertiendoViewModel {
 	}
 
 	public void actualizarEmpresas() {
-		this.setRepositorioEmpresas(new ManejadorDeArchivoEmpresas(rutaArchivoEmpresas).getRepositorioEmpresas());
+		this.setRepositorioEmpresas(new RepositorioEmpresas().traerEmpresas(rutaArchivoEmpresas));
 	}
 	
 	public Empresa getEmpresa() {

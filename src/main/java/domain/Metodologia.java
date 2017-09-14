@@ -5,10 +5,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.OneToMany;
 
 import org.uqbar.commons.utils.Observable;
 
@@ -24,11 +26,9 @@ public class Metodologia {
 	@Id@GeneratedValue
 	long id;
 	String nombre;
-	//@OneToMany(cascade = CascadeType.PERSIST)
-	@Transient
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<CondicionTaxativa> condiciones_taxativas;
-	//@OneToMany(cascade = CascadeType.PERSIST)
-	@Transient
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<CondicionPrioritaria> condiciones_prioritarias;
 	
 	private Metodologia(){}

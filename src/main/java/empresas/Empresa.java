@@ -5,12 +5,17 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
 
 import org.uqbar.commons.utils.Observable;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import domain.Cuenta;
 
@@ -22,7 +27,8 @@ public class Empresa {
 	@GeneratedValue	
 	long id;
 	public String nombre;
-	@OneToMany(cascade = CascadeType.PERSIST)@JoinColumn(name = "Empresa_id")
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinColumn(name = "Empresa_id")
 	public List<Cuenta> cuentas;
 	
 	private Empresa(){}
@@ -48,7 +54,13 @@ public class Empresa {
 	}
 	
 	public void agregarCuenta(Cuenta unaCuenta){
-		cuentas.add(unaCuenta);
+		cuentas.add(unaCuenta); 
+//		EntityManager manager = PerThreadEntityManagers.getEntityManager();
+//		EntityTransaction tx = manager.getTransaction();
+//		tx.begin();
+//		manager.clear();
+//		manager.persist(this);
+//		tx.commit();
 	}
 
 	/* public void addPropertyChangeListener(PropertyChangeListener listener) {

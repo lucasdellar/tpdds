@@ -16,7 +16,7 @@ import validadores.ValidadorEmpresa;
 public class EmpresaViewModel {
 
 	    private Empresa empresa;
-	    private RepositorioEmpresas empresas;
+	    private RepositorioEmpresas repoEmpresas;
 	    private ValidadorEmpresa validador;
 
 	    private Archivo archivo;
@@ -30,7 +30,7 @@ public class EmpresaViewModel {
 	    public EmpresaViewModel(Archivo archivo) {
 	        this();
 	        this.archivo = archivo;
-	        empresas = new ManejadorDeArchivoEmpresas(archivo.getRuta()).getRepositorioEmpresas();
+	        repoEmpresas = new RepositorioEmpresas().traerEmpresas(archivo.getRuta());
 	    }
 
 	    public String getNombreEmpresa() {
@@ -43,8 +43,8 @@ public class EmpresaViewModel {
 	    }
 
 	    public void agregarEmpresa() {
-	    	validador.validarQueNoEsteYaCargarda(empresa.getNombre(), new ManejadorDeArchivoEmpresas(archivo.getRuta()).getRepositorioEmpresas());
-	        archivo.agregarEmpresa(empresa);
+	    	validador.validarQueNoEsteYaCargarda(empresa.getNombre(), repoEmpresas);
+	        repoEmpresas.agregar(empresa);
 	    }
 
 	    public Archivo getArchivo() {
@@ -60,11 +60,11 @@ public class EmpresaViewModel {
 	    }
 
 		public RepositorioEmpresas getEmpresas() {
-			return empresas;
+			return repoEmpresas;
 		}
 
 		public void setEmpresas(RepositorioEmpresas empresas) {
-			this.empresas = empresas;
+			this.repoEmpresas = empresas;
 		}
 
 		public Empresa getEmpresa() {
@@ -76,7 +76,7 @@ public class EmpresaViewModel {
 		}
 
 		public void actualizarEmpresas() {
-			this.setEmpresas(new ManejadorDeArchivoEmpresas(archivo.getRuta()).getRepositorioEmpresas());
+			this.setEmpresas(new RepositorioEmpresas().traerEmpresas(archivo.getRuta()));
 		}
 
 	

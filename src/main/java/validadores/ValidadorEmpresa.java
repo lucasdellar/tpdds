@@ -11,7 +11,7 @@ public class ValidadorEmpresa {
     }
 
 	public void validarQueNoEsteYaCargarda(String nombre, RepositorioEmpresas repositorioEmpresas) {
-    	if(repositorioEmpresas.getLista().stream().anyMatch(x -> x.getNombre().equals(nombre))) throw new EmpresaYaCargadaException("La empresa ingresada ya existe.");
+    	if(repositorioEmpresas.nombreYaUtilizado(nombre)) throw new EmpresaYaCargadaException("La empresa ingresada ya existe.");
 	}
 	
 }

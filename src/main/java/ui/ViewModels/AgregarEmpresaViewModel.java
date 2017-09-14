@@ -8,6 +8,7 @@ import domain.Archivo;
 import domain.Cuenta;
 import empresas.Empresa;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
+import repositorios.RepositorioEmpresas;
 import validadores.ValidadorEmpresa;
 
 @Observable
@@ -36,7 +37,9 @@ public class AgregarEmpresaViewModel {
 	public void agregarEmpresa(){
 		Empresa myEmpresa = new Empresa(empresa);
 		myEmpresa.setCuentas(new ArrayList<Cuenta>());
-		manejador.agregarEmpresaAlArchivo(myEmpresa);
+		
+		new RepositorioEmpresas().traerEmpresas(file.getRuta()).agregar(myEmpresa);
+		//manejador.agregarEmpresaAlArchivo(myEmpresa);
 	}
 	
 }

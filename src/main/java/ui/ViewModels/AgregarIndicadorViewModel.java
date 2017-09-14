@@ -35,7 +35,7 @@ public class AgregarIndicadorViewModel {
 	}
 	public void agregarIndicador() {
 		validador.validarIndicador(nombre, formula, manejador);
-		manejador.agregarIndicadorAlArchivo(new Indicador(nombre, formula));
+		//manejador.agregarIndicadorAlArchivo(new Indicador(nombre, formula));
 	}
 	
 }

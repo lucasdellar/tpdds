@@ -19,7 +19,6 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 	
 	private File file;
 	private RepositorioEmpresas repositorioEmpresas;
-//	private RepositorioCuentas repositorioCuentas;
 	private IConversorFormatoArchivo conversor;
 
 

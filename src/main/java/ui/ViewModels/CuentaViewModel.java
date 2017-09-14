@@ -74,7 +74,7 @@ public class CuentaViewModel {
     public void agregarCuenta() {
     	validador.validarQueNoEsteYaCargarda(nombre, periodo, empresa.getCuentas());
     	empresa.agregarCuenta(new Cuenta(nombre, periodo, valor));
-        archivo.actualizarEmpresa(empresa);
+        //archivo.actualizarEmpresa(empresa);
     }
 
     public Archivo getArchivo() {

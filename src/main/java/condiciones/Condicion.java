@@ -3,9 +3,10 @@ package condiciones;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
@@ -19,6 +20,9 @@ import repositorios.RepositorioIndicadores;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 public abstract class Condicion {
+	
+	@Id@GeneratedValue
+	long id;
 	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Criterio criterio;

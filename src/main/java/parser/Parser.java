@@ -1,11 +1,8 @@
 package parser;
 
-import OperacionesMatematicas.Division;
-import OperacionesMatematicas.Multiplicacion;
 import OperacionesMatematicas.Operador;
-import OperacionesMatematicas.Resta;
-import OperacionesMatematicas.Suma;
 import domain.DomainExceptions.OperadorInvalidoException;
+import domain.DomainExceptions.ParserException;
 import expresiones.Expresion;
 import expresiones.ExpresionCompuesta;
 import expresiones.ExpresionNoNumerica;
@@ -33,6 +30,8 @@ public class Parser {
 		 * Ejemplos: 4 + 4 / 2 = 4. || 4 / 2 * 10 = 20.
 		 */
 		
+		verificarFormato(formula_t);
+		
 		int size = formula_t.length();
 		int pos_ultimo_operador = posicion_ultimo_operador(formula_t);
 		
@@ -52,6 +51,13 @@ public class Parser {
 			return obtenerExpresionPrimitiva(formula_t);
 		}
 		return new ExpresionCompuesta(obtenerExpresion(expresion_1), unOperador, expresion_2);
+	}
+	
+	public static void verificarFormato(String posibleCuenta){
+		
+		String cuentaRegex = "\\s*[\\da-zA-Z]+\\s*([+-/\\*]\\s*[\\da-zA-Z]+\\s*)*$";
+		if(!posibleCuenta.matches(cuentaRegex)) 
+			throw new ParserException("Formato incorrecto");
 	}
 	
 	
