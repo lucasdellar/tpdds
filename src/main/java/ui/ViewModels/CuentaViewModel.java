@@ -4,6 +4,7 @@ import org.uqbar.commons.utils.Observable;
 
 import domain.*;
 import empresas.Empresa;
+import repositorios.RepositorioEmpresas;
 import scala.collection.generic.BitOperations.Int;
 import validadores.ValidadorCuenta;
 
@@ -74,7 +75,7 @@ public class CuentaViewModel {
     public void agregarCuenta() {
     	validador.validarQueNoEsteYaCargarda(nombre, periodo, empresa.getCuentas());
     	empresa.agregarCuenta(new Cuenta(nombre, periodo, valor));
-        //archivo.actualizarEmpresa(empresa);
+    	new RepositorioEmpresas(archivo.getRuta()).persistir(empresa); //Para actualizar la empresa en la DB.
     }
 
     public Archivo getArchivo() {

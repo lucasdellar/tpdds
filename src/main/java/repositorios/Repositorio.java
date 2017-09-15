@@ -33,11 +33,15 @@ public class Repositorio<T> {
 		setLista(objetosTipoT);
 	}
 	
-	public void agregar(T objetoTipoT){
-		lista.add(objetoTipoT);
+	public void persistir(T objetoTipoT){
 		transaction.begin();
 		manager.persist(objetoTipoT);
 		transaction.commit();
+	}
+	
+	public void agregar(T objetoTipoT){
+		lista.add(objetoTipoT);
+		this.persistir(objetoTipoT);
 	}
 
 	public List<T> getLista() {
