@@ -22,26 +22,23 @@ public class RepositorioEmpresas extends Repositorio<Empresa> {
 	
 	private IConversorFormatoArchivo conversor;
 	
-	public RepositorioEmpresas(){
+	public RepositorioEmpresas(String file){
 		conversor = new ConversorFormatoArchivo();
+		this.setLista(manager.createQuery("SELECT e FROM Empresa e").getResultList());
+		this.traerEmpresas(file);
+		
 	}
 	
-	public RepositorioEmpresas traerEmpresas(String file){
+	private void traerEmpresas(String file){
 		
-		RepositorioEmpresas repo = new RepositorioEmpresas();	
-		EntityManager manager = PerThreadEntityManagers.getEntityManager();
-
-		List<Empresa> empresasDeArchivo = this.empresasDeArchivo(file);
-		repo.setLista(manager.createQuery("SELECT e FROM Empresa e").getResultList());
+		List<Empresa> empresasDeArchivo = empresasDeArchivo(file);
 		
 		for(Empresa empresa : empresasDeArchivo){
-			 if(!repo.nombreYaUtilizado(empresa.getNombre()))
-					 repo.agregar(empresa);
+			 if(!this.nombreYaUtilizado(empresa.getNombre()))
+					 this.agregar(empresa);
 		}
-		
-		return repo;
 	}
-	
+
 	public List<Empresa> empresasDeArchivo(String file){
 		
 		BufferedReader bufferedReader;

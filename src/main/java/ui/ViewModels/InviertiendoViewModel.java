@@ -1,16 +1,9 @@
 package ui.ViewModels;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-
 import org.uqbar.commons.utils.Observable;
 
 import domain.Cuenta;
 import empresas.Empresa;
-import manejadoresArchivo.ManejadorDeArchivoEmpresas;
-import repositorios.Repositorio;
+
 import repositorios.RepositorioEmpresas;
 
 
@@ -51,7 +44,7 @@ public class InviertiendoViewModel {
 	}
 
 	public void actualizarEmpresas() {
-		this.setRepositorioEmpresas(new RepositorioEmpresas().traerEmpresas(rutaArchivoEmpresas));
+		this.setRepositorioEmpresas(new RepositorioEmpresas((rutaArchivoEmpresas)));
 	}
 	
 	public Empresa getEmpresa() {

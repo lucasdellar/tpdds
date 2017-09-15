@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import domain.ConversorFormatoArchivo;
@@ -25,14 +26,14 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 	public ManejadorDeArchivoEmpresas(String rutaArchivo, IConversorFormatoArchivo conversor){
 		file = new File(rutaArchivo);
 		this.conversor = conversor;
-		this.repositorioEmpresas = empresasDeArchivo();
+		this.repositorioEmpresas = new RepositorioEmpresas(rutaArchivo);
 	}
 
 	public ManejadorDeArchivoEmpresas(String rutaArchivo){
 		this(rutaArchivo, new ConversorFormatoArchivo());
 	} 
 
-	private RepositorioEmpresas empresasDeArchivo(){
+	private List<Empresa> empresasDeArchivo(){
 		
 		BufferedReader bufferedReader;
 		
@@ -40,10 +41,10 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 			
 			bufferedReader = new BufferedReader(new FileReader(file));
 			String cuentaLeida;
-			RepositorioEmpresas repositorioCuentasDeArchivo = new RepositorioEmpresas();
+			List<Empresa> repositorioCuentasDeArchivo = new ArrayList<Empresa>();
 			while((cuentaLeida = bufferedReader.readLine()) != null){
 				Empresa miEmpresa = conversor.deFormatoArchivo(cuentaLeida, Empresa.class);
-				repositorioCuentasDeArchivo.agregar(miEmpresa);
+				repositorioCuentasDeArchivo.add(miEmpresa);
 			}
 			bufferedReader.close();
 		
@@ -75,10 +76,6 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 		this.repositorioEmpresas = repositorioEmpresas;
 	}
  
-	@Override
-	public RepositorioEmpresas getRepositorioEmpresas(){
-		return empresasDeArchivo();
-	}
 
 	public List<Cuenta> getCuentasDeEmpresa(String empresa) {
 		
@@ -112,6 +109,11 @@ public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {
 		} catch (IOException e) {	throw new AgregarCuentaAlArchivoException("No se pudo agregar la cuenta al archivo con la empresa " + empresa.getNombre());} 
 		
 		
+	}
+
+	@Override
+	public RepositorioEmpresas getRepositorioEmpresas() {
+		return repositorioEmpresas;
 	}
 	
 }

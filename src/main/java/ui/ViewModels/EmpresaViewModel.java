@@ -30,7 +30,7 @@ public class EmpresaViewModel {
 	    public EmpresaViewModel(Archivo archivo) {
 	        this();
 	        this.archivo = archivo;
-	        repoEmpresas = new RepositorioEmpresas().traerEmpresas(archivo.getRuta());
+	        repoEmpresas = new RepositorioEmpresas((archivo.getRuta()));
 	    }
 
 	    public String getNombreEmpresa() {
@@ -76,7 +76,7 @@ public class EmpresaViewModel {
 		}
 
 		public void actualizarEmpresas() {
-			this.setEmpresas(new RepositorioEmpresas().traerEmpresas(archivo.getRuta()));
+			this.setEmpresas(new RepositorioEmpresas(archivo.getRuta()));
 		}
 
 	

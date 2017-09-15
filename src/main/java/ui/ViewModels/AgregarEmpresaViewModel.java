@@ -18,11 +18,13 @@ public class AgregarEmpresaViewModel {
 	private Archivo file;
 	private ManejadorDeArchivoEmpresas manejador;
 	private ValidadorEmpresa validador;
+	private RepositorioEmpresas repoEmpresas;
 	
 	public AgregarEmpresaViewModel(Archivo aFile){
 		file = aFile;
 		validador = new ValidadorEmpresa();
 	    manejador = new ManejadorDeArchivoEmpresas(file.getRuta());
+	    repoEmpresas = new RepositorioEmpresas(file.getRuta());
 	}
 	
 	public String getEmpresa() {
@@ -38,7 +40,7 @@ public class AgregarEmpresaViewModel {
 		Empresa myEmpresa = new Empresa(empresa);
 		myEmpresa.setCuentas(new ArrayList<Cuenta>());
 		
-		new RepositorioEmpresas().traerEmpresas(file.getRuta()).agregar(myEmpresa);
+		repoEmpresas.agregar(myEmpresa);
 		//manejador.agregarEmpresaAlArchivo(myEmpresa);
 	}
 	
