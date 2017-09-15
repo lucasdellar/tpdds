@@ -1,1 +1,0 @@
-{"nombre":"ringo","condiciones_taxativas":[],"condiciones_prioritarias":[]}

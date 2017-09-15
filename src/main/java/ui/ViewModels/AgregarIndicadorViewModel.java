@@ -17,8 +17,8 @@ public class AgregarIndicadorViewModel {
 	
 	
 	
-	public AgregarIndicadorViewModel(String rutaArchivo){
-		repoIndicadores = new RepositorioIndicadores();
+	public AgregarIndicadorViewModel(RepositorioIndicadores repositorioIndicadores){
+		repoIndicadores = repositorioIndicadores;
 		validador = new ValidadorIndicadores();
 	}
 	

@@ -27,12 +27,9 @@ public class AgregarMetodologiaDialog extends  Dialog<AgregarMetodologiaViewMode
 	protected void createFormPanel(Panel mainPanel) {
 		Panel form = new Panel(mainPanel);
         form.setLayout(new ColumnLayout(2));
-        
         new Label(form).setText("Ingrese el nombre de la metodologia a agregar");
         new TextBox(form).bindValueToProperty("nombre");        
-        
         InviertiendoView.crearBoton(mainPanel, "Agregar Condiciones").onClick(() -> openAgregarCondicionDialog());   
-        
         this.onAccept(() -> this.getModelObject().agregarMetodologia());
 		
 	}
