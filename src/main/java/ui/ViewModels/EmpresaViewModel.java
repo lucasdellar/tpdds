@@ -21,7 +21,6 @@ public class EmpresaViewModel {
 
 	    private Archivo archivo;
 
-
 	    public EmpresaViewModel() {
 	        validador = new ValidadorEmpresa();
 	        
@@ -78,9 +77,5 @@ public class EmpresaViewModel {
 		public void actualizarEmpresas() {
 			this.setEmpresas(new RepositorioEmpresas(archivo.getRuta()));
 		}
-
-	
-	    
-	
 	
 }

@@ -9,6 +9,10 @@ import domain.DomainExceptions.IndicadorInexsistenteException;
 
 public class RepositorioIndicadores extends Repositorio<Indicador> {
 
+	public RepositorioIndicadores(){
+		this.setLista(manager.createQuery("SELECT i FROM Indicador i").getResultList());
+	}
+	
 	public Indicador indicadorDesdeString(String indicadorString) {
 		for(Indicador indicador : this.getLista()){
 			if(indicador.getNombre().equals(indicadorString))

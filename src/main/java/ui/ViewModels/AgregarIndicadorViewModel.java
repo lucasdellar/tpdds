@@ -4,6 +4,7 @@ import org.uqbar.commons.utils.Observable;
 
 import domain.Indicador;
 import manejadoresArchivo.ManejadorDeArchivoIndicadores;
+import repositorios.RepositorioIndicadores;
 import validadores.ValidadorIndicadores;
 
 @Observable
@@ -11,13 +12,13 @@ public class AgregarIndicadorViewModel {
 
 	private String nombre;
 	private String formula;
-	private ManejadorDeArchivoIndicadores manejador;
+	private RepositorioIndicadores repoIndicadores;
 	private ValidadorIndicadores validador;
 	
 	
 	
 	public AgregarIndicadorViewModel(String rutaArchivo){
-		manejador = new ManejadorDeArchivoIndicadores(rutaArchivo);
+		repoIndicadores = new RepositorioIndicadores();
 		validador = new ValidadorIndicadores();
 	}
 	
@@ -34,7 +35,8 @@ public class AgregarIndicadorViewModel {
 		this.formula = formula;
 	}
 	public void agregarIndicador() {
-		validador.validarIndicador(nombre, formula, manejador);
+		validador.validarIndicador(nombre, formula, repoIndicadores);
+		repoIndicadores.agregar(new Indicador(nombre, formula));
 		//manejador.agregarIndicadorAlArchivo(new Indicador(nombre, formula));
 	}
 	

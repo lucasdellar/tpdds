@@ -11,19 +11,17 @@ public class ValidadorIndicadores {
 		  //parser.Parser.verificarFormato(formula);
 	    }
 
-		public void validarQueNoEsteYaCargardo(String nombre, String formula, ManejadorDeArchivoIndicadores manejador) {
-			if(manejador.getRepositorioIndicadores().getLista().stream().anyMatch(x -> x.getNombre().equals(nombre))) throw new IndicadorYaCreadoExcepction("El indicador ingresado ya existe.");
- 
+		public void validarQueNoEsteYaCargardo(String nombre, String formula, RepositorioIndicadores repo) {
+			if(repo.getLista().stream().anyMatch(x -> x.getNombre().equals(nombre))) throw new IndicadorYaCreadoExcepction("El indicador ingresado ya existe.");
 		}
 
-		public void validarIndicador(String nombre, String formula, ManejadorDeArchivoIndicadores manejador) {
+		public void validarIndicador(String nombre, String formula, RepositorioIndicadores repo) {
 			this.validarFormula(formula);
-			this.validarQueNoEsteYaCargardo(nombre, formula, manejador);
+			this.validarQueNoEsteYaCargardo(nombre, formula, repo);
 		}
 	
 		public void validarQueExista(String nombre, RepositorioIndicadores repo) {
 			if(!repo.getLista().stream().anyMatch(x -> x.getNombre().equals(nombre))) 
 				throw new IndicadorInexsistenteException("Indicador no cargado");
- 
 		}
 }
