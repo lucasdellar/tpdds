@@ -20,7 +20,6 @@ import condiciones.CondicionTaxativa;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
 
-
 @Entity
 @Observable
 public class Metodologia {

@@ -6,12 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import domain.ConversorFormatoArchivo;
 import domain.IConversorFormatoArchivo;
@@ -24,7 +20,10 @@ public class RepositorioEmpresas extends Repositorio<Empresa> {
 	
 	public RepositorioEmpresas(String file){
 		conversor = new ConversorFormatoArchivo();
-		this.setLista(manager.createQuery("SELECT e FROM Empresa e").getResultList());
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Empresa> criteria = builder.createQuery(Empresa.class);
+		criteria.from(Empresa.class);
+		this.setLista(manager.createQuery(criteria).getResultList());
 		this.traerEmpresas(file);
 		
 	}

@@ -17,7 +17,6 @@ import empresas.Empresa;
 @Entity
 public abstract class Expresion{
 	
-
 	@Id@GeneratedValue
 	long id;
 	public abstract double calcular(Empresa empresa, String periodo);

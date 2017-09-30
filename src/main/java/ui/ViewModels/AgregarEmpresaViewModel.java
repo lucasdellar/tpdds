@@ -32,14 +32,13 @@ public class AgregarEmpresaViewModel {
 	}
 
 	public void setEmpresa(String empresa) {
-		validador.validarNombre(empresa);
+		validador.validarNombre(empresa, repoEmpresas);
 		 this.empresa = empresa;
 	}
 	
 	public void agregarEmpresa(){
 		Empresa myEmpresa = new Empresa(empresa);
 		myEmpresa.setCuentas(new ArrayList<Cuenta>());
-		
 		repoEmpresas.agregar(myEmpresa);
 		//manejador.agregarEmpresaAlArchivo(myEmpresa);
 	}

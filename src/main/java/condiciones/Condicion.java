@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import comparadores.Comparador;
@@ -17,7 +18,8 @@ import criterios.Criterio;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name="Condiciones")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
 public abstract class Condicion {
 	

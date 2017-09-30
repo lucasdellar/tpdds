@@ -83,8 +83,9 @@ public class EvaluarMetodologiaViewModel {
 	{
 		if(empresasAEvaluar.isEmpty() || metodologiaSeleccionada == null) 
 			throw new NoSeCargaronEmpresasException("Debe elegir una metodologia y aniadir empresas para poder evaluarlas.");
-		
+		System.out.println("AAAA");
 		this.setEmpresasRankeadas(getMetodologiaSeleccionada().aplicarMetodologia(empresasAEvaluar));
+		System.out.println("BBBB");
 	}
 
 	public List <Metodologia> getMetodologias() {

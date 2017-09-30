@@ -37,7 +37,7 @@ public class EmpresaViewModel {
 	    }
 
 	    public void setNombreEmpresa(String nombre) {
-	        validador.validarNombre(nombre);
+	        validador.validarNombre(nombre, repoEmpresas);
 	        empresa.setNombre(nombre);
 	    }
 

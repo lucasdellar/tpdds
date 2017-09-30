@@ -63,8 +63,6 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	
 	public InviertiendoView() {
 		super(new InviertiendoViewModel());
-		repositorioMetodologias.setLista(new ArrayList<Metodologia>());
-		repositorioIndicadores.setLista(new ArrayList<Indicador>());
 	}
 	
 	@Override
@@ -214,7 +212,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 	public static void main(String[] args) {
 		
-		/*EntityManager manager = PerThreadEntityManagers.getEntityManager();
+		EntityManager manager = PerThreadEntityManagers.getEntityManager();
 		EntityTransaction tx = manager.getTransaction();
 		
 	/*	-- 01: Persist an account.
@@ -252,7 +250,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 //		Indicador otroIndicador = manager.find(Indicador.class, 1l);
 //		System.out.println(otroIndicador.getFormula());
 //		
-		/*
+		
 		RepositorioIndicadores repositorio = new RepositorioIndicadores();
 		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
 		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
@@ -296,7 +294,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
     	System.out.println(" termine " + manager.find(Metodologia.class, 1l).getNombre());
     	System.out.println(" taxativas " + manager.find(Metodologia.class, 1l).getCondiciones_taxativas().size());
     	System.out.println(" prioritarias " + manager.find(Metodologia.class, 1l).getCondiciones_prioritarias().size());
-    	*/
+    	
 //		RepositorioEmpresas repo = new RepositorioEmpresas();
 //		
 //		repo.traerEmpresas("empresas.txt");
