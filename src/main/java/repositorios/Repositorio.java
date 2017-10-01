@@ -10,6 +10,8 @@ import javax.persistence.EntityTransaction;
 
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
+import domain.DomainExceptions.TransactionException;
+
 public class Repositorio<T> {
 
 	private List<T> lista;
@@ -34,9 +36,15 @@ public class Repositorio<T> {
 	}
 	
 	public void persistir(T objetoTipoT){
-		transaction.begin();
-		manager.persist(objetoTipoT);
-		transaction.commit();
+		try {
+			//if(!transaction.isActive()){
+				transaction.begin();
+				manager.persist(objetoTipoT);
+				transaction.commit();
+			//}
+		} catch (Exception e) {
+			throw new TransactionException("Hay otra transaccion ya activa.");
+		}
 	}
 	
 	public void agregar(T objetoTipoT){

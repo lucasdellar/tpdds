@@ -3,15 +3,21 @@ package condiciones;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import comparadores.Comparador;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
 @Entity
+@DiscriminatorValue(value="CondicionTax")
 public class CondicionTaxativa extends Condicion {
 	
+	@Column
 	private int valor;
 	
 	private CondicionTaxativa(){}

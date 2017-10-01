@@ -20,7 +20,6 @@ public class EvaluarMetolodigaDialog  extends  Dialog<EvaluarMetodologiaViewMode
 
 	public EvaluarMetolodigaDialog(WindowOwner owner, EvaluarMetodologiaViewModel model) {
 		super(owner, model);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

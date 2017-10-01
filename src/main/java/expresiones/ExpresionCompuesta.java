@@ -1,20 +1,19 @@
 package expresiones;
 
 import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
+import javax.persistence.Table;
 
 import OperacionesMatematicas.Operador;
 import empresas.Empresa;
 
 @Entity
-@DiscriminatorValue("ExpComp")
+@Table(name="ExpresionesCompuestas")
 public class ExpresionCompuesta extends Expresion {
+
 	@OneToOne(cascade = CascadeType.PERSIST)
 	Expresion primeraExpresion;
 	@OneToOne(cascade = CascadeType.PERSIST)

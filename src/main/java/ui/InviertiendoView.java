@@ -250,7 +250,6 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 //		Indicador otroIndicador = manager.find(Indicador.class, 1l);
 //		System.out.println(otroIndicador.getFormula());
 //		
-		
 		RepositorioIndicadores repositorio = new RepositorioIndicadores();
 		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
 		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
@@ -283,18 +282,25 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 		prioritaria2.setCriterio(new Promedio(valorDos));
 		prioritaria3.setCriterio(new Promedio(valorTres));
 		taxativa.setCriterio(new Promedio(valor));
-		
-    	tx.begin();
+
+////		try{
+//			if(!tx.isActive()){
+				tx.begin();
+				
+				Metodologia metodologia = new Metodologia("testMetodologia", condicionesTaxativas, condicionesPrioritarias);
+				manager.persist(metodologia);
+				
+				tx.commit();
+//			}	
+////		} catch (Exception e) {
+////			if(tx.isActive())
+////				tx.rollback();
+////		}
     	
-    	Metodologia metodologia = new Metodologia("testMetodologia", condicionesTaxativas, condicionesPrioritarias);
-    	manager.persist(metodologia);
-    	
-    	tx.commit();
-    	
-    	System.out.println(" termine " + manager.find(Metodologia.class, 1l).getNombre());
-    	System.out.println(" taxativas " + manager.find(Metodologia.class, 1l).getCondiciones_taxativas().size());
-    	System.out.println(" prioritarias " + manager.find(Metodologia.class, 1l).getCondiciones_prioritarias().size());
-    	
+//    	System.out.println(" termine " + manager.find(Metodologia.class, 1l).getNombre());
+//    	System.out.println(" taxativas " + manager.find(Metodologia.class, 1l).getCondiciones_taxativas().size());
+//    	System.out.println(" prioritarias " + manager.find(Metodologia.class, 1l).getCondiciones_prioritarias().size());
+//    	
 //		RepositorioEmpresas repo = new RepositorioEmpresas();
 //		
 //		repo.traerEmpresas("empresas.txt");

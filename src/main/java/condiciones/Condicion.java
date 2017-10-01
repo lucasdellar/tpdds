@@ -3,6 +3,7 @@ package condiciones;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -18,9 +19,11 @@ import criterios.Criterio;
 import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
-@Table(name="Condiciones")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
+@Table(name="Condiciones")
+@Inheritance(strategy = InheritanceType.JOINED) // <----- ARREGLAR!!! (Si se cambia por Single_Table ROMPE
+																			// TODO :C
+@DiscriminatorColumn(name = "Tipo")
 public abstract class Condicion {
 	
 	@Id@GeneratedValue

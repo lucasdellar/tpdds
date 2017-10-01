@@ -4,13 +4,14 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import empresas.Empresa;
 
 @Entity
-@DiscriminatorValue("ExpNum")
-public class ExpresionNumero extends Expresion{
-	
+@Table(name="ExpresionesNumericas")
+public class ExpresionNumero extends Expresion{	
+
 	double num;
 	
 	private ExpresionNumero(){}

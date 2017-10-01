@@ -213,7 +213,7 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		unaEmpresa.setCuentas(new ArrayList<Cuenta>());
 		unaEmpresa.agregarCuenta(new Cuenta("pepe", "111", "222"));
 		String json = conversor.aFormatoArchivo(unaEmpresa);
-        Assert.assertEquals(json, "{\"nombre\":\"Hello Bussiness world\",\"cuentas\":[{\"nombre\":\"pepe\",\"periodo\":\"111\",\"valor\":\"222\"}]}");
+        Assert.assertEquals(json, "{\"id\":0,\"nombre\":\"Hello Bussiness world\",\"cuentas\":[{\"id\":0,\"nombre\":\"pepe\",\"periodo\":\"111\",\"valor\":\"222\"}]}");
     }
 	
    @Test

@@ -2,15 +2,21 @@ package repositorios;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import domain.Indicador;
 import domain.DomainExceptions.IndicadorInexsistenteException;
+import empresas.Empresa;
 
 
 public class RepositorioIndicadores extends Repositorio<Indicador> {
 
 	public RepositorioIndicadores(){
-		this.setLista(manager.createQuery("SELECT i FROM Indicador i").getResultList());
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Indicador> criteria = builder.createQuery(Indicador.class);
+		criteria.from(Indicador.class);
+		this.setLista(manager.createQuery(criteria).getResultList());
 	}
 	
 	public Indicador indicadorDesdeString(String indicadorString) {

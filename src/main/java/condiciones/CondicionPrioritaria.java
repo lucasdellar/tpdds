@@ -3,7 +3,11 @@ package condiciones;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import comparadores.Comparador;
 import empresas.Empresa;
@@ -11,8 +15,10 @@ import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
 @Entity
+@DiscriminatorValue(value="CondicionPrior")
 public class CondicionPrioritaria extends Condicion {
-	
+
+	@Column
 	private int peso;
 	
 	private CondicionPrioritaria(){}
