@@ -16,9 +16,4 @@ public class RepositorioMetodologias extends Repositorio<Metodologia> {
 		this.setLista(manager.createQuery(criteria).getResultList());
 	}
 	
-	@Override
-	public void agregar(Metodologia una){
-		this.getLista().add(una);
-	}
-
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -26,7 +27,9 @@ public class Empresa {
 	@Id
 	@GeneratedValue	
 	long id;
+	@Column(name = "nombre")
 	public String nombre;
+
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "Empresa_id")
 	public List<Cuenta> cuentas;

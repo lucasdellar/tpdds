@@ -132,6 +132,10 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 			archivoEmpresas.setRuta(archivoDialog.getRutaArchivo());
 			this.getModelObject().setRutaArchivo(archivoDialog.getRutaArchivo());
 		});
+		
+		archivoDialog.onCancel(() -> {
+		});
+		
 		archivoDialog.open();
 	}
 	
@@ -212,7 +216,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 	public static void main(String[] args) {
 		
-		EntityManager manager = PerThreadEntityManagers.getEntityManager();
+	/*	EntityManager manager = PerThreadEntityManagers.getEntityManager();
 		EntityTransaction tx = manager.getTransaction();
 		
 	/*	-- 01: Persist an account.
@@ -250,7 +254,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 //		Indicador otroIndicador = manager.find(Indicador.class, 1l);
 //		System.out.println(otroIndicador.getFormula());
 //		
-		RepositorioIndicadores repositorio = new RepositorioIndicadores();
+	/*	RepositorioIndicadores repositorio = new RepositorioIndicadores();
 		Indicador unIndicador = new Indicador("indicadorTestA", "testCuentaA * 5");
 		Indicador otroIndicador = new Indicador("indicadorTestB", "testCuentaB + 25");
 		Indicador tercerIndicador = new Indicador("indicadorTestC", "testCuentaC / 2");
@@ -285,7 +289,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 
 ////		try{
 //			if(!tx.isActive()){
-				tx.begin();
+				/*tx.begin();
 				
 				Metodologia metodologia = new Metodologia("testMetodologia", condicionesTaxativas, condicionesPrioritarias);
 				manager.persist(metodologia);
@@ -303,7 +307,7 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 //    	
 //		RepositorioEmpresas repo = new RepositorioEmpresas();
 //		
-//		repo.traerEmpresas("empresas.txt");
+//		repo.traerEmpresas("empresas.txt");*/
 		new InviertiendoView().startApplication();
 	}
 	

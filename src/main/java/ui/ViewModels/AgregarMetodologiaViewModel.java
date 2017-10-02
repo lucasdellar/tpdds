@@ -13,6 +13,7 @@ import condiciones.CondicionTaxativa;
 import domain.Metodologia;
 import manejadoresArchivo.ManejadorDeArchivoMetodologias;
 import repositorios.RepositorioMetodologias;
+import validadores.ValidadorMetodologia;
 
 @Observable
 public class AgregarMetodologiaViewModel {
@@ -20,6 +21,7 @@ public class AgregarMetodologiaViewModel {
 	String nombre; 
 	private List<CondicionTaxativa> condicionesTaxativas;
 	private List<CondicionPrioritaria> condicionesPrioritarias;
+	private ValidadorMetodologia validador;
 	private RepositorioMetodologias repo;
 
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
@@ -34,6 +36,7 @@ public class AgregarMetodologiaViewModel {
 	
 	public AgregarMetodologiaViewModel(RepositorioMetodologias repo) {
 		this.repo = repo;
+		this.validador = new ValidadorMetodologia();
 		//	condiciones = new ArrayList<>();
 	}
 	
@@ -47,7 +50,9 @@ public class AgregarMetodologiaViewModel {
 	}
 
 	public void agregarMetodologia() {
-		repo.agregar(new Metodologia(nombre, condicionesTaxativas, condicionesPrioritarias));
+		Metodologia meto = new Metodologia(nombre, condicionesTaxativas, condicionesPrioritarias);
+		validador.validar(meto, repo);
+		repo.agregar(meto);
 	}
 
 	public List<CondicionTaxativa> getCondicionesTaxativas() {

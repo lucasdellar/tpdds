@@ -20,7 +20,7 @@ import domain.DomainExceptions.IndicadorInvalidoException;
 @Table(name="ExpresionesNoNumericas")
 public class ExpresionNoNumerica extends Expresion{
 
-	@Column
+	@Column(name = "nombreIdentificador")
 	String nombreIdentificador;
 	@Transient
 	RepositorioIndicadores repo;

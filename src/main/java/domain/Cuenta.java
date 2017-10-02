@@ -1,6 +1,7 @@
 package domain;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,8 +17,11 @@ public class Cuenta implements Comparable<Cuenta>{
 	@Id
 	@GeneratedValue
 	long id;
+	@Column(name = "nombre")
 	private String nombre;
+	@Column(name = "periodo")
 	private String periodo;
+	@Column(name = "valor")
 	private String valor;
 
 	public Cuenta() {}

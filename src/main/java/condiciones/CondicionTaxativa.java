@@ -14,10 +14,10 @@ import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
 @Entity
-@DiscriminatorValue(value="CondicionTax")
+@DiscriminatorValue(value="CondicionTaxativa")
 public class CondicionTaxativa extends Condicion {
 	
-	@Column
+	@Column(name = "valor")
 	private int valor;
 	
 	private CondicionTaxativa(){}

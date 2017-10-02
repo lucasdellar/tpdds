@@ -3,6 +3,7 @@ package criterios;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import comparadores.Comparador;
@@ -13,9 +14,11 @@ import empresas.Empresa;
 
 @Entity
 public class Crecimiento extends Criterio {
-	
+	@Column(name = "principio")
 	protected int principio;
+	@Column(name = "fin")
 	protected int fin;
+	@Column(name = "maxIncumplimientos")
 	private int maxIncumplimientos;
 	
 	private Crecimiento(){}

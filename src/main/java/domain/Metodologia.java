@@ -6,10 +6,12 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -26,10 +28,13 @@ public class Metodologia {
 	
 	@Id@GeneratedValue
 	long id;
+	@Column(name = "nombre")
 	String nombre;
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_condicion")
 	private List<CondicionTaxativa> condiciones_taxativas;
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_condicion")
 	private List<CondicionPrioritaria> condiciones_prioritarias;
 	
 	private Metodologia(){}

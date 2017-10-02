@@ -15,10 +15,10 @@ import empresas.EmpresaRankeada;
 import repositorios.RepositorioIndicadores;
 
 @Entity
-@DiscriminatorValue(value="CondicionPrior")
+@DiscriminatorValue(value="CondicionPrioritaria")
 public class CondicionPrioritaria extends Condicion {
 
-	@Column
+	@Column(name = "peso")
 	private int peso;
 	
 	private CondicionPrioritaria(){}

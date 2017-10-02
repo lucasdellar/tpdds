@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import comparadores.Comparador;
@@ -23,6 +25,7 @@ public abstract class Criterio {
 	@Id@GeneratedValue
 	long id;
 	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "valor")
 	public Valor valor;
 	
 	protected Criterio(){}

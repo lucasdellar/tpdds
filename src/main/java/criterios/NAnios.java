@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import comparadores.Comparador;
@@ -13,7 +14,8 @@ import empresas.Empresa;
 
 @Entity
 public class NAnios extends Criterio{
-
+	
+	@Column(name = "anios")
 	int anios;
 	
 	private NAnios(){}

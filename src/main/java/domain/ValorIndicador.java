@@ -1,5 +1,6 @@
 package domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
@@ -9,7 +10,9 @@ import repositorios.RepositorioIndicadores;
 @Entity
 public class ValorIndicador extends Valor{
 	
+	@Column(name = "indicador")
 	String indicador;
+	@Column(name = "periodo")
 	String periodo;
 	
 	@Transient

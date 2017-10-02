@@ -294,9 +294,9 @@ public class Entrega3Test {
 		repositorio.agregar(unIndicador);
 		repositorio.agregar(otroIndicador);
 		Valor unValor = new ValorIndicador(unIndicador.getNombre(), repositorio);
-		Criterio sumatoria = new Sumatoria(unValor);
+		Sumatoria sumatoria = new Sumatoria(unValor);
 		Valor otroValor = new ValorIndicador(otroIndicador.getNombre(), repositorio);
-		Criterio promedio = new Promedio(otroValor);
+		Promedio promedio = new Promedio(otroValor);
 		
 		Empresa empresa = obtenerEmpresaParaTest();
 		
@@ -304,8 +304,8 @@ public class Entrega3Test {
 		empresa.agregarCuenta(new Cuenta("testOtraCuenta", "2016", "15"));
 		empresa.agregarCuenta(new Cuenta("testOtraCuenta", "2017", "15"));
 		
-		Assert.assertEquals(sumatoria.calcular(empresa), 45, 0);
-		Assert.assertEquals(promedio.calcular(empresa), 25, 0);
+		Assert.assertEquals(sumatoria.calcular(empresa), 45.0, 0);
+		Assert.assertEquals(promedio.calcular(empresa), 25.0, 0);
 	}
 
 	@Test

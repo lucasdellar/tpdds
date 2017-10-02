@@ -22,7 +22,7 @@ public class ArchivoDialog extends Dialog<ArchivoViewModel> {
 
     public ArchivoDialog(WindowOwner owner, ArchivoViewModel model) {
         super(owner, model);
-        this.setTitle("Ingrese un archivo fuente");
+        this.setTitle("Ingrese un archivo en caso de tenerlo");
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ArchivoDialog extends Dialog<ArchivoViewModel> {
         Panel form = new Panel(mainPanel);
         form.setLayout(new ColumnLayout(2));
 
-        new Label(form).setText("Ingrese ruta del archivo:");
+        new Label(form).setText("Ingrese un archivo o presione continuar");
         new TextBox(mainPanel).setWidth(150).bindValueToProperty("ruta");
     }
 
@@ -41,5 +41,12 @@ public class ArchivoDialog extends Dialog<ArchivoViewModel> {
                 .onClick(this::accept)
                 .setAsDefault()
                 .disableOnError();
+		new Button(actions)
+	        .setCaption("Continuar")
+	        .onClick(this::cancel)
+	        .setAsDefault()
+	        .disableOnError();
     }
+    
+
 }

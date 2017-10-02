@@ -24,8 +24,7 @@ public class RepositorioEmpresas extends Repositorio<Empresa> {
 		CriteriaQuery<Empresa> criteria = builder.createQuery(Empresa.class);
 		criteria.from(Empresa.class);
 		this.setLista(manager.createQuery(criteria).getResultList());
-		this.traerEmpresas(file);
-		
+		if(file != null ) this.traerEmpresas(file);
 	}
 	
 	private void traerEmpresas(String file){
