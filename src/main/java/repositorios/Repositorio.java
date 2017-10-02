@@ -43,7 +43,9 @@ public class Repositorio<T> {
 				transaction.commit();
 			//}
 		} catch (Exception e) {
-			throw new TransactionException("Hay otra transaccion ya activa.");
+			transaction.commit();
+			this.persistir(objetoTipoT);
+			//throw new TransactionException("Hay otra transaccion ya activa.");
 		}
 	}
 	

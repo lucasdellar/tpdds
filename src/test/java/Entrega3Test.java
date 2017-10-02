@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -288,8 +289,8 @@ public class Entrega3Test {
 	@Test
 	public void calcular_sumatoria_promedio(){
 		RepositorioIndicadores repositorio = new RepositorioIndicadores();
-		Indicador unIndicador = new Indicador("indicadorTestA", "testCuenta * 5");
-		Indicador otroIndicador = new Indicador("indicadorTestB", "testOtraCuenta + 10");
+		Indicador unIndicador = new Indicador("indicadorTestA2", "testCuenta * 5");
+		Indicador otroIndicador = new Indicador("indicadorTestB2", "testOtraCuenta + 10");
 		
 		repositorio.agregar(unIndicador);
 		repositorio.agregar(otroIndicador);
@@ -397,7 +398,7 @@ public class Entrega3Test {
 	public void cumpleCondicionPrioritariaConCriterioSumatoria(){
 		RepositorioIndicadores repositorio = new RepositorioIndicadores();
 		CondicionPrioritaria condicion = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 5);
-		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta * 2");
+		Indicador unIndicador = new Indicador("indicadorTest4", "testCuenta * 2");
 		repositorio.agregar(unIndicador);
 		Valor unValor = new ValorIndicador(unIndicador.getNombre(), condicion.getRepoIndicadores());
 		condicion.setCriterio(new Sumatoria(unValor));
@@ -415,7 +416,7 @@ public class Entrega3Test {
 	public void cumpleCondicionPrioritariaConCriterioPromedio(){
 		RepositorioIndicadores repositorio = new RepositorioIndicadores();
 		CondicionPrioritaria condicion = new CondicionPrioritaria(repositorio, Comparador.MAYOR, 5);
-		Indicador unIndicador = new Indicador("indicadorTest", "testCuenta * 2");
+		Indicador unIndicador = new Indicador("indicadorTest3", "testCuenta * 2");
 		repositorio.agregar(unIndicador);
 		Valor unValor = new ValorIndicador(unIndicador.getNombre(), condicion.getRepoIndicadores());
 		condicion.setCriterio(new Promedio(unValor));
