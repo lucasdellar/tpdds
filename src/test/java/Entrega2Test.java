@@ -224,18 +224,20 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
     }
 
     @Test
-    public void manejadorAgregaEmpresaAlArchivoCorrectamente() {
+    public void manejadorAgregaEmpresaAlRepoCorrectamente() {
         Empresa nuevaEmpresa = new Empresa("popo");
-        manejador.agregarEmpresaAlArchivo(nuevaEmpresa);
-        RepositorioEmpresas repositorioEmpresas = manejador.getRepositorioEmpresas();
-        Assert.assertEquals(repositorioEmpresas.getLista().get(0).getNombre(), "popo");
+        RepositorioEmpresas repositorioEmpresas = new RepositorioEmpresas(null);
+        repositorioEmpresas.agregar(nuevaEmpresa);
+        Assert.assertTrue(repositorioEmpresas.getLista().stream().anyMatch(x -> x.getNombre().equals("popo")));
     }
     
    @Test(expected = CuentaPreexistenteException.class)
-    public void viewModelAgregaCuentaRepetidaAlArchivo(){
-    	agregarEmpresaViewModel.setEmpresa("Seven Up");
+    public void viewModelAgregaCuentaRepetidaAlRepo(){
+	   RepositorioEmpresas repo = new RepositorioEmpresas(null);
+	   agregarEmpresaViewModel.setRepoEmpresas(repo);
+    	agregarEmpresaViewModel.setEmpresa("W Up");
     	agregarEmpresaViewModel.agregarEmpresa();
-    	Empresa empresa = manejador.getRepositorioEmpresas().getLista().get(0);
+    	Empresa empresa = repo.getLista().get(0);
     	cuentasViewModel.setEmpresa(empresa);
     	cuentasViewModel.setNombre("Patrimonio Neto");
     	cuentasViewModel.setPeriodo("1000");

@@ -24,7 +24,7 @@ public class AgregarEmpresaViewModel {
 		file = aFile;
 		validador = new ValidadorEmpresa();
 	    manejador = new ManejadorDeArchivoEmpresas(file.getRuta());
-	    repoEmpresas = new RepositorioEmpresas(file.getRuta());
+	    setRepoEmpresas(new RepositorioEmpresas(file.getRuta()));
 	}
 	
 	public String getEmpresa() {
@@ -32,15 +32,23 @@ public class AgregarEmpresaViewModel {
 	}
 
 	public void setEmpresa(String empresa) {
-		validador.validarNombre(empresa, repoEmpresas);
+		validador.validarNombre(empresa, getRepoEmpresas());
 		 this.empresa = empresa;
 	}
 	
 	public void agregarEmpresa(){
 		Empresa myEmpresa = new Empresa(empresa);
 		myEmpresa.setCuentas(new ArrayList<Cuenta>());
-		repoEmpresas.agregar(myEmpresa);
+		getRepoEmpresas().agregar(myEmpresa);
 		//manejador.agregarEmpresaAlArchivo(myEmpresa);
+	}
+
+	public RepositorioEmpresas getRepoEmpresas() {
+		return repoEmpresas;
+	}
+
+	public void setRepoEmpresas(RepositorioEmpresas repoEmpresas) {
+		this.repoEmpresas = repoEmpresas;
 	}
 	
 }

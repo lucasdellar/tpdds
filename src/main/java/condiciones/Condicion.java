@@ -23,8 +23,7 @@ import repositorios.RepositorioIndicadores;
 
 @Entity
 @Table(name="Condiciones")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // <----- ARREGLAR!!! (Si se cambia por Single_Table ROMPE
-																			// TODO :C
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "Tipo")
 public abstract class Condicion {
 	
