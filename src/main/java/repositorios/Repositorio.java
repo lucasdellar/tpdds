@@ -36,17 +36,11 @@ public class Repositorio<T> {
 	}
 	
 	public void persistir(T objetoTipoT){
-		try {
-			//if(!transaction.isActive()){
+			if(transaction.isActive())
+					transaction.rollback();
 				transaction.begin();
 				manager.persist(objetoTipoT);
 				transaction.commit();
-			//}
-		} catch (Exception e) {
-			transaction.commit();
-			this.persistir(objetoTipoT);
-			//throw new TransactionException("Hay otra transaccion ya activa.");
-		}
 	}
 	
 	public void agregar(T objetoTipoT){

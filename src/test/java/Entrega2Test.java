@@ -56,6 +56,7 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 	
 	@Before
 	public void initObjects() throws IOException{ 
+		System.out.println("begin'");
 		file = new File("cuentasMock.txt");
 		file.createNewFile();
         conversor = new ConversorFormatoArchivo();
@@ -67,9 +68,13 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
         repo = new RepositorioIndicadores();
         parser = new Parser(repo);
         archivo.setRuta("cuentasMock.txt");
-        agregarEmpresaViewModel = new AgregarEmpresaViewModel(archivo);
+        agregarEmpresaViewModel = new AgregarEmpresaViewModel();
+        agregarEmpresaViewModel.setRepoEmpresas(new RepositorioEmpresas(archivo.getRuta()));
         cuentasViewModel.setArchivo(archivo);
         empresaViewModel.setArchivo(archivo);
+        
+        System.out.println("fin begin'");
+      
 	}
 	
 	/* ***************************************** TESTS ENTREGA 2 & ENTREGA 3 ********************************************** */
@@ -226,18 +231,17 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
     @Test
     public void manejadorAgregaEmpresaAlRepoCorrectamente() {
         Empresa nuevaEmpresa = new Empresa("popo");
-        RepositorioEmpresas repositorioEmpresas = new RepositorioEmpresas(null);
-        repositorioEmpresas.agregar(nuevaEmpresa);
-        Assert.assertTrue(repositorioEmpresas.getLista().stream().anyMatch(x -> x.getNombre().equals("popo")));
+        nuevaEmpresa.setCuentas(new ArrayList<Cuenta>());
+        agregarEmpresaViewModel.setEmpresa("popo");
+        agregarEmpresaViewModel.agregarEmpresa();
+        Assert.assertTrue(agregarEmpresaViewModel.getRepoEmpresas().getLista().stream().anyMatch(x -> x.getNombre().equals("popo")));
     }
     
    @Test(expected = CuentaPreexistenteException.class)
     public void viewModelAgregaCuentaRepetidaAlRepo(){
-	   RepositorioEmpresas repo = new RepositorioEmpresas(null);
-	   agregarEmpresaViewModel.setRepoEmpresas(repo);
     	agregarEmpresaViewModel.setEmpresa("W Up");
     	agregarEmpresaViewModel.agregarEmpresa();
-    	Empresa empresa = repo.getLista().get(0);
+    	Empresa empresa = agregarEmpresaViewModel.getRepoEmpresas().getLista().get(0);
     	cuentasViewModel.setEmpresa(empresa);
     	cuentasViewModel.setNombre("Patrimonio Neto");
     	cuentasViewModel.setPeriodo("1000");

@@ -152,7 +152,8 @@ public class InviertiendoView extends MainWindow<InviertiendoViewModel> implemen
 	}
 
 	private void openCrearEmpresaDialog() {
-		AgregarEmpresaViewModel agregarViewModel = new AgregarEmpresaViewModel(archivoEmpresas);
+		AgregarEmpresaViewModel agregarViewModel = new AgregarEmpresaViewModel();
+		agregarViewModel.setRepoEmpresas(this.getModelObject().getRepositorioEmpresas());
 		AgregarEmpresaDialog agregarEmpresaDialog = new AgregarEmpresaDialog(this, agregarViewModel);
 		agregarEmpresaDialog.onAccept(() -> {agregarViewModel.agregarEmpresa(); this.getModelObject().actualizarEmpresas();});
 		agregarEmpresaDialog.open();

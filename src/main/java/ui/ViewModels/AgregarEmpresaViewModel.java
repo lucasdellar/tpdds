@@ -15,16 +15,11 @@ import validadores.ValidadorEmpresa;
 public class AgregarEmpresaViewModel {
 
 	public String empresa;
-	private Archivo file;
-	private ManejadorDeArchivoEmpresas manejador;
 	private ValidadorEmpresa validador;
 	private RepositorioEmpresas repoEmpresas;
 	
-	public AgregarEmpresaViewModel(Archivo aFile){
-		file = aFile;
+	public AgregarEmpresaViewModel(){
 		validador = new ValidadorEmpresa();
-	    manejador = new ManejadorDeArchivoEmpresas(file.getRuta());
-	    setRepoEmpresas(new RepositorioEmpresas(file.getRuta()));
 	}
 	
 	public String getEmpresa() {

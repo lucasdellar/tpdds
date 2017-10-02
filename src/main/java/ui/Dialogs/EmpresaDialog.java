@@ -46,7 +46,8 @@ public class EmpresaDialog extends Dialog<EmpresaViewModel> {
     }
 
     private void openCrearEmpresaDialog() {
-    	AgregarEmpresaViewModel agregarViewModel = new AgregarEmpresaViewModel(this.getModelObject().getArchivo());
+    	AgregarEmpresaViewModel agregarViewModel = new AgregarEmpresaViewModel();
+    	agregarViewModel.setRepoEmpresas(this.getModelObject().getEmpresas());
  		AgregarEmpresaDialog agregarEmpresaDialog = new AgregarEmpresaDialog(this, agregarViewModel);
  		agregarEmpresaDialog.onAccept(() -> {agregarViewModel.agregarEmpresa(); this.getModelObject().actualizarEmpresas();});
  		agregarEmpresaDialog.open();
