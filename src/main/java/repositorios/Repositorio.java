@@ -9,14 +9,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import domain.DomainExceptions.TransactionException;
 
-public class Repositorio<T> {
+public class Repositorio<T> implements TransactionalOps {
 
 	private List<T> lista;
 	EntityManager manager = PerThreadEntityManagers.getEntityManager();
-	EntityTransaction transaction = manager.getTransaction();
+	//EntityTransaction transaction = manager.getTransaction();
 
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
@@ -36,11 +37,12 @@ public class Repositorio<T> {
 	}
 	
 	public void persistir(T objetoTipoT){
-			if(transaction.isActive())
-					transaction.rollback();
-				transaction.begin();
-				manager.persist(objetoTipoT);
-				transaction.commit();
+//			if(transaction.isActive()) {
+//					transaction.rollback();
+//			}
+				withTransaction(() ->manager.persist(objetoTipoT));
+				//transaction.commit();
+				
 	}
 	
 	public void agregar(T objetoTipoT){
@@ -54,6 +56,11 @@ public class Repositorio<T> {
 
 	public void setLista(List<T> lista) {
 		this.lista = lista;
+	}
+
+	@Override
+	public EntityManager entityManager() {
+		return manager;
 	}
 		
 }

@@ -239,6 +239,10 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
     
    @Test(expected = CuentaPreexistenteException.class)
     public void viewModelAgregaCuentaRepetidaAlRepo(){
+	   System.out.println("VAMOOOO");
+//	   EntityManager manager = PerThreadEntityManagers.getEntityManager();
+//		EntityTransaction transaction = manager.getTransaction();
+//		transaction.commit();
     	agregarEmpresaViewModel.setEmpresa("W Up");
     	agregarEmpresaViewModel.agregarEmpresa();
     	Empresa empresa = agregarEmpresaViewModel.getRepoEmpresas().getLista().get(0);
