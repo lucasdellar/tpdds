@@ -1,0 +1,39 @@
+{{# partial "titulo" }}	
+	<title>Donde Invierto</title>
+{{/partial}}
+		
+{{# partial "contenido" }}	
+
+<h4>Completa el formulario:</h4>
+<form action="/empresas/nueva" >
+  <div class="row">
+	  <div class="col-md-10">
+		  Nombre: <input type="text" class="form-control" name="nombre">
+		</div>
+		<div class="col-md-2">
+		  <input type="submit" class="form-control btn btn-default" value="Buscar">
+		</div>
+  </div>
+</form>
+
+<div class="row">
+	<div class="col-md-12">	
+	<table class="table table-striped" >
+			<td>Nombre</td>
+		</hr>
+	{{#empresas}}
+		<tr>
+			<td>{{nombre}}</td>
+		</tr>
+	{{/empresas}}				
+	</table>
+	</div>
+</div>
+
+
+<div class="pull-right">
+  <a class="btn btn-primary"   href="/empresas/nueva">Agregar Empresa</a>
+</div>
+{{/partial}}
+				
+{{> layout.hbs }}

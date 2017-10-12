@@ -1,7 +1,7 @@
 package validadores;
 
-import domain.Metodologia;
 import domain.DomainExceptions.MetodologiaInvalidaException;
+import model.Metodologia;
 import repositorios.RepositorioMetodologias;
 
 public class ValidadorMetodologia {

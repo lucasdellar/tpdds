@@ -1,10 +1,10 @@
 
 package manejadoresArchivo;
 
-import domain.ConversorFormatoArchivo;
-import domain.IConversorFormatoArchivo;
-import domain.Indicador;
 import domain.DomainExceptions.AgregarMetodologiaAlArchivoException;
+import model.ConversorFormatoArchivo;
+import model.IConversorFormatoArchivo;
+import model.Indicador;
 import repositorios.RepositorioIndicadores;
 
 /*import domain.Indicadores.Modelo.Indicador;

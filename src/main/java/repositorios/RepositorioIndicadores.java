@@ -5,9 +5,9 @@ import javax.persistence.Id;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import domain.Indicador;
 import domain.DomainExceptions.IndicadorInexsistenteException;
 import empresas.Empresa;
+import model.Indicador;
 
 
 public class RepositorioIndicadores extends Repositorio<Indicador> {

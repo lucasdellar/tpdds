@@ -7,10 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import comparadores.Comparador;
-import domain.Cuenta;
-import domain.Valor;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
+import model.Cuenta;
+import model.Valor;
 
 @Entity
 public class Crecimiento extends Criterio {

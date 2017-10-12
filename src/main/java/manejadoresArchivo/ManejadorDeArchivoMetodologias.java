@@ -7,10 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import domain.ConversorFormatoArchivo;
-import domain.IConversorFormatoArchivo;
-import domain.Metodologia;
 import domain.DomainExceptions.AgregarMetodologiaAlArchivoException;
+import model.ConversorFormatoArchivo;
+import model.IConversorFormatoArchivo;
+import model.Metodologia;
 import repositorios.RepositorioMetodologias;
 
 public class ManejadorDeArchivoMetodologias {

@@ -18,13 +18,13 @@ import criterios.PorValor;
 import criterios.Mediana;
 import criterios.Promedio;
 import criterios.Sumatoria;
-import domain.Cuenta;
-import domain.Indicador;
-import domain.Metodologia;
-import domain.Valor;
-import domain.ValorIndicador;
 import empresas.Empresa;
 import empresas.EmpresaRankeada;
+import model.Cuenta;
+import model.Indicador;
+import model.Metodologia;
+import model.Valor;
+import model.ValorIndicador;
 import repositorios.RepositorioIndicadores;
 
 public class Entrega3Test {

@@ -18,7 +18,7 @@ import javax.persistence.UniqueConstraint;
 import org.uqbar.commons.utils.Observable;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
-import domain.Cuenta;
+import model.Cuenta;
 
 @Observable
 @Entity
@@ -58,17 +58,9 @@ public class Empresa {
 	
 	public void agregarCuenta(Cuenta unaCuenta){
 		cuentas.add(unaCuenta); 
-//		EntityManager manager = PerThreadEntityManagers.getEntityManager();
-//		EntityTransaction tx = manager.getTransaction();
-//		tx.begin();
-//		manager.clear();
-//		manager.persist(this);
-//		tx.commit();
 	}
-
-	/* public void addPropertyChangeListener(PropertyChangeListener listener) {
-		   propertyChangeSupport.addPropertyChangeListener(listener);
-	}*/
 	
-	
+	public long getId() {
+		return id;
+	 }
 }

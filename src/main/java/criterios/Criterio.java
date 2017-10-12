@@ -14,9 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import comparadores.Comparador;
-import domain.Cuenta;
-import domain.Valor;
 import empresas.Empresa;
+import model.Cuenta;
+import model.Valor;
 
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity

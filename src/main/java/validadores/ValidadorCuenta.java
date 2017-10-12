@@ -2,9 +2,9 @@ package validadores;
 
 import java.util.List;
 
-import domain.Cuenta;
 import domain.DomainExceptions.CuentaInvalidaException;
 import domain.DomainExceptions.CuentaPreexistenteException;
+import model.Cuenta;
 
 public class ValidadorCuenta {
 	

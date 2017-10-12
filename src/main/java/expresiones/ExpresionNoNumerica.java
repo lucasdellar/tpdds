@@ -1,6 +1,7 @@
 package expresiones;
 
 import empresas.Empresa;
+import model.Cuenta;
 import repositorios.RepositorioIndicadores;
 
 import java.util.stream.Collectors;
@@ -13,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import domain.Cuenta;
 import domain.DomainExceptions.IndicadorInvalidoException;
 
 @Entity

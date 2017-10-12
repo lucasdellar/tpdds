@@ -4,29 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
-import OperacionesMatematicas.Multiplicacion;
 import OperacionesMatematicas.Operador;
-import OperacionesMatematicas.Resta;
-import OperacionesMatematicas.Suma;
-import domain.Archivo;
-import domain.ConversorFormatoArchivo;
-import domain.Cuenta;
-import domain.IConversorFormatoArchivo;
-import domain.Indicador;
 import domain.DomainExceptions.ArchivoInvalidoException;
-import domain.DomainExceptions.CuentaInvalidaException;
-import domain.DomainExceptions.CuentaPreexistenteException;
 import domain.DomainExceptions.IndicadorInvalidoException;
 import empresas.Empresa;
 import expresiones.Expresion;
@@ -34,22 +20,22 @@ import expresiones.ExpresionCompuesta;
 import expresiones.ExpresionNoNumerica;
 import expresiones.ExpresionNumero;
 import manejadoresArchivo.ManejadorDeArchivoEmpresas;
+import model.Archivo;
+import model.ConversorFormatoArchivo;
+import model.Cuenta;
+import model.IConversorFormatoArchivo;
+import model.Indicador;
 import parser.Parser;
-import repositorios.RepositorioEmpresas;
 import repositorios.RepositorioIndicadores;
-import ui.ViewModels.AgregarEmpresaViewModel;
-import ui.ViewModels.CuentaViewModel;
-import ui.ViewModels.EmpresaViewModel;
-import ui.ViewModels.InviertiendoViewModel;
 
 public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalEntityManager {
 
     IConversorFormatoArchivo conversor;
     ManejadorDeArchivoEmpresas manejador;
-    InviertiendoViewModel inviertiendoViewModel;
-    CuentaViewModel cuentasViewModel;
-    EmpresaViewModel empresaViewModel;
-    AgregarEmpresaViewModel agregarEmpresaViewModel;
+//    InviertiendoViewModel inviertiendoViewModel;
+//    CuentaViewModel cuentasViewModel;
+//    EmpresaViewModel empresaViewModel;
+//    AgregarEmpresaViewModel agregarEmpresaViewModel;
     File file;
     Parser parser;
     RepositorioIndicadores repo;
@@ -61,20 +47,18 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		file.createNewFile();
         conversor = new ConversorFormatoArchivo();
         manejador = new ManejadorDeArchivoEmpresas("cuentasMock.txt");
-        inviertiendoViewModel = new InviertiendoViewModel();
-        cuentasViewModel = new CuentaViewModel();
-        empresaViewModel = new EmpresaViewModel();
+//        inviertiendoViewModel = new InviertiendoViewModel();
+//        cuentasViewModel = new CuentaViewModel();
+//        empresaViewModel = new EmpresaViewModel();
         Archivo archivo = new Archivo();
         repo = new RepositorioIndicadores();
         parser = new Parser(repo);
         archivo.setRuta("cuentasMock.txt");
-        agregarEmpresaViewModel = new AgregarEmpresaViewModel();
-        agregarEmpresaViewModel.setRepoEmpresas(new RepositorioEmpresas(archivo.getRuta()));
-        cuentasViewModel.setArchivo(archivo);
-        empresaViewModel.setArchivo(archivo);
-        
-        System.out.println("fin begin'");
-      
+//        agregarEmpresaViewModel = new AgregarEmpresaViewModel();
+//        agregarEmpresaViewModel.setRepoEmpresas(new RepositorioEmpresas(archivo.getRuta()));
+//        cuentasViewModel.setArchivo(archivo);
+//        empresaViewModel.setArchivo(archivo);
+     
 	}
 	
 	/* ***************************************** TESTS ENTREGA 2 & ENTREGA 3 ********************************************** */
@@ -228,31 +212,27 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
         Assert.assertEquals(resultado.getNombre(), "Coca-cola");
     }
 
-    @Test
-    public void manejadorAgregaEmpresaAlRepoCorrectamente() {
-        Empresa nuevaEmpresa = new Empresa("popo");
-        nuevaEmpresa.setCuentas(new ArrayList<Cuenta>());
-        agregarEmpresaViewModel.setEmpresa("popo");
-        agregarEmpresaViewModel.agregarEmpresa();
-        Assert.assertTrue(agregarEmpresaViewModel.getRepoEmpresas().getLista().stream().anyMatch(x -> x.getNombre().equals("popo")));
-    }
+//    @Test
+//    public void manejadorAgregaEmpresaAlRepoCorrectamente() {
+//        Empresa nuevaEmpresa = new Empresa("popo");
+//        nuevaEmpresa.setCuentas(new ArrayList<Cuenta>());
+//        agregarEmpresaViewModel.setEmpresa("popo");
+//        agregarEmpresaViewModel.agregarEmpresa();
+//        Assert.assertTrue(agregarEmpresaViewModel.getRepoEmpresas().getLista().stream().anyMatch(x -> x.getNombre().equals("popo")));
+//    }
     
-   @Test(expected = CuentaPreexistenteException.class)
-    public void viewModelAgregaCuentaRepetidaAlRepo(){
-	   System.out.println("VAMOOOO");
-//	   EntityManager manager = PerThreadEntityManagers.getEntityManager();
-//		EntityTransaction transaction = manager.getTransaction();
-//		transaction.commit();
-    	agregarEmpresaViewModel.setEmpresa("W Up");
-    	agregarEmpresaViewModel.agregarEmpresa();
-    	Empresa empresa = agregarEmpresaViewModel.getRepoEmpresas().getLista().get(0);
-    	cuentasViewModel.setEmpresa(empresa);
-    	cuentasViewModel.setNombre("Patrimonio Neto");
-    	cuentasViewModel.setPeriodo("1000");
-    	cuentasViewModel.setValor("2000");
-    	cuentasViewModel.agregarCuenta();
-    	cuentasViewModel.agregarCuenta();
-    }
+//   @Test(expected = CuentaPreexistenteException.class)
+//    public void viewModelAgregaCuentaRepetidaAlRepo(){
+//    	agregarEmpresaViewModel.setEmpresa("W Up");
+//    	agregarEmpresaViewModel.agregarEmpresa();
+//    	Empresa empresa = agregarEmpresaViewModel.getRepoEmpresas().getLista().get(0);
+//    	cuentasViewModel.setEmpresa(empresa);
+//    	cuentasViewModel.setNombre("Patrimonio Neto");
+//    	cuentasViewModel.setPeriodo("1000");
+//    	cuentasViewModel.setValor("2000");
+//    	cuentasViewModel.agregarCuenta();
+//    	cuentasViewModel.agregarCuenta();
+//    }
 
     /*@Test
     public void viewModelAgregarCuentaAlArchivoCorrectamente(){
@@ -286,20 +266,20 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		Assert.assertEquals(empresa1.getCuentas().size(), 9);
 	}
     
-    @Test(expected = CuentaInvalidaException.class)
-    public void cuentaConAnioInvalido(){
-    	cuentasViewModel.setPeriodo("./zxc");
-    }
-    
-    @Test(expected = CuentaInvalidaException.class)
-    public void cuentaConNombreInvalido(){
-    	cuentasViewModel.setNombre(null);
-    }
-    
-    @Test(expected = CuentaInvalidaException.class)
-    public void cuentaConValorInvalido(){
-    	cuentasViewModel.setValor(null);
-    }
+//    @Test(expected = CuentaInvalidaException.class)
+//    public void cuentaConAnioInvalido(){
+//    	cuentasViewModel.setPeriodo("./zxc");
+//    }
+//    
+//    @Test(expected = CuentaInvalidaException.class)
+//    public void cuentaConNombreInvalido(){
+//    	cuentasViewModel.setNombre(null);
+//    }
+//    
+//    @Test(expected = CuentaInvalidaException.class)
+//    public void cuentaConValorInvalido(){
+//    	cuentasViewModel.setValor(null);
+//    }
     
     @Test(expected = ArchivoInvalidoException.class)
     public void archivoInvalidoPorExtension(){

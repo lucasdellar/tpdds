@@ -3,9 +3,9 @@ package repositorios;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import domain.ConversorFormatoArchivo;
-import domain.Metodologia;
 import empresas.Empresa;
+import model.ConversorFormatoArchivo;
+import model.Metodologia;
 
 public class RepositorioMetodologias extends Repositorio<Metodologia> {
 	
