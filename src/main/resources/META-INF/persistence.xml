@@ -29,7 +29,7 @@
     	<class>criterios.Promedio</class>
     	<class>criterios.Sumatoria</class>
     	<class>model.Metodologia</class>
-
+		<class>model.Usuario</class>
         <properties> 
 		    	<property name="hibernate.archive.autodetection" value="class"/>        
 	        

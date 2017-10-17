@@ -1,6 +1,5 @@
 package controladores;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -10,11 +9,12 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import empresas.Empresa;
+import model.Cuenta;
 import repositorios.RepositorioEmpresas;
-import scala.collection.parallel.ParIterableLike.Foreach;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import validadores.ValidadorCuenta;
 import validadores.ValidadorEmpresa;
 
 public class EmpresasControlador implements WithGlobalEntityManager, TransactionalOps {
@@ -68,11 +68,39 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	    String nombre = request.params(":id");
 
 	    System.out.println(nombre);
-	    Empresa empresa = new RepositorioEmpresas().getLista().stream()
-	    		.filter(unaEmpresa -> unaEmpresa.getNombre().equals(nombre)).collect(Collectors.toList()).get(0);
+	    Empresa empresa = new RepositorioEmpresas().getEmpresa(nombre);
 	    
 	    HashMap<String, Object> viewModel = new HashMap<>();
 	    viewModel.put("empresa", empresa);
 	    return new ModelAndView(empresa, "empresa.hbs");
+	  }
+	
+	public ModelAndView addCuenta(Request request, Response response) {
+		RepositorioEmpresas repo = new RepositorioEmpresas();
+		String nombre_empresa = request.queryParams("nombreEmpresa");
+		System.out.println("Nombre: " + nombre_empresa);
+		Empresa empresa = repo.getEmpresa(nombre_empresa);
+		System.out.println("Nombre EMPRESA: " + empresa.getNombre());
+		List<Cuenta> empresa_cuentas = empresa.getCuentas();
+	    String nombre_cuenta = request.queryParams("nombreCuenta");
+	    String periodo = request.queryParams("periodoCuenta");
+	    String valor = request.queryParams("valorCuenta");
+	    
+	    ValidadorCuenta validador = new ValidadorCuenta();
+	    System.out.println("Nombre: " + nombre_cuenta + " ," + periodo + ", " + valor);
+	    if(validador.validarQueNoEsteYaCargarda(nombre_cuenta, periodo, empresa_cuentas)){
+	    	// El nombre ya está en uso...
+	    	System.out.println("BBBBB");
+	    	response.redirect("/empresas/:id/error");
+	    	return null;
+	    }
+	    System.out.println("CCCCCC");
+	    withTransaction(() -> {
+	    	empresa.agregarCuenta(new Cuenta(nombre_cuenta, periodo, valor));
+	    	repo.persistir(empresa);
+	    });
+	    System.out.println("DDDDDD");
+	    response.redirect("/empresas");
+	    return null;
 	  }
 }

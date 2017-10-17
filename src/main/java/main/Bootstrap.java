@@ -8,6 +8,7 @@ import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import empresas.Empresa;
 import model.Cuenta;
+import model.Usuario;
 
 public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
 
@@ -17,6 +18,10 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
   public void run() {
     withTransaction(() -> {
+    	
+    	Usuario user = new Usuario("admin", "utnso");
+    	persist(user);
+    	
     	Empresa coke = new Empresa("Coca-Cola");
     	coke.setCuentas(new ArrayList<Cuenta>());
     	coke.agregarCuenta(new Cuenta("Fanta", "2017", "300000"));

@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -66,6 +67,12 @@ public class RepositorioEmpresas extends Repositorio<Empresa> {
 
 	public boolean nombreYaUtilizado(String nombre) {
 		return this.getLista().stream().anyMatch(x -> x.getNombre().equals(nombre));
+	}
+	
+	public Empresa getEmpresa(String nombre){
+		return this.getLista().stream()
+				   .filter(empresa -> empresa.getNombre().equals(nombre)).collect(Collectors.toList())
+				   .get(0);
 	}
 	
 }

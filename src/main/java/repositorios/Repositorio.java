@@ -37,12 +37,7 @@ public class Repositorio<T> implements TransactionalOps {
 	}
 	
 	public void persistir(T objetoTipoT){
-//			if(transaction.isActive()) {
-//					transaction.rollback();
-//			}
-				withTransaction(() ->manager.persist(objetoTipoT));
-				//transaction.commit();
-				
+		withTransaction(() ->manager.persist(objetoTipoT));		
 	}
 	
 	public void agregar(T objetoTipoT){
