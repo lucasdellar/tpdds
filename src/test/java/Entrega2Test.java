@@ -178,15 +178,15 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		Assert.assertEquals(11350, exp.calcular(unaEmpresa, "1988"), 0);
 	}
 	
-	@Test
-	public void parsearFormulaConIndicador(){
-		Expresion exp = parser.obtenerExpresion("100 * popo + 1 - 1");
-		Indicador nuevo = new Indicador("popo", "6");
-		repo.agregar(nuevo);
-		Empresa unaEmpresa = new Empresa("Domingo");
-		unaEmpresa.cuentas = new ArrayList<>();
-		Assert.assertEquals(600, exp.calcular(unaEmpresa, "1988"), 0);
-	}
+//	@Test
+//	public void parsearFormulaConIndicador(){
+//		Expresion exp = parser.obtenerExpresion("100 * popo + 1 - 1");
+//		Empresa nuevo = new Empresa("popo", "6");
+//		repo.agregar(nuevo);
+//		Empresa unaEmpresa = new Empresa("Domingo");
+//		unaEmpresa.cuentas = new ArrayList<>();
+//		Assert.assertEquals(600, exp.calcular(unaEmpresa, "1988"), 0);
+//	}
 	
 	@Test
 	public void empresaDeFormatoArchivo(){

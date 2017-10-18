@@ -8,6 +8,7 @@ import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import empresas.Empresa;
 import model.Cuenta;
+import model.Indicador;
 import model.Usuario;
 
 public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
@@ -34,6 +35,20 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     	globant.agregarCuenta(new Cuenta("ROE", "2140", "1"));
     	globant.agregarCuenta(new Cuenta("Humanos", "2010", "666"));
     	
+    	Indicador unIndicador = new Indicador("simple", "5+5", "admin");
+    	Indicador otroIndicador = new Indicador("middle", "10-20", "admin");
+    	Indicador tercerIndicador = new Indicador("heavy", "simple+middle", "admin");
+    	Indicador roe = new Indicador("ROE", "ROA+10", "admin");
+    	Indicador roa = new Indicador("ROA", "20", "admin");
+    	Indicador monstruo = new Indicador("monstruo", "ROA+ROE-middle*simple", "admin");
+    	
+    	
+    	persist(unIndicador);
+    	persist(otroIndicador);
+    	persist(tercerIndicador);
+    	persist(roe);
+    	persist(roa);
+    	persist(monstruo);
     	persist(globant);
     	persist(coke);
     	

@@ -17,22 +17,24 @@
 </form>
 
 <button type="button" style="float: right" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Agregar Empresa
+  Agregar Indicador
 </button>
 <table class="table">
   <thead class="thead-inverse">
     <tr>
-      <th>Empresa</th>
+      <th>Indicador</th>
+      <th>Formula</th>
       <th width="1">Acciones</th>
     </tr>
   </thead>
   <tbody>
-  {{#empresas}}
+  {{#indicadores}}
     <tr>
       <td>{{nombre}}</td>
-	  <td width="1"><a class="btn btn-primary" href="/empresas/{{nombre}}" role="button">Ver Cuentas</a></td>
+      <td>{{formula}}</td>
+	  <td width="1"><a class="btn btn-primary" href="#" role="button">Aplicar</a></td>
     </tr>
-   {{/empresas}}
+   {{/indicadores}}
   </tbody>
 </table>
 
@@ -40,18 +42,21 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Agregar Empresa</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Agregar Indicador</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<form action="/empresas" id="needs-validation" method="POST" onSubmit="return validarDatos();" novalidate>
-					<label for="exampleInputEmail1">Nombre de la empresa</label>
-					<input type="text" class="form-control" id="nuevaEmpresa" name="nuevaEmpresa" aria-describedby="emailHelp" placeholder="Ejemplo: FlixNet" pattern="[A-Za-z]+" required>
-					<small id="emailHelp" class="form-text text-muted">El nombre de tu empresa debe ser unico...como vos ;)</small>
+					<label for="exampleInputEmail1">Nombre del indicador</label>
+					<input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="emailHelp" placeholder="Ejemplo: ROE" pattern="[A-Za-z]+" required>
+					<small id="emailHelp" class="form-text text-muted">Los indicadores indican tu vida!</small>
 					<p id="feedback"></p>
-					<button type="submit" style="float: right" class="btn btn-primary">Aceptar</button>
+					<label for="exampleInputEmail1">Formula</label>
+					<input type="text" class="form-control" id="formula" name="formula" aria-describedby="emailHelp" placeholder="Ejemplo: 5+ROE" required>
+					<hr>
+					<button type="subxmit" style="float: right" class="btn btn-primary">Aceptar</button>
 			</div>
 		</form>
       </div>

@@ -1,27 +1,24 @@
 package validadores;
 
 import domain.DomainExceptions.IndicadorInexsistenteException;
-import domain.DomainExceptions.IndicadorYaCreadoExcepction;
-import manejadoresArchivo.ManejadorDeArchivoIndicadores;
+import parser.Parser;
 import repositorios.RepositorioIndicadores;
 
 public class ValidadorIndicadores {
 
-	  public void validarFormula(String formula) {
-		  //parser.Parser.verificarFormato(formula);
+	  public boolean esValidaLaFormula(String formula, RepositorioIndicadores repo) {
+		  return new Parser(repo).verificarFormato(formula);
 	    }
 
-		public void validarQueNoEsteYaCargardo(String nombre, String formula, RepositorioIndicadores repo) {
-			if(repo.getLista().stream().anyMatch(x -> x.getNombre().equals(nombre))) throw new IndicadorYaCreadoExcepction("El indicador ingresado ya existe.");
+		public boolean estaCargado(String nombre, String formula, RepositorioIndicadores repo) {
+			return repo.getLista().stream().anyMatch(x -> x.getNombre().equals(nombre));
 		}
 
-		public void validarIndicador(String nombre, String formula, RepositorioIndicadores repo) {
-			this.validarFormula(formula);
-			this.validarQueNoEsteYaCargardo(nombre, formula, repo);
+		public boolean esValido(String nombre, String formula, RepositorioIndicadores repo) {
+			return this.esValidaLaFormula(formula, repo) || !this.estaCargado(nombre, formula, repo);
 		}
 	
-		public void validarQueExista(String nombre, RepositorioIndicadores repo) {
-			if(!repo.getLista().stream().anyMatch(x -> x.getNombre().equals(nombre))) 
-				throw new IndicadorInexsistenteException("Indicador no cargado");
+		public boolean noExiste(String nombre, RepositorioIndicadores repo) {
+			return !repo.getLista().stream().anyMatch(x -> x.getNombre().equals(nombre));
 		}
 }

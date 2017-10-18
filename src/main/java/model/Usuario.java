@@ -27,4 +27,8 @@ public class Usuario {
 		return this.usuario;
 	}
 
+	public String getPassword() {
+		return this.password;
+	}
+
 }

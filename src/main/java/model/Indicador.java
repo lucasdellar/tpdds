@@ -10,12 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Type;
 import org.uqbar.commons.utils.Observable;
 
 import empresas.Empresa;
@@ -38,7 +35,8 @@ public class Indicador {
 	private String nombre;
 	@Column(name = "formula")
 	private String formula;
-	
+	@Column(name = "usuario")
+	private String usuario;
 	@JoinColumn(name = "formula_objetos")
 	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Expresion formula_objetos;
@@ -46,10 +44,21 @@ public class Indicador {
 	RepositorioIndicadores repositorioIndicadores;
 	
 	private Indicador(){}
-
+	
 	public Indicador(String _nombre, String _formula){
-		setNombre(_nombre);
-		setFormula(_formula);
+		this.nombre = _nombre;
+		this.formula = _formula;
+		// Esto no tiene que ir ac� pero es para ver si funciona.
+		Parser parser = new Parser(repositorioIndicadores);
+		this.formula_objetos = parser.obtenerExpresion(formula);
+		//----------------------------------------------------------
+		//repositorioIndicadores = new RepositorioIndicadores(); esto rompia por arena, dejarlo para cuando migremos.
+	}
+
+	public Indicador(String _nombre, String _formula, String _usuario){
+		this.nombre = _nombre;
+		this.formula = _formula;
+		this.usuario = _usuario;
 		// Esto no tiene que ir ac� pero es para ver si funciona.
 		Parser parser = new Parser(repositorioIndicadores);
 		this.formula_objetos = parser.obtenerExpresion(formula);
