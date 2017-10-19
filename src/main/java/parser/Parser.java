@@ -54,7 +54,7 @@ public class Parser {
 	}
 	
 	public static boolean verificarFormato(String posibleCuenta){
-		
+
 		String cuentaRegex = "\\s*[\\da-zA-Z]+\\s*([+-/\\*]\\s*[\\da-zA-Z]+\\s*)*$";
 		if(!posibleCuenta.matches(cuentaRegex)) 
 			return false;

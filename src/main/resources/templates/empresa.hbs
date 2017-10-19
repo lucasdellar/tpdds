@@ -1,7 +1,7 @@
 {{# partial "titulo" }}	
-	<title>Donde Invierto</title>
+<title>Donde Invierto</title>
 {{/partial}}
-		
+
 {{# partial "contenido" }}	
 
 <center><h1 class="display-1">{{nombre}}</h1></center>
@@ -20,13 +20,13 @@
     </tr>
   </thead>
   <tbody>
-  {{#cuentas}}
+    {{#cuentas}}
     <tr>
       <td>{{nombre}}</td>
       <td>{{periodo}}</td>
       <td>{{valor}}</td>
     </tr>
-   {{/cuentas}}
+    {{/cuentas}}
   </tbody>
 </table>
 
@@ -41,50 +41,50 @@
         </button>
       </div>
       <div class="modal-body">
-		<form action="/empresas/{{nombre}}" id="needs-validation" method="POST" novalidate>
-			<label>Empresa: </label>
-			<input type="text" readonly class="form-control" id="nombreEmpresa" name="nombreEmpresa" value="{{nombre}}" required>
-		    <label>Nombre de la cuenta: </label>
-		    <input type="text" class="form-control" id="nombreCuenta" name="nombreCuenta" aria-describedby="emailHelp" placeholder="Ejemplo: ROE" pattern="[a-zA-Z0-9\s]+" required>
-		    <small id="emailHelp" class="form-text text-muted">Recuerde que no puede haber dos cuentas con el mismo nombre en el mismo periodo..</small>
-		  	<div class="invalid-feedback">
-        		<p id="feedback">Por favor ingresa un nombre para la cuenta (solo letras).</p>
-      		</div>
-		    <label for="exampleInputEmail1">Periodo: </label>
-		    <input type="text" class="form-control" id="periodoCuenta" name="periodoCuenta" aria-describedby="emailHelp" placeholder="Ejemplo: 2017" pattern="\d*" required>
-		    <div class="invalid-feedback">
-        		Periodo invalido.
-      		</div>
-		    <label for="exampleInputEmail1">Valor: </label>
-		    <input type="text" class="form-control" id="valorCuenta" name="valorCuenta" aria-describedby="emailHelp" placeholder="Ejemplo: 1000000" pattern="\d*" required>
-		    <div class="invalid-feedback">
-        		Valor invalido.
-      		</div>
-		  <button type="submit" style="float: right" class="btn btn-primary">Aceptar</button>
-		  </div>
-		</form>
+        <form action="/empresas/{{nombre}}" id="needs-validation" method="POST" novalidate>
+         <label>Empresa: </label>
+         <input type="text" readonly class="form-control" id="nombreEmpresa" name="nombreEmpresa" value="{{nombre}}" required>
+         <label>Nombre de la cuenta: </label>
+         <input type="text" class="form-control" id="nombreCuenta" name="nombreCuenta" aria-describedby="emailHelp" placeholder="Ejemplo: ROE" pattern="[a-zA-Z0-9\s]+" required>
+         <small id="emailHelp" class="form-text text-muted">Recuerde que no puede haber dos cuentas con el mismo nombre en el mismo periodo..</small>
+         <div class="invalid-feedback">
+          <p id="feedback">Por favor ingresa un nombre para la cuenta (solo letras).</p>
+        </div>
+        <label for="exampleInputEmail1">Periodo: </label>
+        <input type="text" class="form-control" id="periodoCuenta" name="periodoCuenta" aria-describedby="emailHelp" placeholder="Ejemplo: 2017" pattern="\d*" required>
+        <div class="invalid-feedback">
+          Periodo invalido.
+        </div>
+        <label for="exampleInputEmail1">Valor: </label>
+        <input type="text" class="form-control" id="valorCuenta" name="valorCuenta" aria-describedby="emailHelp" placeholder="Ejemplo: 1000000" pattern="\d*" required>
+        <div class="invalid-feedback">
+          Valor invalido.
+        </div>
+        <button type="submit" style="float: right" class="btn btn-primary">Aceptar</button>
       </div>
-    </div>
+    </form>
   </div>
+</div>
+</div>
 </div>
 
 <script>
-(function() {
-  "use strict";
-  window.addEventListener("load", function() {
-    var form = document.getElementById("needs-validation");
-    form.addEventListener("submit", function(event) {
-      if (form.checkValidity() == false) {
-        event.preventDefault();
-        event.stopPropagation();
-        document.getElementById("feedback").innerHTML = "Ingrese un nombre, solo con letras.";
-      }
-      form.classList.add("was-validated");
+  (function() {
+    "use strict";
+    window.addEventListener("load", function() {
+      var form = document.getElementById("needs-validation");
+      form.addEventListener("submit", function(event) {
+        if (form.checkValidity() == false) {
+          event.preventDefault();
+          event.stopPropagation();
+          document.getElementById("feedback").innerHTML = "Ingrese un nombre, solo con letras.";
+        }
+        form.classList.add("was-validated");
+      }, false);
     }, false);
-  }, false);
-}());
+  }());
 </script>
 
 {{/partial}}
-				
+
 {{> layout.hbs }}

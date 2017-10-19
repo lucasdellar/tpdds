@@ -30,14 +30,18 @@ import validadores.ValidadorIndicadores;
 
 public class IndicadoresControlador implements WithGlobalEntityManager, TransactionalOps {
 	
+	public ModelAndView error(Request request, Response response) {
+	    return new ModelAndView(null, "indicador-error.hbs");
+	  }
 	
 	public Void crear(Request request, Response response) {
-		RepositorioIndicadores repo = new RepositorioIndicadores();
+		String nombre_usuario = request.session().attribute("usuario");
+		RepositorioIndicadores repo = new RepositorioIndicadores(findIndicadores(nombre_usuario));
 	    String nombre = request.queryParams("nombre");
 	    String formula = request.queryParams("formula");
 	    String usuario = request.session().attribute("usuario");
 	    
-	    if(new ValidadorIndicadores().estaCargado(nombre, formula, repo)){
+	    if(new ValidadorIndicadores().esValido(nombre, formula, repo)){
 	    	// El indicador ya está cargado...
 	    	response.redirect("/indicadores/error");
 	    	return null;
@@ -103,33 +107,5 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	    return new ModelAndView(empresa, "empresa.hbs");
 	  }
 	
-	public ModelAndView addCuenta(Request request, Response response) {
-		RepositorioEmpresas repo = new RepositorioEmpresas();
-		String nombre_empresa = request.queryParams("nombreEmpresa");
-		System.out.println("Nombre: " + nombre_empresa);
-		Empresa empresa = repo.getEmpresa(nombre_empresa);
-		System.out.println("Nombre EMPRESA: " + empresa.getNombre());
-		List<Cuenta> empresa_cuentas = empresa.getCuentas();
-	    String nombre_cuenta = request.queryParams("nombreCuenta");
-	    String periodo = request.queryParams("periodoCuenta");
-	    String valor = request.queryParams("valorCuenta");
-	    
-	    ValidadorCuenta validador = new ValidadorCuenta();
-	    System.out.println("Nombre: " + nombre_cuenta + " ," + periodo + ", " + valor);
-	    if(validador.validarQueNoEsteYaCargarda(nombre_cuenta, periodo, empresa_cuentas)){
-	    	// El nombre ya está en uso...
-	    	System.out.println("BBBBB");
-	    	response.redirect("/empresas/:id/error");
-	    	return null;
-	    }
-	    System.out.println("CCCCCC");
-	    withTransaction(() -> {
-	    	empresa.agregarCuenta(new Cuenta(nombre_cuenta, periodo, valor));
-	    	repo.persistir(empresa);
-	    });
-	    System.out.println("DDDDDD");
-	    response.redirect("/empresas");
-	    return null;
-	  }
 }
 

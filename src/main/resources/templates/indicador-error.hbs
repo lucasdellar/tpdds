@@ -1,43 +1,20 @@
 {{# partial "titulo" }}	
 <title>Donde Invierto</title>
-<script src="validarDatosIndicador.js"></script>
+<link rel="icon" href="../logo.png">
+<script src="../validarDatosIndicador.js"></script>
 {{/partial}}
 
-{{# partial "contenido" }}	
-
-<h4>Busca tu empresa por nombre:</h4>
-<form action="/indicadores" >
-	<div class="row">
-		<div class="col-md-10">
-			<input type="text" class="form-control" name="filtroNombre">
-		</div>
-		<div class="col-md-2">
-			<input type="submit" class="form-control btn btn-default" value="Buscar">
-		</div>
-	</div>
-</form>
-
-<button type="button" style="float: right" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-	Agregar Indicador
-</button>
-<table class="table">
-	<thead class="thead-inverse">
-		<tr>
-			<th>Indicador</th>
-			<th>Formula</th>
-			<th width="1">Acciones</th>
-		</tr>
-	</thead>
-	<tbody>
-		{{#indicadores}}
-		<tr>
-			<td>{{nombre}}</td>
-			<td>{{formula}}</td>
-			<td width="1"><a class="btn btn-primary" href="#" role="button">Aplicar</a></td>
-		</tr>
-		{{/indicadores}}
-	</tbody>
-</table>
+{{# partial "contenido" }}
+<div class="alert alert-danger" role="alert">
+	<h4 class="alert-heading">Ooops!</h4>
+	<p>El indicador ingresado ya existe, por favor vuelva a intentarlo con otro nombre y/o formula.</p>
+	<hr>
+	<p class="mb-0">Try again?</p>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		Agregar Indicador
+	</button>
+	<a class="btn btn-primary" href="/indicadores" role="button">Volver atr&aacutes</a>
+</div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">

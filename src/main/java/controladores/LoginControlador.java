@@ -23,6 +23,7 @@ public class LoginControlador {
 	  }
 	  
 	  public ModelAndView error(Request request, Response response) {
+			System.out.print("BBBBB");
 		  return new ModelAndView(null, "login-error.hbs");
 	  }
 	  
@@ -39,7 +40,8 @@ public class LoginControlador {
 		  List<Usuario> queryResult = this.findUsuario(usuario_nombre);
 		  
 		  if(queryResult.isEmpty()){
-			response.redirect("/login/error");
+			response.redirect("/error");
+			System.out.print("AAAA");
 			return null;
 		  }
 		  if(!queryResult.get(0).getPassword().equals(password)){

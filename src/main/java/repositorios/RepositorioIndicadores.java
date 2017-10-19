@@ -1,16 +1,19 @@
 package repositorios;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.List;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 import domain.DomainExceptions.IndicadorInexsistenteException;
-import empresas.Empresa;
 import model.Indicador;
 
 
 public class RepositorioIndicadores extends Repositorio<Indicador> {
+	
+	public RepositorioIndicadores(List<Indicador> indicadores){
+		this.setLista(indicadores);
+	}
 
 	public RepositorioIndicadores(){
 		CriteriaBuilder builder = manager.getCriteriaBuilder();

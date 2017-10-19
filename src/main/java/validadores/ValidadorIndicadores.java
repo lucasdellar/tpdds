@@ -1,6 +1,5 @@
 package validadores;
 
-import domain.DomainExceptions.IndicadorInexsistenteException;
 import parser.Parser;
 import repositorios.RepositorioIndicadores;
 

@@ -25,7 +25,7 @@ public class Rutas {
 
     get("/login", login::mostrar, engine);
     post("/login", login::login, engine);
-    get("/login/error", login::error, engine);
+    get("/error", login::error, engine);
     get("/", (request, response) -> {
     	String usuario = request.session().attribute("usuario");
     	if (usuario == null) {
@@ -44,6 +44,8 @@ public class Rutas {
     get("/empresas/:id", empresas::mostrar, engine);
     post("/empresas/:id", empresas::addCuenta, engine);
     get("/indicadores", indicadores::listar, engine);
+    post("/indicadores", indicadores::crear);
+    get("/indicadores/error", indicadores::error, engine);
   }
 
 }

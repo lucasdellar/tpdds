@@ -1,39 +1,40 @@
 {{# partial "titulo" }}	
-	<title>Donde Invierto</title>
+<title>Donde Invierto</title>
+<script src="validarDatosEmpresa.js"></script>
 {{/partial}}
-		
+
 {{# partial "contenido" }}	
 
 <h4>Busca tu empresa por nombre:</h4>
 <form action="/empresas" >
-  <div class="row">
-  	<div class="col-md-10">
-		  <input type="text" class="form-control" name="filtroNombre">
+	<div class="row">
+		<div class="col-md-10">
+			<input type="text" class="form-control" name="filtroNombre">
+		</div>
+		<div class="col-md-2">
+			<input type="submit" class="form-control btn btn-default" value="Buscar">
+		</div>
 	</div>
-	<div class="col-md-2">
-		<input type="submit" class="form-control btn btn-default" value="Buscar">
-	</div>
-  </div>
 </form>
 
 <button type="button" style="float: right" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Agregar Empresa
+	Agregar Empresa
 </button>
 <table class="table">
-  <thead class="thead-inverse">
-    <tr>
-      <th>Empresa</th>
-      <th width="1">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-  {{#empresas}}
-    <tr>
-      <td>{{nombre}}</td>
-	  <td width="1"><a class="btn btn-primary" href="/empresas/{{nombre}}" role="button">Ver Cuentas</a></td>
-    </tr>
-   {{/empresas}}
-  </tbody>
+	<thead class="thead-inverse">
+		<tr>
+			<th>Empresa</th>
+			<th width="1">Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#empresas}}
+		<tr>
+			<td>{{nombre}}</td>
+			<td width="1"><a class="btn btn-primary" href="/empresas/{{nombre}}" role="button">Ver Cuentas</a></td>
+		</tr>
+		{{/empresas}}
+	</tbody>
 </table>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -48,40 +49,17 @@
 			<div class="modal-body">
 				<form action="/empresas" id="needs-validation" method="POST" onSubmit="return validarDatos();" novalidate>
 					<label for="exampleInputEmail1">Nombre de la empresa</label>
-					<input type="text" class="form-control" id="nuevaEmpresa" name="nuevaEmpresa" aria-describedby="emailHelp" placeholder="Ejemplo: FlixNet" pattern="[A-Za-z]+" required>
+					<input type="text" class="form-control" id="nuevaEmpresa" name="nuevaEmpresa" aria-describedby="emailHelp" placeholder="Ejemplo: FlixNet" required>
 					<small id="emailHelp" class="form-text text-muted">El nombre de tu empresa debe ser unico...como vos ;)</small>
 					<p id="feedback"></p>
 					<button type="submit" style="float: right" class="btn btn-primary">Aceptar</button>
-			</div>
-		</form>
-      </div>
-    </div>
-  </div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 </div>
 
-<script>
-	function validarDatos(){
-		var errores = 0;
-		var nombre_empresa = document.getElementById("nuevaEmpresa").value;
-		
-		document.getElementById("feedback").innerHTML = "";	
-		document.getElementById("feedback").style.color = "red";
-		if(nombre_empresa == null || nombre_empresa.length == 0){
-			document.getElementById("feedback").innerHTML = "Debe ingresar un nombre";
-			errores++;
-		}
-		if(!/^[a-zA-Z\s]*$/.test(nombre_empresa)){
-			document.getElementById("feedback").innerHTML = "El nombre solo puede contener letras y espacios";
-			
-			errores++;
-		}
-		
-		if(errores > 0)
-			return false;
-		return true;
-}
-</script> 
-
 {{/partial}}
-				
+
 {{> layout.hbs }}

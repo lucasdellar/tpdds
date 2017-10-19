@@ -1,61 +1,44 @@
 {{# partial "titulo" }}	
-	<title>Donde Invierto</title>
+<title>D&oacutende Invierto</title>
+<link rel="icon" href="../logo.png">
+<script src="../validarDatosEmpresa.js"></script>
 {{/partial}}
-		
+
 {{# partial "contenido" }}
 <div class="alert alert-danger" role="alert">
-  	<h4 class="alert-heading">Ooops!</h4>
-  	<p>Ya existe una empresa con ese nombre.</p>
-  	<hr>
-  	<p class="mb-0">Queres volver a intentarlo?</p>
-  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  		Agregar Empresa
+	<h4 class="alert-heading">Ooops!</h4>
+	<p>Ya existe una empresa con ese nombre.</p>
+	<hr>
+	<p class="mb-0">Queres volver a intentarlo?</p>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		Agregar Empresa
 	</button>
 	<a class="btn btn-primary" href="/empresas" role="button">Volver atr&aacutes</a>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar Empresa</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-		<form action="/empresas" id="needs-validation" method="POST" novalidate>
-		    <label for="exampleInputEmail1">Nombre de la empresa</label>
-		    <input type="text" class="form-control" id="nuevaEmpresa" name="nuevaEmpresa" aria-describedby="emailHelp" placeholder="Ejemplo: FlixNet" pattern="[A-Za-z]+" required>
-		    <small id="emailHelp" class="form-text text-muted">El nombre de tu empresa debe ser unico...como vos ;)</small>
-		  	<div class="invalid-feedback">
-        		Por favor ingresa un nombre para la empresa (solo letras).
-      		</div>
-		  </div>
-		  <button type="submit" style="float: right" class="btn btn-primary">Aceptar</button>
-		</form>
-      </div>
-    </div>
-  </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Agregar Empresa</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="/empresas" id="needs-validation" method="POST" onSubmit="return validarDatos();" novalidate>
+					<label for="exampleInputEmail1">Nombre de la empresa</label>
+					<input type="text" class="form-control" id="nuevaEmpresa" name="nuevaEmpresa" aria-describedby="emailHelp" placeholder="Ejemplo: FlixNet" required>
+					<small id="emailHelp" class="form-text text-muted">El nombre de tu empresa debe ser unico...como vos ;)</small>
+					<p id="feedback"></p>
+					<button type="submit" style="float: right" class="btn btn-primary">Aceptar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 </div>
 
-<script>
-(function() {
-  "use strict";
-  window.addEventListener("load", function() {
-    var form = document.getElementById("needs-validation");
-    form.addEventListener("submit", function(event) {
-      if (form.checkValidity() == false) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      form.classList.add("was-validated");
-    }, false);
-  }, false);
-}());
-</script>
-
 {{/partial}}
-				
+
 {{> layout.hbs }}

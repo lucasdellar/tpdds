@@ -10,8 +10,8 @@ body{
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: #FF00D9 !important;
-    font-family: sans-serif !important;
+  background-color: #FF00D9 !important;
+  font-family: sans-serif !important;
 }
 
 div.wrapper{
@@ -36,9 +36,9 @@ div.well{
   padding: 40px;
 }
 
-h4 { 
+#header { 
 	color: #111; 
-	font-family: 'Helvetica Neue', sans-serif; 
+	font-family: 'Roboto Bold', sans-serif;
 	font-size: 30px; 
 	font-weight: bold; 
 	letter-spacing: -1px; 
