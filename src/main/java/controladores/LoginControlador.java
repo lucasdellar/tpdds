@@ -26,6 +26,12 @@ public class LoginControlador {
 		  return new ModelAndView(null, "login-error.hbs");
 	  }
 	  
+	  public ModelAndView logout(Request request, Response response) {
+		  request.session().removeAttribute("usuario");
+		  response.redirect("/login");
+		  return null;
+	  }
+	  
 	  public ModelAndView login(Request request, Response response) {
 		  String usuario_nombre = request.queryParams("usuario");
 		  String password = request.queryParams("password");

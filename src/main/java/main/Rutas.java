@@ -35,6 +35,7 @@ public class Rutas {
     	}
     	return null;
     });
+    get("/logout", login::logout, engine);
     
     get("/home", home::mostrar, engine);
     get("/empresas", empresas::listar, engine);
