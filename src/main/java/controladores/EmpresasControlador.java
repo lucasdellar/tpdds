@@ -1,5 +1,6 @@
 package controladores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -19,23 +20,26 @@ import validadores.ValidadorEmpresa;
 
 public class EmpresasControlador implements WithGlobalEntityManager, TransactionalOps {
 	
+	RepositorioEmpresas repoEmpresas;
+	
+	public EmpresasControlador(){
+		repoEmpresas = new RepositorioEmpresas();
+	}
+	
 	public ModelAndView error(Request request, Response response) {
 	    return new ModelAndView(null, "empresa-error.hbs");
 	  }
 	
 	public Void crear(Request request, Response response) {
-		RepositorioEmpresas repo = new RepositorioEmpresas();
 	    String nombre = request.queryParams("nuevaEmpresa");
 	    
-	    if(new ValidadorEmpresa().validarNombre(nombre, repo)){
-	    	// El nombre ya está en uso...
+	    if(new ValidadorEmpresa().validarNombre(nombre, repoEmpresas)){
+	    	// El nombre ya estï¿½ en uso...
 	    	response.redirect("/empresas/error");
 	    	return null;
 	    }
 	    
-	    withTransaction(() -> {
-	      repo.persistir(new Empresa(nombre));
-	    });
+    	repoEmpresas.agregar(new Empresa(nombre));
 	
 	    response.redirect("/empresas");
 	    return null;
@@ -47,13 +51,12 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
     		response.redirect("/login");
     		return null;
     	}
-    	RepositorioEmpresas repo = new RepositorioEmpresas();
 	    List<Empresa> empresas;
 	    String filtroNombre = request.queryParams("filtroNombre");
 	    if (Objects.isNull(filtroNombre) || filtroNombre.isEmpty()) {
-	      empresas = repo.getLista();
+	      empresas = repoEmpresas.getLista();
 	    } else {
-	      empresas = repo.getLista().stream().
+	      empresas = repoEmpresas.getLista().stream().
 	    		  filter(empresa -> empresa.getNombre().equals(filtroNombre))
 	    		  .collect(Collectors.toList());
 	    }
@@ -74,7 +77,7 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	    String nombre = request.params(":id");
 
 	    System.out.println(nombre);
-	    Empresa empresa = new RepositorioEmpresas().getEmpresa(nombre);
+	    Empresa empresa = repoEmpresas.getEmpresa(nombre);
 	    
 	    HashMap<String, Object> viewModel = new HashMap<>();
 	    viewModel.put("empresa", empresa);
@@ -82,10 +85,9 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	  }
 	
 	public ModelAndView addCuenta(Request request, Response response) {
-		RepositorioEmpresas repo = new RepositorioEmpresas();
 		String nombre_empresa = request.queryParams("nombreEmpresa");
 		System.out.println("Nombre: " + nombre_empresa);
-		Empresa empresa = repo.getEmpresa(nombre_empresa);
+		Empresa empresa = repoEmpresas.getEmpresa(nombre_empresa);
 		System.out.println("Nombre EMPRESA: " + empresa.getNombre());
 		List<Cuenta> empresa_cuentas = empresa.getCuentas();
 	    String nombre_cuenta = request.queryParams("nombreCuenta");
@@ -95,7 +97,7 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	    ValidadorCuenta validador = new ValidadorCuenta();
 	    System.out.println("Nombre: " + nombre_cuenta + " ," + periodo + ", " + valor);
 	    if(validador.validarQueNoEsteYaCargarda(nombre_cuenta, periodo, empresa_cuentas)){
-	    	// El nombre ya está en uso...
+	    	// El nombre ya estï¿½ en uso...
 	    	System.out.println("BBBBB");
 	    	response.redirect("/empresas/:id/error");
 	    	return null;
@@ -103,7 +105,7 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	    System.out.println("CCCCCC");
 	    withTransaction(() -> {
 	    	empresa.agregarCuenta(new Cuenta(nombre_cuenta, periodo, valor));
-	    	repo.persistir(empresa);
+	    	repoEmpresas.persistir(empresa);
 	    });
 	    System.out.println("DDDDDD");
 	    response.redirect("/empresas");
