@@ -14,7 +14,7 @@ public class ValidadorIndicadores {
 		}
 
 		public boolean esValido(String nombre, String formula, RepositorioIndicadores repo) {
-			return this.esValidaLaFormula(formula, repo) || !this.estaCargado(nombre, formula, repo);
+			return this.esValidaLaFormula(formula, repo) && !this.estaCargado(nombre, formula, repo);
 		}
 	
 		public boolean noExiste(String nombre, RepositorioIndicadores repo) {

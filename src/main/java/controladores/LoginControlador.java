@@ -41,7 +41,6 @@ public class LoginControlador {
 		  
 		  if(queryResult.isEmpty()){
 			response.redirect("/error");
-			System.out.print("AAAA");
 			return null;
 		  }
 		  if(!queryResult.get(0).getPassword().equals(password)){

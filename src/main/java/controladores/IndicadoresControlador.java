@@ -17,18 +17,24 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import empresas.Empresa;
-import model.Cuenta;
 import model.Indicador;
-import model.Usuario;
 import repositorios.RepositorioEmpresas;
 import repositorios.RepositorioIndicadores;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import validadores.ValidadorCuenta;
 import validadores.ValidadorIndicadores;
 
 public class IndicadoresControlador implements WithGlobalEntityManager, TransactionalOps {
+	
+	ValidadorIndicadores validador;
+	RepositorioIndicadores repo;
+	String lastUser;
+	
+	public IndicadoresControlador(){
+		validador = new ValidadorIndicadores();
+		lastUser = "";
+	}
 	
 	public ModelAndView error(Request request, Response response) {
 	    return new ModelAndView(null, "indicador-error.hbs");
@@ -36,20 +42,22 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	
 	public Void crear(Request request, Response response) {
 		String nombre_usuario = request.session().attribute("usuario");
-		RepositorioIndicadores repo = new RepositorioIndicadores(findIndicadores(nombre_usuario));
+		repo = new RepositorioIndicadores(findIndicadores(nombre_usuario));
 	    String nombre = request.queryParams("nombre");
 	    String formula = request.queryParams("formula");
 	    String usuario = request.session().attribute("usuario");
 	    
-	    if(new ValidadorIndicadores().esValido(nombre, formula, repo)){
-	    	// El indicador ya está cargado...
+	    if(!validador.esValido(nombre, formula, repo)){
+	    	// El indicador ya estï¿½ cargado...
 	    	response.redirect("/indicadores/error");
 	    	return null;
 	    }
 	    
+	    repo.agregar(new Indicador(nombre, formula, usuario));
+	    /*
 	    withTransaction(() -> {
 	      repo.persistir(new Indicador(nombre, formula, usuario));
-	    });
+	    });*/
 	
 	    response.redirect("/indicadores");
 	    return null;
@@ -61,14 +69,22 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
     		response.redirect("/login");
     		return null;
     	}
-	    List<Indicador> indicadores;
+    	if(!lastUser.equals(usuario)){
+    	    lastUser = usuario;
+    		repo = new RepositorioIndicadores(findIndicadores(usuario));
+    	}
+    	List<Indicador> indicadores;
 	    String filtroNombre = request.queryParams("filtroNombre");
 	    if (Objects.isNull(filtroNombre) || filtroNombre.isEmpty()) {
-	      indicadores = findIndicadores(usuario);
+	    	indicadores = repo.getLista(); 
+	    	//indicadores = findIndicadores(usuario);
 	    } else {
-	      indicadores = findIndicadores(usuario).stream()
+	    	indicadores = repo.getLista().stream()
+    		  		.filter(indicador -> indicador.getNombre().equals(filtroNombre))
+    		  		.collect(Collectors.toList());
+	       /* indicadores = findIndicadores(usuario).stream()
 	    		  		.filter(indicador -> indicador.getNombre().equals(filtroNombre))
-	    		  		.collect(Collectors.toList());
+	    		  		.collect(Collectors.toList());*/
 	    }
 
 	    HashMap<String, Object> viewModel = new HashMap<>();
