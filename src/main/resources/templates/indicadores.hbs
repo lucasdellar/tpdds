@@ -6,18 +6,19 @@
 {{# partial "contenido" }}	
 
 <h4>Busca tu empresa por nombre:</h4>
+
 <form action="/indicadores" >
 	<div class="row">
-		<div class="col-md-10">
-			<input type="text" class="form-control" name="filtroNombre">
+		<div class="col-sm-11 text-center line">
+			<input class="form-control mr-sm-2" type="search" placeholder="Ejemplo: ROE" aria-label="Search" name="filtroNombre">
 		</div>
-		<div class="col-md-2">
-			<input type="submit" class="form-control btn btn-default" value="Buscar">
+		<div class="col-md-1">
+			<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>	
 		</div>
 	</div>
 </form>
 
-<button type="button" style="float: right" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button type="button" style="float: right" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
 	Agregar Indicador
 </button>
 <table class="table">
@@ -33,7 +34,7 @@
 		<tr>
 			<td>{{nombre}}</td>
 			<td>{{formula}}</td>
-			<td width="1"><a class="btn btn-primary" href="/indicadores/{{nombre}}" role="button">Aplicar</a></td>
+			<td width="1"><a class="btn btn-outline-danger my-2 my-sm-0" href="/indicadores/{{nombre}}" role="button">Aplicar</a></td>
 		</tr>
 		{{/indicadores}}
 	</tbody>
