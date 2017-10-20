@@ -1,0 +1,20 @@
+<table class="table">
+	<thead class="thead-inverse">
+		<tr>
+			<th>Empresa</th>
+			<th width="1">Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#empresas}}
+		<tr>
+		
+			<td>{{nombre}}</td>
+			
+			{{# block "boton" }}
+  			{{/block}}	
+			
+		</tr>
+		{{/empresas}}
+	</tbody>
+</table>

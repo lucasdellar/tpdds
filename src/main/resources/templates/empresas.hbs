@@ -12,7 +12,7 @@
 			<input type="text" class="form-control" name="filtroNombre">
 		</div>
 		<div class="col-md-2">
-			<input type="submit" class="form-control btn btn-default" value="Buscar">
+			<input type="submit" class="form-control btn btn-default" value="Buscar">	
 		</div>
 	</div>
 </form>
@@ -20,22 +20,12 @@
 <button type="button" style="float: right" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 	Agregar Empresa
 </button>
-<table class="table">
-	<thead class="thead-inverse">
-		<tr>
-			<th>Empresa</th>
-			<th width="1">Acciones</th>
-		</tr>
-	</thead>
-	<tbody>
-		{{#empresas}}
-		<tr>
-			<td>{{nombre}}</td>
-			<td width="1"><a class="btn btn-primary" href="/empresas/{{nombre}}" role="button">Ver Cuentas</a></td>
-		</tr>
-		{{/empresas}}
-	</tbody>
-</table>
+
+{{# partial "boton" }}
+
+<td width="1"><a class="btn btn-primary" href="/empresas/{{nombre}}" role="button">Ver Cuentas</a></td>
+{{/partial}}
+{{> empresas-layout.hbs}}
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -61,5 +51,6 @@
 </div>
 
 {{/partial}}
+
 
 {{> layout.hbs }}

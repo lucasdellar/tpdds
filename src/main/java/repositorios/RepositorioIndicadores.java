@@ -27,7 +27,8 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 			if(indicador.getNombre().equals(indicadorString))
 				return indicador;
 		}
-		throw new IndicadorInexsistenteException("Se busco un indicador inexistente.");
+		return this.getLista().get(0);
+		//throw new IndicadorInexsistenteException("Se busco un indicador inexistente.");
 	}
 
 }

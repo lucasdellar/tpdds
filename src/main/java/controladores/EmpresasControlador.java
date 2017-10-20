@@ -76,7 +76,6 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
     	}
 	    String nombre = request.params(":id");
 
-	    System.out.println(nombre);
 	    Empresa empresa = repoEmpresas.getEmpresa(nombre);
 	    
 	    HashMap<String, Object> viewModel = new HashMap<>();

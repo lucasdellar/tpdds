@@ -1,0 +1,52 @@
+{{# partial "titulo" }}	
+<title>D&oacutende Invierto</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+{{/partial}}
+
+{{# partial "contenido" }}
+
+<h3 style="font-family:'Roboto Thin', sans-serif">Indicador: {{indicador}}</h3>
+<h4>Formula: {{formula}}</h4>	
+
+<table class="table">
+	<thead class="thead-inverse">
+		<tr>
+			<th>Periodos</th>
+			<th width="1">Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#periodos}}
+		<tr>
+		
+			<td>{{this}}</td>
+			
+			<td width="1"><a class="btn btn-primary" type="button" href="indicadores/{{indicador}}/{{nombre}}/{{this}}" value="Aplicar">Seleccionar</button></td>
+			
+		</tr>
+		{{/periodos}}
+	</tbody>
+</table>
+
+<!--
+<div class="row">
+  <div class="col-4">
+    <div class="list-group" id="list-tab" role="tablist">
+    {{#empresas}}
+      <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="indicadores/{{indicador}}/{{nombre}}" 
+      role="tab" aria-controls="home">{{nombre}}</a>
+    {{/empresas}}
+    </div>
+  </div>
+  <div class="col-8">
+    <div class="tab-content" id="nav-tabContent">
+    {{#empresas}}
+      <div class="tab-pane" id="{{nombre}}" role="tabpanel" aria-labelledby="list-home-list">{{nombre}}</div>
+      {{/empresas}}
+    </div>
+  </div>
+</div>
+-->
+{{/partial}}
+
+{{> layout.hbs }}

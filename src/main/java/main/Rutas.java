@@ -42,9 +42,13 @@ public class Rutas {
     get("/empresas/error", empresas::error, engine);
     post("/empresas", empresas::crear);
     get("/empresas/:id", empresas::mostrar, engine);
-    post("/empresas/:id", empresas::addCuenta, engine);
+    post("/empresas/:id", empresas::addCuenta, engine); 
     get("/indicadores", indicadores::listar, engine);
     post("/indicadores", indicadores::crear);
+    get("/indicadores/:indicador", indicadores::seleccionarEmpresa, engine);
+    get("/indicadores/:indicador/:empresa", indicadores::seleccionarPeriodo, engine);
+    get("/indicadores/:indicador/:empresa/:periodo", indicadores::aplicar, engine);
+    
     get("/indicadores/error", indicadores::error, engine);
   }
 
