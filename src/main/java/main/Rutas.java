@@ -8,6 +8,7 @@ import static spark.SparkBase.staticFileLocation;
 import controladores.EmpresasControlador;
 import controladores.HomeControlador;
 import controladores.IndicadoresControlador;
+import controladores.MetodologiasControlador;
 import controladores.LoginControlador;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -19,6 +20,7 @@ public class Rutas {
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     EmpresasControlador empresas = new EmpresasControlador();
     IndicadoresControlador indicadores = new IndicadoresControlador();
+    MetodologiasControlador metodologias = new MetodologiasControlador();
 
     port(8080);
     staticFileLocation("/public");
@@ -50,6 +52,10 @@ public class Rutas {
     get("/indicadores/:indicador/:empresa/:periodo", indicadores::aplicar, engine);
     
     get("/indicadores/error", indicadores::error, engine);
+  
+    get("/metodologias", metodologias::listar, engine);
+    get("/metodologias/:metodologia", metodologias::aplicar, engine);
+    
   }
 
 }
