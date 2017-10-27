@@ -19,13 +19,13 @@
 </form>
 
 
-<button type="button" style="float: right" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+<button type="button" style="float: right" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
 	Agregar Empresa
 </button>
 
 {{# partial "boton" }}
-
 <td width="1"><a class="btn btn-outline-danger my-2 my-sm-0" href="/empresas/{{nombre}}" role="button">Ver Cuentas</a></td>
+<td width="1"><a class="btn btn-outline-danger my-2 my-sm-0" href="/empresas/{{nombre}}/indicadores" role="button">Aplicar Indicador</a></td>
 {{/partial}}
 {{> empresas-layout.hbs}}
 
@@ -44,7 +44,7 @@
 					<input type="text" class="form-control" id="nuevaEmpresa" name="nuevaEmpresa" aria-describedby="emailHelp" placeholder="Ejemplo: FlixNet" required>
 					<small id="emailHelp" class="form-text text-muted">El nombre de tu empresa debe ser unico...como vos ;)</small>
 					<p id="feedback"></p>
-					<button type="submit" style="float: right" class="btn btn-success">Aceptar</button>
+					<button type="submit" style="float: right" class="btn btn-danger">Aceptar</button>
 				</div>
 			</form>
 		</div>

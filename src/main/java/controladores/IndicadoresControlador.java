@@ -1,5 +1,6 @@
 package controladores;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -73,10 +74,6 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 
 	    Indicador indicador = repo.indicadorDesdeString(nombreIndicador);
 	    
-	    System.out.println("empresa " + nombreEmpresa);
-	    
-	    System.out.println("indicador " + nombreIndicador);
-	    
 	    Empresa empresa = new RepositorioEmpresas().getLista().stream().filter(x -> x.getNombre()
 	    		.equals(nombreEmpresa)).collect(Collectors.toList()).get(0);
 	    
@@ -97,53 +94,33 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
     		response.redirect("/login");
     		return null;
     	}
-        System.out.println("111111111");
-	    
-	    String nombreIndicador = request.params(":indicador");
-	    System.out.println("2222222222");
 	    String nombreEmpresa = request.params(":empresa");
-
-	    System.out.println("nombre indicador " + nombreIndicador);
-	    
-	    Indicador indicador = repo.indicadorDesdeString(nombreIndicador);
-	    
-	    System.out.println("nombre indicador 2 " + indicador.getNombre());
 	    Empresa empresa = new RepositorioEmpresas().getLista().stream().filter(x -> x.getNombre()
-	    		.equals(nombreEmpresa)).collect(Collectors.toList()).get(0);
-	    List<String> posiblesPeriodos = empresa.getCuentas().stream().map( x -> x.getPeriodo()).collect(Collectors.toList());
+									    		   .equals(nombreEmpresa))
+	    										   .collect(Collectors.toList()).get(0);
+	    List<String> posiblesPeriodos = empresa.getCuentas().stream()
+	    									   .map( x -> x.getPeriodo())
+	    									   .collect(Collectors.toList());
+	    posiblesPeriodos.sort(Comparator.comparing(periodo -> Integer.valueOf(periodo)));
 	    
 	    HashMap<String, Object> viewModel = new HashMap<>();
-	    
-	    viewModel.put("indicador", indicador.getNombre());
-	    viewModel.put("formula", indicador.getFormula());
-	    viewModel.put("empresa", nombreEmpresa);
 	    viewModel.put("periodos", posiblesPeriodos);
-	    
 	    return new ModelAndView(viewModel, "seleccionar-periodo.hbs");
 	  }
 	
-	public ModelAndView seleccionarEmpresa(Request request, Response response) {
+	public ModelAndView seleccionarIndicador(Request request, Response response) {
 
 	   	String usuario = request.session().attribute("usuario");
     	if (usuario == null) {
     		response.redirect("/login");
     		return null;
     	}
-	    String nombre = request.params(":indicador");
-	    System.out.println("666666666666");
-	    
-	    System.out.println("nombre indicador en SE : " + nombre);
-	    
-	    Indicador indicador = repo.indicadorDesdeString(nombre);
-	    List<Empresa> empresas = new RepositorioEmpresas().getLista();
+	    String empresa = request.params(":empresa");
+	    repo = new RepositorioIndicadores(findIndicadores(usuario));
 	    HashMap<String, Object> viewModel = new HashMap<>();
-	    System.out.println("333333333");
-	    viewModel.put("indicador", indicador.getNombre());
-	    System.out.println("444444444");
-	    viewModel.put("formula", indicador.getFormula());
-	    viewModel.put("empresas", empresas);
-	    System.out.println("555555555");
-	    return new ModelAndView(viewModel, "seleccionar-empresa.hbs");
+	    viewModel.put("indicadores", repo.getLista());
+	    viewModel.put("empresa", empresa);
+	    return new ModelAndView(viewModel, "seleccionar-indicador.hbs");
 	  }
 	
 	public ModelAndView listar(Request request, Response response) {

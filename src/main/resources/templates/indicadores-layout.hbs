@@ -1,0 +1,50 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+<script src="validarDatosIndicador.js"></script>
+{{/partial}}
+
+{{# partial "contenido" }}	
+
+<h4>Busca tu empresa por nombre:</h4>
+
+<form action="/indicadores" >
+	<div class="row">
+		<div class="col-sm-11 text-center line">
+			<input class="form-control mr-sm-2" type="search" placeholder="Ejemplo: ROE" aria-label="Search" name="filtroNombre">
+		</div>
+		<div class="col-md-1">
+			<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>	
+		</div>
+	</div>
+</form>
+
+{{# block "agregar" }}
+{{/block}}	
+
+<table class="table" style="margin-top: 60px;">
+	<thead class="thead-inverse">
+		<tr>
+			<th>Indicador</th>
+			<th>Formula</th>
+			{{# block "accion" }}
+			{{/block}}	
+		</tr>
+	</thead>
+	<tbody>
+		{{#indicadores}}
+		<tr>
+			<td>{{nombre}}</td>
+			<td>{{formula}}</td>
+			{{# block "boton" }}
+			{{/block}}	
+		</tr>
+		{{/indicadores}}
+	</tbody>
+</table>
+
+{{# block "modal" }}
+{{/block}}
+
+{{/partial}}
+
+{{> layout.hbs }}
