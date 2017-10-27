@@ -87,6 +87,31 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	    return new ModelAndView(viewModel, "aplicar-indicador.hbs");
 	  }
 	
+	public ModelAndView mostrarResultadoIndicador(Request request, Response response) {
+
+	   	String usuario = request.session().attribute("usuario");
+    	if (usuario == null) {
+    		response.redirect("/login");
+    		return null;
+    	}
+    	
+	    String nombreEmpresa = request.params(":empresa");
+	    String periodo = request.params(":periodo");
+	    String nombreIndicador = request.params(":indicador");
+	    Empresa empresa = new RepositorioEmpresas().getLista().stream().filter(x -> x.getNombre()
+									    		   .equals(nombreEmpresa))
+	    										   .collect(Collectors.toList()).get(0);
+	    Indicador indicador = repo.getLista().stream().filter(x -> x.getNombre()
+	    		   .equals(nombreIndicador))
+				   .collect(Collectors.toList()).get(0);
+	    
+	    HashMap<String, Object> viewModel = new HashMap<>();
+	    viewModel.put("resultado", indicador.aplicarIndicador(periodo, empresa, repo));
+	    viewModel.put("indicador", indicador.getNombre());
+	    viewModel.put("empresa", nombreEmpresa);
+	    return new ModelAndView(viewModel, "mostrarResultadoIndicador.hbs");
+	  }
+	
 	public ModelAndView seleccionarPeriodo(Request request, Response response) {
 
 	   	String usuario = request.session().attribute("usuario");
@@ -95,6 +120,7 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
     		return null;
     	}
 	    String nombreEmpresa = request.params(":empresa");
+	    String nombreIndicador = request.params(":indicador");
 	    Empresa empresa = new RepositorioEmpresas().getLista().stream().filter(x -> x.getNombre()
 									    		   .equals(nombreEmpresa))
 	    										   .collect(Collectors.toList()).get(0);
@@ -105,6 +131,7 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	    
 	    HashMap<String, Object> viewModel = new HashMap<>();
 	    viewModel.put("periodos", posiblesPeriodos);
+	    viewModel.put("indicador", nombreIndicador);
 	    return new ModelAndView(viewModel, "seleccionar-periodo.hbs");
 	  }
 	

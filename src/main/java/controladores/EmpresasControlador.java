@@ -17,6 +17,7 @@ import spark.Request;
 import spark.Response;
 import validadores.ValidadorCuenta;
 import validadores.ValidadorEmpresa;
+import validadores.ValidadorUsuario;
 
 public class EmpresasControlador implements WithGlobalEntityManager, TransactionalOps {
 	
@@ -46,11 +47,11 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	  }
 
 	public ModelAndView listar(Request request, Response response) {
-    	String usuario = request.session().attribute("usuario");
-    	if (usuario == null) {
-    		response.redirect("/login");
-    		return null;
-    	}
+		return ValidadorUsuario.ChequearUsuarioLogeado(request, response) ? null
+				: listarEmpresas(request, response);
+	  }
+	
+	public ModelAndView listarEmpresas(Request request, Response response){
 	    List<Empresa> empresas;
 	    String filtroNombre = request.queryParams("filtroNombre");
 	    if (Objects.isNull(filtroNombre) || filtroNombre.isEmpty()) {
@@ -66,7 +67,7 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	    viewModel.put("filtroNombre", filtroNombre);
 
 	    return new ModelAndView(viewModel, "empresas.hbs");
-	  }
+	}
 
 	public ModelAndView mostrar(Request request, Response response) {
     	String usuario = request.session().attribute("usuario");

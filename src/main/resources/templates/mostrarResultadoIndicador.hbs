@@ -1,0 +1,26 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+<center> <h1>Seleccione el per&iacuteodo: </h1></center>
+<div class="form-group text-center">
+<img src="almanaque.png" width="300px" height="300px" style="opacity: 0.3; position: absolute;">
+</div>
+
+<form class="form-row align-items-center" action="empresas/{{empresa}}/indicadores/{{indicador}}/" method="POST">
+  <div class="form-group mx-sm-3">
+    <label for="inputPassword2" class="sr-only">Password</label>
+    <div id="select">
+<select class="form-control">
+	{{#periodos}}
+	  <option>{{this}}</option>
+	{{/periodos}}
+</select>
+  </div>
+  <button type="submit" class="btn btn-danger" style="margin-left: 15px;">Calcular</button>
+</form>
+
+{{/partial}}
+
+{{> layout.hbs }}
