@@ -36,6 +36,7 @@ public class Empresa {
 
 	public Empresa(String aName){
 		this.nombre = aName;
+		this.cuentas = new ArrayList<Cuenta>();
 	}
 
 	public List<Cuenta> getCuentas() {

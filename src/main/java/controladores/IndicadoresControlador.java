@@ -88,7 +88,6 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	  }
 	
 	public ModelAndView mostrarResultadoIndicador(Request request, Response response) {
-
 	   	String usuario = request.session().attribute("usuario");
     	if (usuario == null) {
     		response.redirect("/login");
@@ -130,6 +129,7 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	    posiblesPeriodos.sort(Comparator.comparing(periodo -> Integer.valueOf(periodo)));
 	    
 	    HashMap<String, Object> viewModel = new HashMap<>();
+	    viewModel.put("empresa", nombreEmpresa);
 	    viewModel.put("periodos", posiblesPeriodos);
 	    viewModel.put("indicador", nombreIndicador);
 	    return new ModelAndView(viewModel, "seleccionar-periodo.hbs");

@@ -50,7 +50,6 @@ public class Rutas {
     get("/empresas/:empresa/indicadores", indicadores::seleccionarIndicador, engine);
     get("/empresas/:empresa/indicadores/:indicador", indicadores::seleccionarPeriodo, engine);
     get("/empresas/:empresa/indicadores/:indicador/:periodo", indicadores::mostrarResultadoIndicador, engine);
-    
     get("/indicadores/error", indicadores::error, engine);
   
     get("/metodologias", metodologias::listar, engine);

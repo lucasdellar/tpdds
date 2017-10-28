@@ -44,7 +44,7 @@ public class LoginControlador {
 			return null;
 		  }
 		  if(!queryResult.get(0).getPassword().equals(password)){
-			  response.redirect("/login/error");
+			  response.redirect("/error");
 			  return null;
 		  }
 		  

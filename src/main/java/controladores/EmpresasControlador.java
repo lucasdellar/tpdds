@@ -86,29 +86,23 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	
 	public ModelAndView addCuenta(Request request, Response response) {
 		String nombre_empresa = request.queryParams("nombreEmpresa");
-		System.out.println("Nombre: " + nombre_empresa);
 		Empresa empresa = repoEmpresas.getEmpresa(nombre_empresa);
-		System.out.println("Nombre EMPRESA: " + empresa.getNombre());
 		List<Cuenta> empresa_cuentas = empresa.getCuentas();
 	    String nombre_cuenta = request.queryParams("nombreCuenta");
 	    String periodo = request.queryParams("periodoCuenta");
 	    String valor = request.queryParams("valorCuenta");
 	    
 	    ValidadorCuenta validador = new ValidadorCuenta();
-	    System.out.println("Nombre: " + nombre_cuenta + " ," + periodo + ", " + valor);
 	    if(validador.validarQueNoEsteYaCargarda(nombre_cuenta, periodo, empresa_cuentas)){
 	    	// El nombre ya est� en uso...
-	    	System.out.println("BBBBB");
 	    	response.redirect("/empresas/:id/error");
 	    	return null;
 	    }
-	    System.out.println("CCCCCC");
 	    withTransaction(() -> {
 	    	empresa.agregarCuenta(new Cuenta(nombre_cuenta, periodo, valor));
 	    	repoEmpresas.persistir(empresa);
 	    });
-	    System.out.println("DDDDDD");
-	    response.redirect("/empresas");
+	    response.redirect("/empresas/" + nombre_empresa);
 	    return null;
 	  }
 }

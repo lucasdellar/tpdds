@@ -3,23 +3,25 @@
 {{/partial}}
 
 {{# partial "contenido" }}
-<center> <h1>Seleccione el per&iacuteodo: </h1></center>
-<div class="form-group text-center">
-<img src="almanaque.png" width="300px" height="300px" style="opacity: 0.3; position: absolute;">
-</div>
-
-<form class="form-row align-items-center" action="empresas/{{empresa}}/indicadores/{{indicador}}/calcular" method="POST">
-  <div class="form-group mx-sm-3">
-    <label for="inputPassword2" class="sr-only">Password</label>
-    <div id="select">
-<select class="form-control">
-	{{#periodos}}
-	  <option>{{this}}</option>
-	{{/periodos}}
-</select>
-  </div>
-  <button type="submit" class="btn btn-danger" style="margin-left: 15px;">Calcular</button>
-</form>
+<center>	
+<h1 style="padding-top: 30px;">Seleccione el per&iacuteodo: </h1>
+</center>
+<table class="table" style="margin-top: 60px;">
+	<thead class="thead-inverse">
+		<tr>
+			<th>Per&iacuteodo</th>
+			<th width="1">Acci&oacuten</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#periodos}}
+		<tr>
+			<td>{{this}}</td>
+			<td width="1"><a class="btn btn-outline-danger my-2 my-sm-0" href="/empresas/{{empresa}}/indicadores/{{indicador}}/{{this}}" role="button">Calcular</a></td>
+		</tr>
+		{{/periodos}}
+	</tbody>
+</table>
 
 {{/partial}}
 

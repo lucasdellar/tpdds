@@ -2,25 +2,22 @@
 <title>Donde Invierto</title>
 {{/partial}}
 
-{{# partial "contenido" }}
-<center> <h1>Seleccione el per&iacuteodo: </h1></center>
-<div class="form-group text-center">
-<img src="almanaque.png" width="300px" height="300px" style="opacity: 0.3; position: absolute;">
+{{# partial "contenido" }}	
+
+<div class="jumbotron jumbotron-fluid" style="margin-top: 20px;">
+  <div class="container">
+  <center>
+    <h1 class="display-3">Su resultado es: <strong style="color: blue;">{{resultado}}</strong></h1>
+    <p class="lead"><u>Detalles</u>:</p>
+    <p class="lead">Empresa: <i>{{empresa}}</i> | Indicador: {{indicador}}</p>
+    <hr>
+    <p class="lead">Gracias por confiar en nosotros.</p>
+    <a class="btn btn-outline-danger my-2 my-sm-0" href="empresas/{{empresa}}/indicadores/{{indicador}}" role="button">Volver</a>
+    </center>
+  </div>
 </div>
 
-<form class="form-row align-items-center" action="empresas/{{empresa}}/indicadores/{{indicador}}/" method="POST">
-  <div class="form-group mx-sm-3">
-    <label for="inputPassword2" class="sr-only">Password</label>
-    <div id="select">
-<select class="form-control">
-	{{#periodos}}
-	  <option>{{this}}</option>
-	{{/periodos}}
-</select>
-  </div>
-  <button type="submit" class="btn btn-danger" style="margin-left: 15px;">Calcular</button>
-</form>
-
 {{/partial}}
+
 
 {{> layout.hbs }}
