@@ -33,7 +33,7 @@ public class MetodologiasControlador  implements WithGlobalEntityManager, Transa
 	String lastUser;
 	
 	public ModelAndView error(Request request, Response response) {
-	    return new ModelAndView(null, "indicador-error.hbs");
+	    return new ModelAndView(null, "metodologias-error.hbs");
 	  }
 	public ModelAndView aplicar(Request request, Response response) {
 

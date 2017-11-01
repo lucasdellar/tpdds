@@ -105,4 +105,18 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	    response.redirect("/empresas/" + nombre_empresa);
 	    return null;
 	  }
+	
+	public ModelAndView cuenta_error(Request request, Response response) {
+    	String usuario = request.session().attribute("usuario");
+    	if (usuario == null) {
+    		response.redirect("/login");
+    		return null;
+    	}
+    	
+	    String empresa = request.queryParams(":id");
+    	HashMap<String, Object> viewModel = new HashMap<>();
+ 	    viewModel.put("empresa", empresa);
+    	
+    	return new ModelAndView(viewModel, "cuenta-error.hbs");
+	  }
 }
