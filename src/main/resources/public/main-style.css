@@ -7,11 +7,6 @@ body {
   color: #5a5a5a;
 }
 
-#container {
-   min-height:100%;
-   position:relative;
-}
-
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
@@ -99,7 +94,6 @@ body {
 }
 
 footer{
-	position:absolute;
 	width: 100%;
 	bottom: 0;
 }
