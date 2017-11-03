@@ -48,33 +48,21 @@ public class Indicador {
 	public Indicador(String _nombre, String _formula){
 		this.nombre = _nombre;
 		this.formula = _formula;
-		// Esto no tiene que ir ac� pero es para ver si funciona.
 		Parser parser = new Parser(repositorioIndicadores);
 		this.formula_objetos = parser.obtenerExpresion(formula);
-		//----------------------------------------------------------
-		//repositorioIndicadores = new RepositorioIndicadores(); esto rompia por arena, dejarlo para cuando migremos.
 	}
 
 	public Indicador(String _nombre, String _formula, String _usuario){
 		this.nombre = _nombre;
 		this.formula = _formula;
 		this.usuario = _usuario;
-		// Esto no tiene que ir ac� pero es para ver si funciona.
 		Parser parser = new Parser(repositorioIndicadores);
 		this.formula_objetos = parser.obtenerExpresion(formula);
-		//----------------------------------------------------------
-		//repositorioIndicadores = new RepositorioIndicadores(); esto rompia por arena, dejarlo para cuando migremos.
 	}
 	
 	
 	
 	public Double aplicarIndicador(String periodo, Empresa unaEmpresa, RepositorioIndicadores repo){
-//		repositorioIndicadores = repo;
-//		formula = formula.replaceAll("\\s+","");
-//		String cuentaLiteralMatematica = reemplazarPorLasCuentas( filtrarCuentasPorAnio(unaEmpresa.getCuentas(), periodo));
-//		cuentaLiteralMatematica = reemplazarPorLosIndicadores(cuentaLiteralMatematica, periodo, unaEmpresa);
-//		if(!parser.Parser.chequearQueQuedenSoloNumeros(cuentaLiteralMatematica))
-//			throw new IndicadorInvalidoException("Se esta utilizando un indicador sobre una empresa con datos insuficientes.");
 		return formula_objetos.calcular(unaEmpresa, periodo);
 	}
 

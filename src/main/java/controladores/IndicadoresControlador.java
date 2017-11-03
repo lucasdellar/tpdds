@@ -17,6 +17,7 @@ import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
+import domain.DomainExceptions.IndicadorInvalidoException;
 import empresas.Empresa;
 import model.Indicador;
 import repositorios.RepositorioEmpresas;
@@ -25,6 +26,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import validadores.ValidadorIndicadores;
+import validadores.ValidadorUsuario;
 
 public class IndicadoresControlador implements WithGlobalEntityManager, TransactionalOps {
 	
@@ -38,7 +40,23 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	}
 	
 	public ModelAndView error(Request request, Response response) {
-	    return new ModelAndView(null, "indicador-error.hbs");
+		return ValidadorUsuario.ChequearUsuarioLogeado(request, response) ? null
+				: new ModelAndView(null, "indicador-error.hbs");
+	  }
+	
+	public ModelAndView error_aplicar(Request request, Response response) {
+	   	String usuario = request.session().attribute("usuario");    	
+		if (usuario == null) {
+    		response.redirect("/login");
+    		return null;
+    	}
+	    String nombreEmpresa = request.params(":empresa");
+	    String nombreIndicador = request.params(":indicador");
+	    
+	    HashMap<String, Object> viewModel = new HashMap<>();
+	    viewModel.put("indicador", nombreIndicador);
+	    viewModel.put("empresa", nombreEmpresa);
+	    return new ModelAndView(viewModel, "indicador-aplicar-error.hbs");
 	  }
 	
 	public Void crear(Request request, Response response) {
@@ -97,6 +115,7 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	    String nombreEmpresa = request.params(":empresa");
 	    String periodo = request.params(":periodo");
 	    String nombreIndicador = request.params(":indicador");
+	    Double resultado;
 	    Empresa empresa = new RepositorioEmpresas().getLista().stream().filter(x -> x.getNombre()
 									    		   .equals(nombreEmpresa))
 	    										   .collect(Collectors.toList()).get(0);
@@ -104,8 +123,16 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	    		   .equals(nombreIndicador))
 				   .collect(Collectors.toList()).get(0);
 	    
+	    try{
+	    	resultado = indicador.aplicarIndicador(periodo, empresa, repo);
+	    }catch(IndicadorInvalidoException e){
+    		response.redirect("/empresas/"+nombreEmpresa+"/indicadores/"+nombreIndicador+"/"+periodo+"/error");
+    		return null;
+	    }
+	    
 	    HashMap<String, Object> viewModel = new HashMap<>();
-	    viewModel.put("resultado", indicador.aplicarIndicador(periodo, empresa, repo));
+	    
+	    viewModel.put("resultado", resultado);
 	    viewModel.put("indicador", indicador.getNombre());
 	    viewModel.put("empresa", nombreEmpresa);
 	    return new ModelAndView(viewModel, "mostrarResultadoIndicador.hbs");

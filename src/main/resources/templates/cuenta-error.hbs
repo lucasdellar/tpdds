@@ -1,7 +1,7 @@
 {{# partial "titulo" }}	
 <title>D&oacutende Invierto</title>
 <link rel="icon" href="../logo.png">
-<script src="../validarDatosEmpresa.js"></script>
+<script src="../validarDatosCuenta.js"></script>
 {{/partial}}
 
 {{# partial "contenido" }}
@@ -27,9 +27,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="/empresas/{{nombre}}" id="needs-validation" method="POST" onSubmit="return validarDatos();" novalidate>
+        <form action="/empresas/{{empresa}}" id="needs-validation" method="POST" onSubmit="return validarDatos();" novalidate>
          <label>Empresa: </label>
-         <input type="text" readonly class="form-control" id="nombreEmpresa" name="nombreEmpresa" value="{{nombre}}" required>
+         <input type="text" readonly class="form-control" id="nombreEmpresa" name="nombreEmpresa" value="{{empresa}}" required>
          <label>Nombre de la cuenta: </label>
          <input type="text" class="form-control" id="nombreCuenta" name="nombreCuenta" aria-describedby="emailHelp" placeholder="Ejemplo: ROE" pattern="[a-zA-Z0-9\s]+" required>
          <small id="emailHelp" class="form-text text-muted">Recuerde que no puede haber dos cuentas con el mismo nombre en el mismo periodo..</small>

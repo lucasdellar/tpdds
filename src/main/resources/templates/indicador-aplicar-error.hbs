@@ -1,0 +1,17 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+<link rel="icon" href="../logo.png">
+{{/partial}}
+
+{{# partial "contenido" }}
+<div class="alert alert-danger" role="alert">
+	<h4 class="alert-heading">Ups!</h4>
+	<p>Se intent&oacute calcular un indicador con cuentas en un per&iacuteodo que la empresa no posee.</p>
+	<hr>
+	<p class="mb-0">Quer&eacutes volver a intentarlo?</p>
+	<a class="btn btn-primary" href="/empresas/{{empresa}}/indicadores/{{indicador}}" role="button">Volver atr&aacutes</a>
+</div>
+
+{{/partial}}
+
+{{> layout.hbs }}

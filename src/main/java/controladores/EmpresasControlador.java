@@ -95,7 +95,7 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	    ValidadorCuenta validador = new ValidadorCuenta();
 	    if(validador.validarQueNoEsteYaCargarda(nombre_cuenta, periodo, empresa_cuentas)){
 	    	// El nombre ya est� en uso...
-	    	response.redirect("/empresas/:id/error");
+	    	response.redirect("/empresas/" + nombre_empresa + "/error");
 	    	return null;
 	    }
 	    withTransaction(() -> {
@@ -113,7 +113,7 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
     		return null;
     	}
     	
-	    String empresa = request.queryParams(":id");
+	    String empresa = request.params(":id");
     	HashMap<String, Object> viewModel = new HashMap<>();
  	    viewModel.put("empresa", empresa);
     	

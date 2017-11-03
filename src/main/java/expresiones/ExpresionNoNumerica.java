@@ -47,8 +47,10 @@ public class ExpresionNoNumerica extends Expresion{
 						.get(0).aplicarIndicador(unPeriodo, unaEmpresa, repo);
 			}
 			} catch (IndexOutOfBoundsException e) {
-			throw new IndicadorInvalidoException("Se esta utilizando un indicador sobre una empresa con datos insuficientes.");
-		}
+				throw new IndicadorInvalidoException("Se esta utilizando un indicador sobre una empresa con datos insuficientes.");
+			} catch (NullPointerException e){
+				throw new IndicadorInvalidoException("Se esta utilizando un indicador sobre una empresa con datos insuficientes.");	
+			}
 	}
 	
 	Boolean esLaCuenta(Cuenta unaCuenta, String unPeriodo){

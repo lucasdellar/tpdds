@@ -79,7 +79,7 @@ public class MetodologiasControlador  implements WithGlobalEntityManager, Transa
 	    HashMap<String, Object> viewModel = new HashMap<>();
 	    viewModel.put("metodologias", repo.getLista());
 
-	    return new ModelAndView(viewModel, "metologias.hbs");
+	    return new ModelAndView(viewModel, "metodologias.hbs");
 	  }
 	
 }
