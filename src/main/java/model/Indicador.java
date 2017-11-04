@@ -35,6 +35,7 @@ public class Indicador {
 	private String nombre;
 	@Column(name = "formula")
 	private String formula;
+	@JoinColumn(name = "usuario")
 	@Column(name = "usuario")
 	private String usuario;
 	@JoinColumn(name = "formula_objetos")
@@ -63,7 +64,7 @@ public class Indicador {
 	
 	
 	public Double aplicarIndicador(String periodo, Empresa unaEmpresa, RepositorioIndicadores repo){
-		return formula_objetos.calcular(unaEmpresa, periodo);
+		return formula_objetos.calcular(unaEmpresa, periodo, repo);
 	}
 
 

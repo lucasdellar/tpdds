@@ -70,7 +70,7 @@ public class Parser {
 		
 		return exp.matches(".*\\d+.*") ?
 			 new ExpresionNumero(Double.parseDouble(exp)) 
-			: new ExpresionNoNumerica(exp, repo); 
+			: new ExpresionNoNumerica(exp); 
 	}
 	
 	private int posicion_ultimo_operador(String formula){

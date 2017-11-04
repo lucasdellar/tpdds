@@ -25,6 +25,7 @@ import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import OperacionesMatematicas.Operador;
 import empresas.Empresa;
+import repositorios.RepositorioIndicadores;
 
 @Entity
 @Table(name="ExpresionesCompuestas")
@@ -48,8 +49,8 @@ public class ExpresionCompuesta extends Expresion {
 		this.segundaExpresion = otraExpresion;
 	}
 	
-	public double calcular(Empresa unaEmpresa, String unPeriodo){
-		return operador.calcular(primeraExpresion.calcular(unaEmpresa, unPeriodo),
-								 segundaExpresion.calcular(unaEmpresa, unPeriodo));
+	public double calcular(Empresa unaEmpresa, String unPeriodo, RepositorioIndicadores repo){
+		return operador.calcular(primeraExpresion.calcular(unaEmpresa, unPeriodo, repo),
+								 segundaExpresion.calcular(unaEmpresa, unPeriodo, repo));
 	}
 }

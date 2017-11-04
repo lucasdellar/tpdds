@@ -8,6 +8,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import empresas.Empresa;
+import repositorios.RepositorioIndicadores;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -15,6 +16,6 @@ public abstract class Expresion{
 	
 	@Id@GeneratedValue(strategy=GenerationType.TABLE)
 	long id;
-	public abstract double calcular(Empresa empresa, String periodo);
+	public abstract double calcular(Empresa empresa, String periodo, RepositorioIndicadores repo);
 	
 }

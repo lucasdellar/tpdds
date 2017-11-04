@@ -22,17 +22,14 @@ public class ExpresionNoNumerica extends Expresion{
 
 	@Column(name = "nombreIdentificador")
 	String nombreIdentificador;
-	@Transient
-	RepositorioIndicadores repo;
 	
 	private ExpresionNoNumerica(){}
 	
-	public ExpresionNoNumerica(String identificador, RepositorioIndicadores repo){
+	public ExpresionNoNumerica(String identificador){
 		this.nombreIdentificador= identificador;
-		this.repo = repo;
 	}
 	
-	public double calcular(Empresa unaEmpresa, String unPeriodo){
+	public double calcular(Empresa unaEmpresa, String unPeriodo, RepositorioIndicadores repo){
 		try {
 			if(unaEmpresa.getCuentas().stream().anyMatch(unaCuenta -> esLaCuenta(unaCuenta, unPeriodo))){
 			String valor = unaEmpresa.getCuentas().stream()

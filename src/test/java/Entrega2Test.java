@@ -90,7 +90,7 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 	@Test
 	public void parsearFormulaSoloNumeros(){
 		Expresion exp = parser.obtenerExpresion("10 * 10 + 2 / 2");
-		Assert.assertEquals(51, exp.calcular(null, null), 0);
+		Assert.assertEquals(51, exp.calcular(null, null, null), 0);
 	}
 	
 	@Test
@@ -100,7 +100,7 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		unaEmpresa.cuentas = new ArrayList<>();
 		unaEmpresa.agregarCuenta(new Cuenta("ROE", "1454", "20"));
 		
-		Assert.assertEquals(200, exp.calcular(unaEmpresa, "1454"), 0);
+		Assert.assertEquals(200, exp.calcular(unaEmpresa, "1454", repo), 0);
 	}
 	
 	@Test
@@ -110,8 +110,8 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		unaEmpresa.cuentas = new ArrayList<>();
 		unaEmpresa.agregarCuenta(new Cuenta("patrimonio", "2017", "100"));
 		
-		Expresion expresion = new ExpresionNoNumerica("patrimonio", repo);
-		Assert.assertEquals(100, expresion.calcular(unaEmpresa, "2017"), 0);
+		Expresion expresion = new ExpresionNoNumerica("patrimonio");
+		Assert.assertEquals(100, expresion.calcular(unaEmpresa, "2017", repo), 0);
 	}
 
 	@Test (expected = IndicadorInvalidoException.class)
@@ -121,8 +121,8 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		unaEmpresa.cuentas = new ArrayList<>();
 		unaEmpresa.agregarCuenta(new Cuenta("patrimonio", "2017", "100"));
 		
-		Expresion expresion = new ExpresionNoNumerica("fondos", repo);
-		Assert.assertEquals(100, expresion.calcular(unaEmpresa, "2017"), 0);
+		Expresion expresion = new ExpresionNoNumerica("fondos");
+		Assert.assertEquals(100, expresion.calcular(unaEmpresa, "2017", repo), 0);
 	}
 	
 	@Test
@@ -136,10 +136,10 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		
 		Expresion expresion1 = new ExpresionNumero(10);
 		Operador operador = Operador.MULTIPLICACION;
-		Expresion expresion2 = new ExpresionNoNumerica("USS", repo);
+		Expresion expresion2 = new ExpresionNoNumerica("USS");
 		Expresion expresionCompuesta = new ExpresionCompuesta(expresion1, operador, expresion2);
 		
-		Assert.assertEquals(1000, expresionCompuesta.calcular(unaEmpresa, "2000"), 0);
+		Assert.assertEquals(1000, expresionCompuesta.calcular(unaEmpresa, "2000", repo), 0);
 	}
 	
 	@Test 
@@ -155,7 +155,7 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		Operador operadorSum = Operador.SUMA;
 		Operador operadorRes = Operador.RESTA;
 		Expresion expresion_10 = new ExpresionNumero(10);
-		Expresion expresion_1000 = new ExpresionNoNumerica("USS", repo);
+		Expresion expresion_1000 = new ExpresionNoNumerica("USS");
 		Expresion expresion_500 = new ExpresionNumero(500);
 		Expresion expresion_3 = new ExpresionNumero(3);
 		Expresion expresionCompuesta = new ExpresionCompuesta(expresion_10, operadorMul, expresion_1000);
@@ -164,7 +164,7 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		Expresion expresionSuperCompuesta = 
 				new ExpresionCompuesta(expresionCompuesta, operadorSum, expresionCompuesta2);
 		
-		Assert.assertEquals(1497, expresionSuperCompuesta.calcular(unaEmpresa, "1988"), 0);
+		Assert.assertEquals(1497, expresionSuperCompuesta.calcular(unaEmpresa, "1988", repo), 0);
 	}
 	
 	@Test
@@ -175,7 +175,7 @@ public class Entrega2Test extends AbstractPersistenceTest implements WithGlobalE
 		unaEmpresa.cuentas = new ArrayList<>();
 		unaEmpresa.agregarCuenta(new Cuenta("USS", "1988", "100"));
 
-		Assert.assertEquals(11350, exp.calcular(unaEmpresa, "1988"), 0);
+		Assert.assertEquals(11350, exp.calcular(unaEmpresa, "1988", repo), 0);
 	}
 	
 //	@Test

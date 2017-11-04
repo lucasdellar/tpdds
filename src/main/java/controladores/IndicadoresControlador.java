@@ -123,6 +123,8 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	    		   .equals(nombreIndicador))
 				   .collect(Collectors.toList()).get(0);
 	    
+	    System.out.println("Pudo encontrar el indicador ? " + repo.indicadorDesdeString("ROA").getFormula());
+	    
 	    try{
 	    	resultado = indicador.aplicarIndicador(periodo, empresa, repo);
 	    }catch(IndicadorInvalidoException e){
