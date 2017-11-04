@@ -55,8 +55,8 @@ public class Rutas {
     get("/indicadores/error", indicadores::error, engine);
   
     get("/metodologias", metodologias::listar, engine);
-    get("/metodologias/:metodologia", metodologias::aplicar, engine);
-    
+    get("/metodologias/:metodologia", metodologias::seleccionarEmpresas, engine);
+    post("/metodologias", metodologias::agregar, engine);
   }
 
 }
