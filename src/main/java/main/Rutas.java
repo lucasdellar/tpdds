@@ -56,7 +56,8 @@ public class Rutas {
   
     get("/metodologias", metodologias::listar, engine);
     get("/metodologias/:metodologia", metodologias::seleccionarEmpresas, engine);
-    post("/metodologias", metodologias::agregar, engine);
+    post("/metodologias/:metodologia", metodologias::agregarEmpresa);
+    get("/metodologias/:metodologia/resultado", metodologias::aplicar, engine);
   }
 
 }

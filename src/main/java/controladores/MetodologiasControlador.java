@@ -3,22 +3,14 @@ package controladores;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
-
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import empresas.Empresa;
-import model.Indicador;
+import empresas.EmpresaRankeada;
+import model.Metodologia;
 import repositorios.RepositorioEmpresas;
 import repositorios.RepositorioIndicadores;
 import repositorios.RepositorioMetodologias;
@@ -36,32 +28,13 @@ public class MetodologiasControlador  implements WithGlobalEntityManager, Transa
 	List<Empresa> empresasNoSeleccionadas;
 	
 	public MetodologiasControlador() {
-		empresasSeleccionadas = new ArrayList<Empresa>();
+		empresasSeleccionadas = new RepositorioEmpresas().getLista();
 		empresasNoSeleccionadas = new ArrayList<Empresa>();
 	}
 	
 	public ModelAndView error(Request request, Response response) {
 	    return new ModelAndView(null, "metodologias-error.hbs");
 	  }
-	public ModelAndView seleccionarEmpresas(Request request, Response response) {
-
-	   	String usuario = request.session().attribute("usuario");
-    	if (usuario == null) {
-    		response.redirect("/login");
-    		return null;
-    	}
-    	
-	    
-    	String metodologia = request.params(":metodologia");
-	    HashMap<String, Object> viewModel = new HashMap<>();
-
-	    
-	    viewModel.put("empresasNoSeleccionadas", empresasNoSeleccionadas);
-	    viewModel.put("empresasSeleccionadas", empresasSeleccionadas);
-	    viewModel.put("metodologia", metodologia);
-	    return new ModelAndView(viewModel, "aplicar-indicador.hbs");
-	  }
-	
 	
 	public ModelAndView listar(Request request, Response response) {
     	String usuario = request.session().attribute("usuario");
@@ -69,29 +42,71 @@ public class MetodologiasControlador  implements WithGlobalEntityManager, Transa
     		response.redirect("/login");
     		return null;
     	}
-
+    	empresasNoSeleccionadas = new RepositorioEmpresas().getLista();
+    	empresasSeleccionadas = new ArrayList<>();
     	RepositorioMetodologias repo = new RepositorioMetodologias();
-    	List<Empresa> empresas = new RepositorioEmpresas().getLista();
 	    HashMap<String, Object> viewModel = new HashMap<>();
 	    viewModel.put("metodologias", repo.getLista());
-	    viewModel.put("empresas", empresas);
-	    empresasNoSeleccionadas = new RepositorioEmpresas().getLista();
-	    return new ModelAndView(viewModel, "metodologias.hbs");
+	    return new ModelAndView(viewModel, "seleccionar-metodologia.hbs");
 	  }
 	
-	public ModelAndView agregar(Request request, Response response) {
+	public ModelAndView seleccionarEmpresas(Request request, Response response) {
+	   	String usuario = request.session().attribute("usuario");
+    	if (usuario == null) {
+    		response.redirect("/login");
+    		return null;
+    	}
+    	
+    	String metodologia = request.params(":metodologia");
+    	
+	    HashMap<String, Object> viewModel = new HashMap<>();
+	    viewModel.put("empresasNoSeleccionadas", empresasNoSeleccionadas);
+	    viewModel.put("empresasSeleccionadas", empresasSeleccionadas);
+	    viewModel.put("metodologia", metodologia);
+	    return new ModelAndView(viewModel, "seleccionar-empresas.hbs");
+	  }
+	
+	public ModelAndView agregarEmpresa(Request request, Response response) {
     	String usuario = request.session().attribute("usuario");
     	if (usuario == null) {
     		response.redirect("/login");
     		return null;
     	}
+    	String metodologia = request.params("metodologia");
     	String empresa = request.queryParams("empresa");
-    	System.out.println("---------->" + empresa);
-    	RepositorioMetodologias repo = new RepositorioMetodologias();
-    	List<Empresa> empresas = new RepositorioEmpresas().getLista();
+    	int index = 0;
+    	
+    	if(empresa.isEmpty())
+    		response.redirect("metodologias/" + metodologia);
+    	
+    	for(Empresa unaEmpresa : empresasNoSeleccionadas){
+    		if(unaEmpresa.getNombre().equals(empresa)){
+    			index = empresasNoSeleccionadas.indexOf(unaEmpresa);
+    			empresasNoSeleccionadas.remove(unaEmpresa);
+    			empresasSeleccionadas.add(unaEmpresa);
+    			break;
+    		}
+    	}
+    	
+	    response.redirect("metodologias/" + metodologia);
+	    return null;
+	  }
+	
+	public ModelAndView aplicar(Request request, Response response) {
+    	String usuario = request.session().attribute("usuario");
+    	if (usuario == null) {
+    		response.redirect("/login");
+    		return null;
+    	}
+    	String nombre = request.params("metodologia");
+    	Metodologia metodologia = new RepositorioMetodologias().getLista().stream().
+    								  filter(unaMetodologia -> unaMetodologia.getNombre().equals(nombre))
+    								  .collect(Collectors.toList())
+    								  .get(0);
+    	List<EmpresaRankeada> resultado = metodologia.aplicar(empresasSeleccionadas);
 	    HashMap<String, Object> viewModel = new HashMap<>();
-	    viewModel.put("empresa", empresa);
-	    return new ModelAndView(viewModel, "prueba.hbs");
+	    viewModel.put("empresas", resultado);
+	    return new ModelAndView(viewModel, "mostrar-resultado.hbs");
 	  }
 	
 }

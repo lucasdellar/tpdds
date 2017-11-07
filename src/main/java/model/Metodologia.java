@@ -45,7 +45,7 @@ public class Metodologia {
 		this.condiciones_prioritarias = condiciones_prioritarias;
 	}
 
-	public List<EmpresaRankeada> aplicarMetodologia(List<Empresa> empresas){
+	public List<EmpresaRankeada> aplicar(List<Empresa> empresas){
 		List<EmpresaRankeada> misEmpresas = new ArrayList<EmpresaRankeada>();
 		inicializarEmpresasRankeadas(misEmpresas, empresas); 
 		misEmpresas = filtrar_empresas(misEmpresas);

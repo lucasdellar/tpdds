@@ -5,26 +5,23 @@
 
 {{# partial "contenido" }}	
 
+<h1> Seleccione una metodolog&iacutea</h1>
+
 <table class="table" style="margin-top: 60px;">
 	<thead class="thead-inverse">
 		<tr>
-			<th>Empresa</th>
+			<th>Metodolog&iacutea</th>
 			<th width="1">Acciones</th>
-			<th></th>
 		</tr>
 	</thead>
 	<tbody>
-		{{#empresas}}
+		{{#metodologias}}
 		<tr>
-		<form action="/metodologias" method="POST" >
-			<td><input class="form-control mr-sm-2" type="text" value={{nombre}} name="empresa" id="empresa" readonly></td>
-			<td>
-			<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Agregar</button>	
-			</form></div>
-</form></td>
-			
+		
+			<td>{{nombre}}</td>
+			<td width="1"><a class="btn btn-outline-danger my-2 my-sm-0" href="/metodologias/{{nombre}}" role="button">Seleccionar</a></td>
 		</tr>
-		{{/empresas}}
+		{{/metodologias}}
 	</tbody>
 </table>
 

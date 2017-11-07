@@ -231,8 +231,8 @@ public class Entrega3Test {
 		
 		List<Empresa> empresas = obtenerEmpresasParaMetodologia();
 
-		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).size(), 1);
-		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(0).getEmpresa().getNombre(), "testEmpresa3");
+		Assert.assertEquals(metodologia.aplicar(empresas).size(), 1);
+		Assert.assertEquals(metodologia.aplicar(empresas).get(0).getEmpresa().getNombre(), "testEmpresa3");
 	}
 	
 	@Test
@@ -279,9 +279,9 @@ public class Entrega3Test {
 		
 		List<Empresa> empresas = obtenerEmpresasParaMetodologia();
 		
-		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(0).getEmpresa().getNombre(), "testEmpresa3");
-		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(1).getEmpresa().getNombre(), "testEmpresa2");
-		Assert.assertEquals(metodologia.aplicarMetodologia(empresas).get(2).getEmpresa().getNombre(), "testEmpresa1");
+		Assert.assertEquals(metodologia.aplicar(empresas).get(0).getEmpresa().getNombre(), "testEmpresa3");
+		Assert.assertEquals(metodologia.aplicar(empresas).get(1).getEmpresa().getNombre(), "testEmpresa2");
+		Assert.assertEquals(metodologia.aplicar(empresas).get(2).getEmpresa().getNombre(), "testEmpresa1");
 	}
 	
 	/* ********************************************* TESTS DE CRITERIOS ************************************************** */	
