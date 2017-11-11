@@ -1,6 +1,7 @@
 package expresiones;
 
 import empresas.Empresa;
+import model.Cuenta;
 import repositorios.RepositorioIndicadores;
 
 import java.util.stream.Collectors;
@@ -13,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import domain.Cuenta;
 import domain.DomainExceptions.IndicadorInvalidoException;
 
 @Entity
@@ -22,17 +22,14 @@ public class ExpresionNoNumerica extends Expresion{
 
 	@Column(name = "nombreIdentificador")
 	String nombreIdentificador;
-	@Transient
-	RepositorioIndicadores repo;
 	
 	private ExpresionNoNumerica(){}
 	
-	public ExpresionNoNumerica(String identificador, RepositorioIndicadores repo){
+	public ExpresionNoNumerica(String identificador){
 		this.nombreIdentificador= identificador;
-		this.repo = repo;
 	}
 	
-	public double calcular(Empresa unaEmpresa, String unPeriodo){
+	public double calcular(Empresa unaEmpresa, String unPeriodo, RepositorioIndicadores repo){
 		try {
 			if(unaEmpresa.getCuentas().stream().anyMatch(unaCuenta -> esLaCuenta(unaCuenta, unPeriodo))){
 			String valor = unaEmpresa.getCuentas().stream()
@@ -47,8 +44,10 @@ public class ExpresionNoNumerica extends Expresion{
 						.get(0).aplicarIndicador(unPeriodo, unaEmpresa, repo);
 			}
 			} catch (IndexOutOfBoundsException e) {
-			throw new IndicadorInvalidoException("Se esta utilizando un indicador sobre una empresa con datos insuficientes.");
-		}
+				throw new IndicadorInvalidoException("Se esta utilizando un indicador sobre una empresa con datos insuficientes.");
+			} catch (NullPointerException e){
+				throw new IndicadorInvalidoException("Se esta utilizando un indicador sobre una empresa con datos insuficientes.");	
+			}
 	}
 	
 	Boolean esLaCuenta(Cuenta unaCuenta, String unPeriodo){

@@ -3,8 +3,8 @@ package criterios;
 import javax.persistence.Entity;
 
 import comparadores.Comparador;
-import domain.Valor;
 import empresas.Empresa;
+import model.Valor;
 
 @Entity
 public class PorValor extends Criterio {

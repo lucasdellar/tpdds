@@ -8,9 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import comparadores.Comparador;
-import domain.Valor;
 import domain.DomainExceptions.CriterioParaCondicionIncorrectaException;
 import empresas.Empresa;
+import model.Valor;
 
 @Entity
 public class NAnios extends Criterio{

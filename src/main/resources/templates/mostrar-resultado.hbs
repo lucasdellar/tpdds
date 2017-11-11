@@ -1,0 +1,27 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+<script src="validarDatosEmpresa.js"></script>
+{{/partial}}
+
+{{# partial "contenido" }}	
+
+<h1> Seleccione una metodolog&iacutea</h1>
+
+<div class="jumbotron jumbotron-fluid" style="margin-top: 20px;">
+  <div class="container">
+  <center>
+    <h1 class="display-3">El ranking de empresas es:</h1>
+    {{#empresas}}
+    <p class="lead">Empresa: <i>{{empresa}}</i> | Ranking: {{ranking}}</p>
+    <hr>
+    {{/empresas}}
+    <p class="lead">Gracias por confiar en nosotros.</p>
+    <a class="btn btn-outline-danger my-2 my-sm-0" href="/" role="button">Volver</a>
+    </center>
+  </div>
+</div>
+
+{{/partial}}
+
+
+{{> layout.hbs }}

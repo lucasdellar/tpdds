@@ -53,11 +53,12 @@ public class Parser {
 		return new ExpresionCompuesta(obtenerExpresion(expresion_1), unOperador, expresion_2);
 	}
 	
-	public static void verificarFormato(String posibleCuenta){
-		
+	public static boolean verificarFormato(String posibleCuenta){
+
 		String cuentaRegex = "\\s*[\\da-zA-Z]+\\s*([+-/\\*]\\s*[\\da-zA-Z]+\\s*)*$";
 		if(!posibleCuenta.matches(cuentaRegex)) 
-			throw new ParserException("Formato incorrecto");
+			return false;
+		return true;
 	}
 	
 	
@@ -69,7 +70,7 @@ public class Parser {
 		
 		return exp.matches(".*\\d+.*") ?
 			 new ExpresionNumero(Double.parseDouble(exp)) 
-			: new ExpresionNoNumerica(exp, repo); 
+			: new ExpresionNoNumerica(exp); 
 	}
 	
 	private int posicion_ultimo_operador(String formula){

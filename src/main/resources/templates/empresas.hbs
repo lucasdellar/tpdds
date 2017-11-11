@@ -1,0 +1,58 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+<script src="validarDatosEmpresa.js"></script>
+{{/partial}}
+
+{{# partial "contenido" }}	
+
+<h4>Busca tu empresa por nombre:</h4>
+
+<form action="/empresas" >
+	<div class="row">
+		<div class="col-sm-11 text-center line">
+			<input class="form-control mr-sm-2" type="search" placeholder="Ejemplo: Huber" aria-label="Search" name="filtroNombre">
+		</div>
+		<div class="col-md-1">
+			<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>	
+		</div>
+	</div>
+</form>
+
+
+<button type="button" style="float: right" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+	Agregar Empresa
+</button>
+
+{{# partial "boton" }}
+<td width="1"><a class="btn btn-outline-danger my-2 my-sm-0" href="/empresas/{{nombre}}" role="button">Ver Cuentas</a></td>
+<td width="1"><a class="btn btn-outline-danger my-2 my-sm-0" href="/empresas/{{nombre}}/indicadores" role="button">Aplicar Indicador</a></td>
+{{/partial}}
+{{> empresas-layout.hbs}}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Agregar Empresa</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="/empresas" id="needs-validation" method="POST" onSubmit="return validarDatos();" novalidate>
+					<label for="exampleInputEmail1">Nombre de la empresa</label>
+					<input type="text" class="form-control" id="nuevaEmpresa" name="nuevaEmpresa" aria-describedby="emailHelp" placeholder="Ejemplo: FlixNet" required>
+					<small id="emailHelp" class="form-text text-muted">El nombre de tu empresa debe ser unico...como vos ;)</small>
+					<p id="feedback"></p>
+					<button type="submit" style="float: right" class="btn btn-danger">Aceptar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+
+{{/partial}}
+
+
+{{> layout.hbs }}

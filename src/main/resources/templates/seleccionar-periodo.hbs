@@ -1,0 +1,28 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+<center>	
+<h1 style="padding-top: 30px;">Seleccione el per&iacuteodo: </h1>
+</center>
+<table class="table" style="margin-top: 60px;">
+	<thead class="thead-inverse">
+		<tr>
+			<th>Per&iacuteodo</th>
+			<th width="1">Acci&oacuten</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#periodos}}
+		<tr>
+			<td>{{this}}</td>
+			<td width="1"><a class="btn btn-outline-danger my-2 my-sm-0" href="/empresas/{{empresa}}/indicadores/{{indicador}}/{{this}}" role="button">Calcular</a></td>
+		</tr>
+		{{/periodos}}
+	</tbody>
+</table>
+
+{{/partial}}
+
+{{> layout.hbs }}

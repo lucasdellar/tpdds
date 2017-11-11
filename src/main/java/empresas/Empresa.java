@@ -6,21 +6,19 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.Table;
 
 import org.uqbar.commons.utils.Observable;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
-import domain.Cuenta;
+import model.Cuenta;
 
 @Observable
+@Table(name = "Empresas")
 @Entity
 public class Empresa {
 
@@ -38,6 +36,7 @@ public class Empresa {
 
 	public Empresa(String aName){
 		this.nombre = aName;
+		this.cuentas = new ArrayList<Cuenta>();
 	}
 
 	public List<Cuenta> getCuentas() {
@@ -58,17 +57,9 @@ public class Empresa {
 	
 	public void agregarCuenta(Cuenta unaCuenta){
 		cuentas.add(unaCuenta); 
-//		EntityManager manager = PerThreadEntityManagers.getEntityManager();
-//		EntityTransaction tx = manager.getTransaction();
-//		tx.begin();
-//		manager.clear();
-//		manager.persist(this);
-//		tx.commit();
 	}
-
-	/* public void addPropertyChangeListener(PropertyChangeListener listener) {
-		   propertyChangeSupport.addPropertyChangeListener(listener);
-	}*/
 	
-	
+	public long getId() {
+		return id;
+	 }
 }

@@ -1,0 +1,23 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+{{/partial}}
+
+{{# partial "contenido" }}	
+
+<div class="jumbotron jumbotron-fluid" style="margin-top: 20px;">
+  <div class="container">
+  <center>
+    <h1 class="display-3">Su resultado es: <strong style="color: blue;">{{resultado}}</strong></h1>
+    <p class="lead"><u>Detalles</u>:</p>
+    <p class="lead">Empresa: <i>{{empresa}}</i> | Indicador: {{indicador}}</p>
+    <hr>
+    <p class="lead">Gracias por confiar en nosotros.</p>
+    <a class="btn btn-outline-danger my-2 my-sm-0" href="empresas/{{empresa}}/indicadores/{{indicador}}" role="button">Volver</a>
+    </center>
+  </div>
+</div>
+
+{{/partial}}
+
+
+{{> layout.hbs }}

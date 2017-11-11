@@ -1,0 +1,68 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+<script src="../validarDatosCuenta.js"></script>
+{{/partial}}
+
+{{# partial "contenido" }}	
+
+<center><h1 class="display-1">{{nombre}}</h1></center>
+
+<h1 class="display-6" style="float:left">Cuentas</h1>
+
+<button type="button" class="btn btn-danger" style="float: right" data-toggle="modal" data-target="#exampleModal">
+  Agregar Cuenta
+</button>
+<table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Nombre</th>
+      <th>Periodo</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#cuentas}}
+    <tr>
+      <td>{{nombre}}</td>
+      <td>{{periodo}}</td>
+      <td>{{valor}}</td>
+    </tr>
+    {{/cuentas}}
+  </tbody>
+</table>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Cuenta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/empresas/{{nombre}}" id="needs-validation" method="POST" onSubmit="return validarDatos();" novalidate>
+         <label>Empresa: </label>
+         <input type="text" readonly class="form-control" id="nombreEmpresa" name="nombreEmpresa" value="{{nombre}}" required>
+         <label>Nombre de la cuenta: </label>
+         <input type="text" class="form-control" id="nombreCuenta" name="nombreCuenta" aria-describedby="emailHelp" placeholder="Ejemplo: ROE" pattern="[a-zA-Z0-9\s]+" required>
+         <small id="emailHelp" class="form-text text-muted">Recuerde que no puede haber dos cuentas con el mismo nombre en el mismo periodo..</small>
+          <p id="feedback1"></p>
+        <label for="exampleInputEmail1">Periodo: </label>
+        <input type="text" class="form-control" id="periodoCuenta" name="periodoCuenta" aria-describedby="emailHelp" placeholder="Ejemplo: 2017" pattern="\d*" required>
+         <p id="feedback2"></p>
+        <label for="exampleInputEmail1">Valor: </label>
+        <input type="text" class="form-control" id="valorCuenta" name="valorCuenta" aria-describedby="emailHelp" placeholder="Ejemplo: 1000000" pattern="\d*" required>
+         <p id="feedback3"></p>
+        <button type="submit" style="float: right" class="btn btn-danger">Aceptar</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+
+{{/partial}}
+
+{{> layout.hbs }}

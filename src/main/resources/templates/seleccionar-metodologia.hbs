@@ -1,0 +1,31 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+<script src="validarDatosEmpresa.js"></script>
+{{/partial}}
+
+{{# partial "contenido" }}	
+
+<h1> Seleccione una metodolog&iacutea</h1>
+
+<table class="table" style="margin-top: 60px;">
+	<thead class="thead-inverse">
+		<tr>
+			<th>Metodolog&iacutea</th>
+			<th width="1">Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#metodologias}}
+		<tr>
+		
+			<td>{{nombre}}</td>
+			<td width="1"><a class="btn btn-outline-danger my-2 my-sm-0" href="/metodologias/{{nombre}}" role="button">Seleccionar</a></td>
+		</tr>
+		{{/metodologias}}
+	</tbody>
+</table>
+
+{{/partial}}
+
+
+{{> layout.hbs }}

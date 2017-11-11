@@ -9,11 +9,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.ConversorFormatoArchivo;
-import domain.Cuenta;
-import domain.IConversorFormatoArchivo;
 import domain.DomainExceptions.AgregarCuentaAlArchivoException;
 import empresas.Empresa;
+import model.ConversorFormatoArchivo;
+import model.Cuenta;
+import model.IConversorFormatoArchivo;
 import repositorios.RepositorioEmpresas;
 
 public class ManejadorDeArchivoEmpresas implements IManejadorDeArchivoEmpresas {

@@ -1,0 +1,21 @@
+{{# partial "titulo" }}	
+<title>D&oacutende Invierto</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+{{/partial}}
+
+{{# partial "contenido" }}
+
+<h3 style="font-family:'Roboto Thin', sans-serif">Indicador: {{indicador}}</h3>
+<h4>Formula: {{formula}}</h4>	
+
+{{# partial "boton" }}
+
+<td width="1"><a class="btn btn-outline-danger my-2 my-sm-0" role="button" href="indicadores/{{indicador}}/{{nombre}}" value="Aplicar">Seleccionar</button></td>
+
+{{/partial}}
+
+{{> empresas-layout.hbs }}
+
+{{/partial}}
+
+{{> layout.hbs }}

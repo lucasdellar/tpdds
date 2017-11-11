@@ -2,14 +2,14 @@ package validadores;
 
 import java.util.List;
 
-import domain.Cuenta;
 import domain.DomainExceptions.CuentaInvalidaException;
 import domain.DomainExceptions.CuentaPreexistenteException;
+import model.Cuenta;
 
 public class ValidadorCuenta {
 	
-    public void validarQueNoEsteYaCargarda(String nombre, String periodo, List<Cuenta> misCuentas) {
-    	if(misCuentas.stream().anyMatch(x -> x.getNombre().equals(nombre) && x.getPeriodo().equals(periodo)))	throw new CuentaPreexistenteException("La cuenta ingresada ya existe.");
+    public Boolean validarQueNoEsteYaCargarda(String nombre, String periodo, List<Cuenta> misCuentas) {
+    	return misCuentas.stream().anyMatch(cuenta -> cuenta.getNombre().equals(nombre) && cuenta.getPeriodo().equals(periodo));
 	}
 
     public void validarAnio(String anio) {

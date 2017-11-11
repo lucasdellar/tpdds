@@ -5,18 +5,26 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import domain.ConversorFormatoArchivo;
-import domain.IConversorFormatoArchivo;
 import domain.DomainExceptions.AgregarCuentaAlArchivoException;
 import empresas.Empresa;
+import model.ConversorFormatoArchivo;
+import model.IConversorFormatoArchivo;
 
 public class RepositorioEmpresas extends Repositorio<Empresa> {
 	
 	private IConversorFormatoArchivo conversor;
+	
+	public RepositorioEmpresas(){
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Empresa> criteria = builder.createQuery(Empresa.class);
+		criteria.from(Empresa.class);
+		this.setLista(manager.createQuery(criteria).getResultList());
+	}
 	
 	public RepositorioEmpresas(String file){
 		conversor = new ConversorFormatoArchivo();
@@ -59,6 +67,12 @@ public class RepositorioEmpresas extends Repositorio<Empresa> {
 
 	public boolean nombreYaUtilizado(String nombre) {
 		return this.getLista().stream().anyMatch(x -> x.getNombre().equals(nombre));
+	}
+	
+	public Empresa getEmpresa(String nombre){
+		return this.getLista().stream()
+				   .filter(empresa -> empresa.getNombre().equals(nombre)).collect(Collectors.toList())
+				   .get(0);
 	}
 	
 }

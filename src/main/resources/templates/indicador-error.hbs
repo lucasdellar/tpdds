@@ -1,0 +1,48 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+<link rel="icon" href="../logo.png">
+<script src="../validarDatosIndicador.js"></script>
+{{/partial}}
+
+{{# partial "contenido" }}
+<div class="alert alert-danger" role="alert">
+	<h4 class="alert-heading">Ups!</h4>
+	<p>El indicador ingresado ya existe, por favor vuelva a intentarlo con otro nombre y/o formula.</p>
+	<hr>
+	<p class="mb-0">Quer&eacutes volver a intentarlo?</p>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		Agregar Indicador
+	</button>
+	<a class="btn btn-primary" href="/indicadores" role="button">Volver atr&aacutes</a>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Agregar Indicador</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="/indicadores" id="needs-validation" method="POST" onSubmit="return validarDatos();" novalidate>
+					<label for="exampleInputEmail1">Nombre del indicador</label>
+					<input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="emailHelp" placeholder="Ejemplo: ROE" required>
+					<small id="emailHelp" class="form-text text-muted">Los indicadores indican tu vida!</small>
+					<p id="feedback1"></p>
+					<label for="exampleInputEmail1">Formula</label>
+					<input type="text" class="form-control" id="formula" name="formula" aria-describedby="emailHelp" placeholder="Ejemplo: 5+ROE" required>
+					<p id="feedback2"></p>
+					<hr>
+					<button type="subxmit" style="float: right" class="btn btn-primary">Aceptar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+
+{{/partial}}
+
+{{> layout.hbs }}

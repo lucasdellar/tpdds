@@ -1,0 +1,93 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="carousel-item active">
+          <img class="first-slide" src="slide1.gif" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption d-none d-md-block text-left">
+              <center><h1>Bienvenido {{usuario}}!</h1>
+              <a class="btn btn-danger" href="/empresas" role="button">Comenz&aacute!</a></center>
+            </div>
+          </div>
+        </div>
+      </div>
+
+	<hr>
+    <div class="container marketing">
+
+      <div class="row">
+        <div class="col-lg-4">
+          <img class="rounded-circle" src="header1.png" alt="Generic placeholder image" width="140" height="140">
+          <h2>Empresas</h2>
+          <p>Con nuestra app podr&aacutes encontrar todas las empresas y agregar m&aacutes a tu gusto. De esta manera encontrar&aacutes todo en un solo lugar.</p>
+          <p><a class="btn btn-outline-danger my-2 my-sm-0" href="/empresas" role="button">Visitar</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="rounded-circle" src="header2.jpg" alt="Generic placeholder image" width="140" height="140">
+          <h2>Indicadores</h2>
+          <p>Sabemos que hoy en d&iacutea es importante realizar muchos c&aacutelculos con respecto a la situaci&oacuten de cada empresa. Por eso te proveemos de &eacutesta herramienta. No dudes en probarla :)</p>
+          <p><a class="btn btn-outline-danger my-2 my-sm-0" href="/indicadores" role="button">Visitar</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="rounded-circle" src="header3.png" alt="Generic placeholder image" width="140" height="140">
+          <h2>Metodolog&iacuteas</h2>
+          <p>Nuestra herramienta m&aacutes poderosa para c&aacutelculos y &aacutenalisis avanzados del mercado.</p>
+          <p><a class="btn btn-outline-danger my-2 my-sm-0" href="/metodologias" role="button">Visitar</a></p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading"><span class="text-muted">Si no te funciona</span> te devolvemos el dinero</h2>
+          <p class="lead">Nuestro equipo estuvo desarrollando "D&oacutende Invierto" durante d&eacutecadas. Por ello estamos completamente seguros que saldr&aacutes ganando s&iacute o s&iacute!</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-fluid mx-auto" src="coins.png" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7 push-md-5">
+          <h2 class="featurette-heading"><span class="text-muted">No persigas m&aacutes al dinero!</span> Deja que &eacutel venga a vos ;)</h2>
+          <p class="lead">Con nuestra ayuda el dinero ya no ser&aacute un problema. Eso ya qued&oacute en el pasado. Ahora tendr&aacutes que preocuparte c&oacutemo gastarlo y eso implicar saber d&oacutende invertirlo.</p>
+        </div>
+        <div class="col-md-5 pull-md-7">
+          <img class="featurette-image img-fluid mx-auto" src="second.jpg" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading"><span class="text-muted">Por &uacuteltimo,</span> Gracias por confiar en nosotros!</h2>
+          <p class="lead">Nuestro equipo se encuentra muy orgulloso de su trabajo. Luego de mucho esfuerzo y con la ayuda de la c&aacutetedra de DDS pudimos lograr lo que ven hoy en d&iacutea. Muchas gracias :)</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-fluid mx-auto" src="thanks.png" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <!-- /END THE FEATURETTES -->
+
+
+    </div><!-- /.container -->
+
+{{/partial}}
+
+{{> layout.hbs }}

@@ -1,0 +1,44 @@
+{{# partial "titulo" }}	
+<title>Donde Invierto</title>
+<script src="validarDatosEmpresa.js"></script>
+{{/partial}}
+
+{{# partial "contenido" }}	
+
+<table class="table" style="margin-top: 60px;">
+	<thead class="thead-inverse">
+		<tr>
+			<th>Empresas candidatas</th>
+			<th width="1">Acciones</th>
+			<th>Empresas seleccionadas</th>
+			<th width="1">Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#empresasNoSeleccionadas}}
+		<tr>
+		<form action="/metodologias/{{metodologia}}" method="POST" >
+			<td><input class="form-control mr-sm-2" type="text" value={{nombre}} name="empresa" id="empresa" readonly></td>
+			<td><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Agregar</button>	
+		</form></td>
+			
+		</tr>
+		{{/empresasNoSeleccionadas}}
+		
+		{{#empresasSeleccionadas}}
+		<tr>
+		<form action="/metodologias/{{metodologia}}" method="POST" >
+			<td><input class="form-control mr-sm-2" type="text" value={{nombre}} name="empresa" id="empresa" readonly></td>
+			<td><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Remover</button>	
+		</form></td>
+		</tr>
+		{{/empresasSeleccionadas}}
+	</tbody>
+</table>
+
+<center><a class="btn btn-danger my-2 my-sm-0" href="/metodologias/{{metodologia}}/resultado" role="button">Metodologizate</a></center>
+
+{{/partial}}
+
+
+{{> layout.hbs }}

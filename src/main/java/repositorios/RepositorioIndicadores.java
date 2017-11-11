@@ -1,16 +1,19 @@
 package repositorios;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.List;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import domain.Indicador;
 import domain.DomainExceptions.IndicadorInexsistenteException;
-import empresas.Empresa;
+import model.Indicador;
 
 
 public class RepositorioIndicadores extends Repositorio<Indicador> {
+	
+	public RepositorioIndicadores(List<Indicador> indicadores){
+		this.setLista(indicadores);
+	}
 
 	public RepositorioIndicadores(){
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
@@ -24,7 +27,8 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 			if(indicador.getNombre().equals(indicadorString))
 				return indicador;
 		}
-		throw new IndicadorInexsistenteException("Se busco un indicador inexistente.");
+		return this.getLista().get(0);
+		//throw new IndicadorInexsistenteException("Se busco un indicador inexistente.");
 	}
 
 }
