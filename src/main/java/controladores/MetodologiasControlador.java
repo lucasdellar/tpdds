@@ -18,6 +18,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import validadores.ValidadorIndicadores;
+import validadores.ValidadorUsuario;
 
 public class MetodologiasControlador  implements WithGlobalEntityManager, TransactionalOps {
 	
@@ -26,6 +27,7 @@ public class MetodologiasControlador  implements WithGlobalEntityManager, Transa
 	String lastUser;
 	List<Empresa> empresasSeleccionadas;
 	List<Empresa> empresasNoSeleccionadas;
+	RepositorioMetodologias repo_metodologias; 
 	
 	public MetodologiasControlador() {
 		empresasSeleccionadas = new RepositorioEmpresas().getLista();
@@ -36,27 +38,42 @@ public class MetodologiasControlador  implements WithGlobalEntityManager, Transa
 	    return new ModelAndView(null, "metodologias-error.hbs");
 	  }
 	
+	// -------------------------------------- Validación de Usuario -------------------------------------- //
+	
 	public ModelAndView listar(Request request, Response response) {
-    	String usuario = request.session().attribute("usuario");
-    	if (usuario == null) {
-    		response.redirect("/login");
-    		return null;
-    	}
-    	empresasNoSeleccionadas = new RepositorioEmpresas().getLista();
-    	empresasSeleccionadas = new ArrayList<>();
-    	RepositorioMetodologias repo = new RepositorioMetodologias();
-	    HashMap<String, Object> viewModel = new HashMap<>();
-	    viewModel.put("metodologias", repo.getLista());
-	    return new ModelAndView(viewModel, "seleccionar-metodologia.hbs");
+		return ValidadorUsuario.ChequearUsuarioLogeado(request, response) ? null
+				: this.mostrarLista(request, response);
 	  }
 	
 	public ModelAndView seleccionarEmpresas(Request request, Response response) {
-	   	String usuario = request.session().attribute("usuario");
-    	if (usuario == null) {
-    		response.redirect("/login");
-    		return null;
-    	}
-    	
+		return ValidadorUsuario.ChequearUsuarioLogeado(request, response) ? null
+				: this.mostrarSeleccionEmpresas(request, response);
+	  }
+	
+	public ModelAndView agregarEmpresa(Request request, Response response) {
+		return ValidadorUsuario.ChequearUsuarioLogeado(request, response) ? null
+				: this.mostrarAgregarEmpresa(request, response);
+	  }
+	
+	public ModelAndView aplicar(Request request, Response response) {
+		return ValidadorUsuario.ChequearUsuarioLogeado(request, response) ? null
+				: this.mostrarAplicar(request, response);
+	  }
+	
+	// -------------------------------------- Métodos principales -------------------------------------- //
+	
+	public ModelAndView mostrarLista(Request request, Response response) {
+		RepositorioEmpresas repo = new RepositorioEmpresas();
+		repo.traerTodas();
+    	empresasNoSeleccionadas = repo.getLista();
+    	empresasSeleccionadas = new ArrayList<>();
+    	repo_metodologias = new RepositorioMetodologias();
+	    HashMap<String, Object> viewModel = new HashMap<>();
+	    viewModel.put("metodologias", repo_metodologias.getLista());
+	    return new ModelAndView(viewModel, "seleccionar-metodologia.hbs");
+	  }
+	
+	public ModelAndView mostrarSeleccionEmpresas(Request request, Response response) {    	
     	String metodologia = request.params(":metodologia");
     	
 	    HashMap<String, Object> viewModel = new HashMap<>();
@@ -66,12 +83,7 @@ public class MetodologiasControlador  implements WithGlobalEntityManager, Transa
 	    return new ModelAndView(viewModel, "seleccionar-empresas.hbs");
 	  }
 	
-	public ModelAndView agregarEmpresa(Request request, Response response) {
-    	String usuario = request.session().attribute("usuario");
-    	if (usuario == null) {
-    		response.redirect("/login");
-    		return null;
-    	}
+	public ModelAndView mostrarAgregarEmpresa(Request request, Response response) {
     	String metodologia = request.params("metodologia");
     	String empresa = request.queryParams("empresa");
     	int index = 0;
@@ -92,17 +104,9 @@ public class MetodologiasControlador  implements WithGlobalEntityManager, Transa
 	    return null;
 	  }
 	
-	public ModelAndView aplicar(Request request, Response response) {
-    	String usuario = request.session().attribute("usuario");
-    	if (usuario == null) {
-    		response.redirect("/login");
-    		return null;
-    	}
+	public ModelAndView mostrarAplicar(Request request, Response response) {
     	String nombre = request.params("metodologia");
-    	Metodologia metodologia = new RepositorioMetodologias().getLista().stream().
-    								  filter(unaMetodologia -> unaMetodologia.getNombre().equals(nombre))
-    								  .collect(Collectors.toList())
-    								  .get(0);
+    	Metodologia metodologia = repo_metodologias.find(nombre);
     	List<EmpresaRankeada> resultado = metodologia.aplicar(empresasSeleccionadas);
 	    HashMap<String, Object> viewModel = new HashMap<>();
 	    viewModel.put("empresas", resultado);

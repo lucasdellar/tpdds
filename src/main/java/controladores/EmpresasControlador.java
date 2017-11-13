@@ -1,6 +1,5 @@
 package controladores;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -29,38 +28,48 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	
 	public ModelAndView error(Request request, Response response) {
 	    return new ModelAndView(null, "empresa-error.hbs");
-	  }
+	}
+
+	// -------------------------------------- Validación de Usuario -------------------------------------- //
+	public ModelAndView cuenta_error(Request request, Response response){
+		return ValidadorUsuario.ChequearUsuarioLogeado(request, response) ? null
+				: mostrar_cuenta_error(request, response);
+	}
+	
+	public ModelAndView mostrar(Request request, Response response){
+		return ValidadorUsuario.ChequearUsuarioLogeado(request, response) ? null
+				: mostrarEmpresa(request, response);
+	}
+	
+	public ModelAndView listar(Request request, Response response) {
+		return ValidadorUsuario.ChequearUsuarioLogeado(request, response) ? null
+				: listarEmpresas(request, response);
+	}
+	
+	// -------------------------------------- Métodos principales -------------------------------------- //
 	
 	public Void crear(Request request, Response response) {
 	    String nombre = request.queryParams("nuevaEmpresa");
 	    
 	    if(new ValidadorEmpresa().validarNombre(nombre, repoEmpresas)){
-	    	// El nombre ya estï¿½ en uso...
 	    	response.redirect("/empresas/error");
 	    	return null;
-	    }
+	    } 
 	    
     	repoEmpresas.agregar(new Empresa(nombre));
-	
 	    response.redirect("/empresas");
 	    return null;
-	  }
-
-	public ModelAndView listar(Request request, Response response) {
-		return ValidadorUsuario.ChequearUsuarioLogeado(request, response) ? null
-				: listarEmpresas(request, response);
 	  }
 	
 	public ModelAndView listarEmpresas(Request request, Response response){
 	    List<Empresa> empresas;
 	    String filtroNombre = request.queryParams("filtroNombre");
-	    if (Objects.isNull(filtroNombre) || filtroNombre.isEmpty()) {
-	      empresas = repoEmpresas.getLista();
-	    } else {
-	      empresas = repoEmpresas.getLista().stream().
-	    		  filter(empresa -> empresa.getNombre().equals(filtroNombre))
-	    		  .collect(Collectors.toList());
+	    if (Objects.isNull(filtroNombre) || filtroNombre.isEmpty()){
+	    	repoEmpresas.traerTodas();
+	    	empresas = repoEmpresas.getLista();	    	
 	    }
+	    else
+	      empresas = repoEmpresas.getEmpresas(filtroNombre);
 	    
 	    HashMap<String, Object> viewModel = new HashMap<>();
 	    viewModel.put("empresas", empresas);
@@ -69,16 +78,9 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	    return new ModelAndView(viewModel, "empresas.hbs");
 	}
 
-	public ModelAndView mostrar(Request request, Response response) {
-    	String usuario = request.session().attribute("usuario");
-    	if (usuario == null) {
-    		response.redirect("/login");
-    		return null;
-    	}
+	public ModelAndView mostrarEmpresa(Request request, Response response) {
 	    String nombre = request.params(":id");
-
-	    Empresa empresa = repoEmpresas.getEmpresa(nombre);
-	    
+	    Empresa empresa = repoEmpresas.getEmpresas(nombre).get(0);
 	    HashMap<String, Object> viewModel = new HashMap<>();
 	    viewModel.put("empresa", empresa);
 	    return new ModelAndView(empresa, "empresa.hbs");
@@ -86,7 +88,7 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	
 	public ModelAndView addCuenta(Request request, Response response) {
 		String nombre_empresa = request.queryParams("nombreEmpresa");
-		Empresa empresa = repoEmpresas.getEmpresa(nombre_empresa);
+		Empresa empresa = repoEmpresas.getEmpresas(nombre_empresa).get(0);
 		List<Cuenta> empresa_cuentas = empresa.getCuentas();
 	    String nombre_cuenta = request.queryParams("nombreCuenta");
 	    String periodo = request.queryParams("periodoCuenta");
@@ -94,7 +96,6 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	    
 	    ValidadorCuenta validador = new ValidadorCuenta();
 	    if(validador.validarQueNoEsteYaCargarda(nombre_cuenta, periodo, empresa_cuentas)){
-	    	// El nombre ya estï¿½ en uso...
 	    	response.redirect("/empresas/" + nombre_empresa + "/error");
 	    	return null;
 	    }
@@ -106,13 +107,7 @@ public class EmpresasControlador implements WithGlobalEntityManager, Transaction
 	    return null;
 	  }
 	
-	public ModelAndView cuenta_error(Request request, Response response) {
-    	String usuario = request.session().attribute("usuario");
-    	if (usuario == null) {
-    		response.redirect("/login");
-    		return null;
-    	}
-    	
+	public ModelAndView mostrar_cuenta_error(Request request, Response response) {
 	    String empresa = request.params(":id");
     	HashMap<String, Object> viewModel = new HashMap<>();
  	    viewModel.put("empresa", empresa);

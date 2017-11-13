@@ -1,7 +1,9 @@
 package empresas;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -49,6 +51,12 @@ public class Empresa {
 
 	public String getNombre() {
 		return nombre;
+	}
+	
+	public List<String> getPosibilesPeriodosOrdenados(){
+		List<String> posiblesPeriodos = this.getCuentas().stream().map( x -> x.getPeriodo()).collect(Collectors.toList());
+		posiblesPeriodos.sort(Comparator.comparing(periodo -> Integer.valueOf(periodo)));
+		return posiblesPeriodos;
 	}
 
 	public void setNombre(String nombre) {

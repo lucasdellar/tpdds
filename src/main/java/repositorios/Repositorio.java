@@ -17,17 +17,6 @@ public class Repositorio<T> implements TransactionalOps {
 
 	private List<T> lista;
 	EntityManager manager = PerThreadEntityManagers.getEntityManager();
-	//EntityTransaction transaction = manager.getTransaction();
-
-	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-	   propertyChangeSupport.addPropertyChangeListener(listener);
-	}
-	
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		   propertyChangeSupport.removePropertyChangeListener(listener);
-	}
 	
 	public Repositorio(){
 		lista = new ArrayList<T>();

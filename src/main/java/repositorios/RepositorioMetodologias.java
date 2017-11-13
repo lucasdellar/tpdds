@@ -1,5 +1,7 @@
 package repositorios;
 
+import java.util.stream.Collectors;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -14,6 +16,13 @@ public class RepositorioMetodologias extends Repositorio<Metodologia> {
 		CriteriaQuery<Metodologia> criteria = builder.createQuery(Metodologia.class);
 		criteria.from(Metodologia.class);
 		this.setLista(manager.createQuery(criteria).getResultList());
+	}
+	
+	public Metodologia find(String nombre){
+		return this.getLista().stream().
+				  filter(unaMetodologia -> unaMetodologia.getNombre().equals(nombre))
+				  .collect(Collectors.toList())
+				  .get(0);
 	}
 	
 }

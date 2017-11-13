@@ -50,7 +50,7 @@ public class Rutas {
     post("/indicadores", indicadores::crear);
     get("/empresas/:empresa/indicadores", indicadores::seleccionarIndicador, engine);
     get("/empresas/:empresa/indicadores/:indicador", indicadores::seleccionarPeriodo, engine);
-    get("/empresas/:empresa/indicadores/:indicador/:periodo", indicadores::mostrarResultadoIndicador, engine);
+    get("/empresas/:empresa/indicadores/:indicador/:periodo", indicadores::resultadoIndicador, engine);
     get("/empresas/:empresa/indicadores/:indicador/:periodo/error", indicadores::error_aplicar, engine);
     get("/indicadores/error", indicadores::error, engine);
   

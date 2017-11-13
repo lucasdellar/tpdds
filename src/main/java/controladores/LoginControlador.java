@@ -12,6 +12,7 @@ import javax.persistence.criteria.Root;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import model.Usuario;
+import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -23,7 +24,6 @@ public class LoginControlador {
 	  }
 	  
 	  public ModelAndView error(Request request, Response response) {
-			System.out.print("BBBBB");
 		  return new ModelAndView(null, "login-error.hbs");
 	  }
 	  
@@ -37,7 +37,7 @@ public class LoginControlador {
 		  String usuario_nombre = request.queryParams("usuario");
 		  String password = request.queryParams("password");
 
-		  List<Usuario> queryResult = this.findUsuario(usuario_nombre);
+		  List<Usuario> queryResult = new RepositorioUsuarios().findUsuario(usuario_nombre);
 		  
 		  if(queryResult.isEmpty()){
 			response.redirect("/error");
@@ -51,18 +51,5 @@ public class LoginControlador {
 		  request.session().attribute("usuario", usuario_nombre);
 		  response.redirect("/home");
 		  return null;
-	  }
-	  
-	  private List<Usuario> findUsuario(String usuario_nombre){
-		  EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
-		  CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		  CriteriaQuery<Usuario> criteriaQuery = criteriaBuilder.createQuery(Usuario.class);
-		  Root<Usuario> root = criteriaQuery.from(Usuario.class);
-		  criteriaQuery.select(root);
-		  ParameterExpression<String> params = criteriaBuilder.parameter(String.class);
-		  criteriaQuery.where(criteriaBuilder.equal(root.get("usuario"), params));
-		  TypedQuery<Usuario> query = entityManager.createQuery(criteriaQuery);
-		  query.setParameter(params, usuario_nombre);
-		  return query.getResultList();
 	  }
 }
