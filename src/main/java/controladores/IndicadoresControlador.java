@@ -20,6 +20,8 @@ import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import domain.DomainExceptions.IndicadorInvalidoException;
 import empresas.Empresa;
 import model.Indicador;
+import model.IndicadorPorEmpresa;
+import model.IndicadorPorEmpresaPK;
 import repositorios.RepositorioEmpresas;
 import repositorios.RepositorioIndicadores;
 import spark.ModelAndView;
@@ -131,9 +133,10 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	    Double resultado;
 	    Empresa empresa = new RepositorioEmpresas().getEmpresas(nombreEmpresa).get(0);
 	    Indicador indicador = repo.findIndicador(nombreIndicador).get(0);
-	        
+	    
 	    try{
-	    	resultado = indicador.aplicarIndicador(periodo, empresa, repo);
+	    	resultado = traerOCalcularIndicador(empresa, indicador, periodo);
+	    	
 	    }catch(IndicadorInvalidoException e){
     		response.redirect("/empresas/"+nombreEmpresa+"/indicadores/"+nombreIndicador+"/"+periodo+"/error");
     		return null;
@@ -146,6 +149,20 @@ public class IndicadoresControlador implements WithGlobalEntityManager, Transact
 	    return new ModelAndView(viewModel, "mostrarResultadoIndicador.hbs");
 	  }
 	
+	private double traerOCalcularIndicador(Empresa empresa, Indicador indicador, String periodo) {
+		double resultado;
+		try {
+			IndicadorPorEmpresa unIndicadorPorEmpresa = entityManager().getReference(IndicadorPorEmpresa.class, new IndicadorPorEmpresaPK(empresa.getId(), indicador.getId(), periodo));
+    		resultado = unIndicadorPorEmpresa.getResultado();
+		}catch (Exception e){
+			resultado = indicador.aplicarIndicador(periodo, empresa, repo);
+    		IndicadorPorEmpresa otroIndicadorPorEmpresa = new IndicadorPorEmpresa(empresa.getId(), indicador.getId(), periodo, resultado);
+    		withTransaction(() ->entityManager().persist(otroIndicadorPorEmpresa));	
+		}
+		
+		return resultado;
+	}
+
 	public ModelAndView mostrarSeleccionarPeriodo(Request request, Response response) {
 	    String nombreEmpresa = request.params(":empresa");
 	    String nombreIndicador = request.params(":indicador");

@@ -2,6 +2,7 @@ package empresas;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class Empresa {
 		return cuentas;
 	}
 
-	public void setCuentas(ArrayList<Cuenta> cuentas) {
+	public void setCuentas(List<Cuenta> cuentas) {
 		this.cuentas = cuentas;
 	}
 
@@ -54,7 +55,8 @@ public class Empresa {
 	}
 	
 	public List<String> getPosibilesPeriodosOrdenados(){
-		List<String> posiblesPeriodos = this.getCuentas().stream().map( x -> x.getPeriodo()).collect(Collectors.toList());
+		HashSet<String> hash = new HashSet( this.getCuentas().stream().map( x -> x.getPeriodo()).collect(Collectors.toList()));
+		List<String> posiblesPeriodos = new ArrayList<String>(hash);
 		posiblesPeriodos.sort(Comparator.comparing(periodo -> Integer.valueOf(periodo)));
 		return posiblesPeriodos;
 	}

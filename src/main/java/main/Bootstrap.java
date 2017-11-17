@@ -15,6 +15,7 @@ import criterios.Sumatoria;
 import empresas.Empresa;
 import model.Cuenta;
 import model.Indicador;
+import model.IndicadorPorEmpresa;
 import model.Metodologia;
 import model.Usuario;
 import model.Valor;
@@ -65,6 +66,10 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     	for(Empresa empresa : masEmpresas){
     		persist(empresa);
     	}
+    	
+    	IndicadorPorEmpresa unIndicadorPorEmpresa = new IndicadorPorEmpresa(coke.getId(), unIndicador.getId(), "2015", unIndicador.aplicarIndicador("2015", coke, new RepositorioIndicadores("admin")));
+    	
+    	persist(unIndicadorPorEmpresa);
     	
     	/* METODOLOGIA */
     	RepositorioIndicadores repositorio = new RepositorioIndicadores();

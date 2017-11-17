@@ -30,6 +30,7 @@ import repositorios.RepositorioIndicadores;
 public class Indicador {
 	
 	@Id@GeneratedValue
+	private
 	long id;
 	@Column(name = "nombre")
 	private String nombre;
@@ -111,6 +112,14 @@ public class Indicador {
 
 	public void setFormula(String formula) {
 		this.formula = formula;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	

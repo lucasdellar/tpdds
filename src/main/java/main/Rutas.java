@@ -9,6 +9,7 @@ import controladores.EmpresasControlador;
 import controladores.HomeControlador;
 import controladores.IndicadoresControlador;
 import controladores.MetodologiasControlador;
+import repositorios.RepositorioEmpresas;
 import controladores.LoginControlador;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -58,6 +59,9 @@ public class Rutas {
     get("/metodologias/:metodologia", metodologias::seleccionarEmpresas, engine);
     post("/metodologias/:metodologia", metodologias::agregarEmpresa);
     get("/metodologias/:metodologia/resultado", metodologias::aplicar, engine);
+    
+    new RepositorioEmpresas("test.txt");
+    
   }
 
 }

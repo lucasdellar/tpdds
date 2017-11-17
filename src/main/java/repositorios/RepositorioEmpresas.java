@@ -14,6 +14,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
+import org.eclipse.jetty.server.session.JDBCSessionManager.Session;
+import org.hibernate.SessionFactory;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import domain.DomainExceptions.AgregarCuentaAlArchivoException;
@@ -45,7 +47,21 @@ public class RepositorioEmpresas extends Repositorio<Empresa> {
 		for(Empresa empresa : empresasDeArchivo){
 			 if(!this.nombreYaUtilizado(empresa.getNombre()))
 					 this.agregar(empresa);
+			 else
+				 this.actualizarEmpresa(empresa);
 		}
+	}
+
+	private void actualizarEmpresa(Empresa empresaActualizada) {
+		Empresa miEmpresa = this.getEmpresas(empresaActualizada.getNombre()).get(0);
+
+		entityManager().getTransaction().begin();
+		entityManager().createQuery("delete from IndicadorPorEmpresa where empresa_id = " + miEmpresa.getId()).executeUpdate();
+		entityManager().createQuery("delete from Cuenta where Empresa_id = " + miEmpresa.getId()).executeUpdate();
+		entityManager().createQuery("delete from Empresa where id = " + miEmpresa.getId()).executeUpdate();
+		entityManager().getTransaction().commit();
+
+		this.persistir(empresaActualizada);
 	}
 
 	public List<Empresa> empresasDeArchivo(String file){

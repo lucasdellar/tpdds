@@ -1,0 +1,1 @@
+{"nombre":"Globant","cuentas":[{"nombre":"Patrimonio Neto","periodo":"2015","valor":"10000000"}]}
